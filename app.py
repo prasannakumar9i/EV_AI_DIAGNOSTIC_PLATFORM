@@ -84,13 +84,15 @@ def load_kb():
 
     try:
 
-        persist_dir = "data/vector_store"
+        import os
+
+        persist_dir = os.path.join("data", "vector_store")
 
         client = chromadb.PersistentClient(path=persist_dir)
 
         col = client.get_or_create_collection(
             name="ev_manuals",
-            metadata={"hnsw:space": "cosine"},
+            metadata={"hnsw:space": "cosine"}
         )
 
         model = SentenceTransformer("all-MiniLM-L6-v2")
@@ -99,7 +101,7 @@ def load_kb():
 
     except Exception as e:
 
-        print("KB load error:", e)
+        st.error(f"Knowledge base load error: {e}")
 
         return None, None, 0
 
