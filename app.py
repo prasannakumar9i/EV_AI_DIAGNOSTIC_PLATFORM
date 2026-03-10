@@ -109,20 +109,34 @@ def search_kb(question, col, model, k=4):
         return []
 
     try:
-
         q_vec = model.encode(question, normalize_embeddings=True).tolist()
 
         results = col.query(
             query_embeddings=[q_vec],
-            n_results=k,
+            n_results=k * 3   # request more results
         )
 
-        return list(zip(results["documents"][0], results["distances"][0]))
+        docs = results["documents"][0]
+        dists = results["distances"][0]
+
+        seen = set()
+        filtered = []
+
+        for doc, dist in zip(docs, dists):
+
+            text = doc[:150]
+
+            if text not in seen:
+                seen.add(text)
+                filtered.append((doc, dist))
+
+            if len(filtered) == k:
+                break
+
+        return filtered
 
     except Exception:
-
         return []
-
 
 # ── Build Chatbot Response ──────────────────────────────
 def build_answer(question, docs_dists):
