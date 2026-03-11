@@ -57,7 +57,8 @@ EV_AI_Diagnostic_Platform/
 │
 ├── notebooks/
 │   └── EV_AI_Diagnostic_Platform.ipynb
-│
+├── pages/
+│   └──ev_dashboard.py
 ├── src/
 │   ├── can_bus/
 │   │   └── simulator.py
