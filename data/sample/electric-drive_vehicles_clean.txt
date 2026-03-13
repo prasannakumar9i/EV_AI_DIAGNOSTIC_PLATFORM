@@ -1,0 +1,126 @@
+Electric vehicles can offer several benefts, including improved fuel economy,
+lower fuel costs, and reduced emissions. Photo by Erik Nelsen, NREL 64276.
+At a Glance: Electric Vehicles
+Electric vehicles (EVs) All-electric vehicles are propelled by one
+or more electric motors powered by energy
+include all-electric
+stored in batteries. This makes BEVs very
+vehicles--also referred to low maintenance, which saves on costs.
+as battery electric vehicles
+PHEVs use batteries to power an electric
+(BEVs)--and plug-in hybrid motor and use another fuel, such as gasoline,
+electric vehicles (PHEVs). to power a conventional engine.
+PHEVs produce fewer emissions than
+About the Vehicles conventional vehicles because of their
+increased fuel economy, and in all-electric
+Why consider one? mode produce no tailpipe emissions, just like
+all-electric vehicles.
+EVs cost less to operate, so the higher initial
+vehicle cost can be offset over the lifetime
+EVs provide instant torque, resulting in a
+of the vehicle. That's because electric
+fun, fast, and quiet driver experience!
+drivetrains are very efficient, and electricity
+is much cheaper than gasoline or diesel fuel.
+What vehicles are available and how
+Because they use little or no gas, these much do they cost?
+vehicles minimize or even eliminate trips to Manufacturers' suggested retail prices
+the gas station. Most drivers find that they (MSRPs) start at about $28,000 for allcan primarily charge at home or at work. electric vehicles.
+
+Did You Know?
+Electricity is much cheaper than gasoline or diesel fuel, costing about $6 to
+drive 200 miles at a nationwide average, when accounting for vehicle
+effciency.
+EVs are about three times more effcient than conventional vehicles,
+earning these vehicles top spots on FuelEconomy.gov's list of most effcient
+vehicles (fueleconomy.gov/feg/topten.jsp).
+Regenerative braking allows EVs to capture energy normally lost during
+braking by using the electric motor as a generator and storing that captured
+energy in the battery.
+Most currently available electric vehicles have ranges between 110 and
+over 300 miles. Larger batteries and growing access to charging are
+increasingly addressing "range anxiety," or the fear of running out of charge.
+A federal tax credit of $3,750-$7,500 There are more than 140,000 public charging
+may be available for some EV purchases. outlets across the country, including a
+Depending on your location, you may growing number of "DC fast charge" units
+also be eligible for incentives from your that enable rapid charging. To locate stations,
+state or utility. Find relevant incentives use the Alternative Fueling Station Locator
+by searching the Alternative Fuels Data (afdc.energy.gov/stations) or download the
+Center's (AFDC's) Federal and State Laws Android or iPhone app.
+and Incentives database (afdc.energy.gov/
+afdc/laws).
+Search and compare dozens of models
+from all major manufacturers at
+FuelEconomy.gov.
+Charging Batteries
+Where can I charge?
+Most EVs come with a 110-volt "Level 1"
+cordset that can be plugged in to a typical
+household outlet.
+For quicker charging, homeowners can
+install a 240-volt "Level 2" unit, often with
+little or no required electrical upgrades
+because most homes have 240-volt service
+for appliances like dryers and electric ranges. This "Level 1" cordset can be
+plugged in to a typical dedicated,
+More and more workplaces are also
+110-volt household outlet. Photos
+installing charging units or making 110-volt
+by Erik Nelsen, NREL 64271, inset
+outlets available to employees and visitors.
+64274.
+
+Public charging stations typically include one or more "Level 2" units and may
+include "DC fast charge" units as well. Photo by Dennis Schroeder, NREL 48757.
+How long does it take to recharge? What about safety and maintenance?
+"Level 1" charging units add 2-5 miles of EVs and their battery packs undergo the
+range per hour of charging. same rigorous safety testing as conventional vehicles sold in the United States and
+"Level 2" charging units add 10-30 miles of must meet Federal Motor Vehicle Safety
+range per hour of charging. Standards.
+"DC fast" units can add 100-200+ miles of Because PHEVs have a conventional
+range in as little as 30 minutes. engine, their maintenance requirements are
+similar to those of conventional vehicles.
+How far can I go on a charge?
+BEVs have fewer maintenance requireThe distance an EV can travel on a single battery ments because they have fewer moving
+charge is known as its "all-electric range." parts and fluids to change, and their
+electrical systems require minimal
+All-electric vehicles can typically go between maintenance.
+110 and over 300 miles on a single charge.
+A manufacturer's battery warranty typically
+PHEVs can typically go 15-60 miles on battery covers 8 years/100,000 miles. Expected
+power alone; their overall range is determined by battery lifetime is 12-15 years under
+the fuel tank capacity because the engine kicks normal operating conditions. Check with
+in when the battery is depleted. your vehicle's manufacturer for vehicle and
+battery warranty information.
+Several factors affect actual range, including
+driving conditions, driving habits, battery
+size, and use of climate controls.
+
+Options for Going Electric
+Below are the key differences between BEVs and PHEVs:
+All-electric vehicles can travel about 100 to 400 miles on a
+single charge (depending on model and battery options).
+They are powered by an electric motor that uses energy
+BEV
+stored in a battery (larger than the battery in a PHEV). EV
+batteries are charged by plugging the vehicle in to an
+electric power source and through regenerative braking.
+A smaller battery allows PHEVs to travel on electricity
+alone for up to 60 miles (depending on model). The
+battery can be charged by plugging in to an electric
+PHEV
+power source, through regenerative braking, and by
+the engine.
+Unlike all-electric vehicles, PHEVs don't have to be plugged in. They can be
+fueled solely with gasoline, like a conventional vehicle. However, they will
+not achieve maximum fuel economy or take full advantage of their electric
+capabilities without plugging in.
+Two types of electric-drive vehicles not covered here are hybrid electric
+vehicles (which are powered by a conventional engine and an electric motor
+that uses energy from the internal combustion engine as well as energy
+stored in a battery) and fuel cell electric vehicles (which use a propulsion
+system similar to electric vehicles, and energy stored as hydrogen is
+converted to electricity by the fuel cell).
+For more information, visit:
+afdc.energy.gov
+DOE/GO-102023-6049   August 2023

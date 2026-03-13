@@ -1,0 +1,412 @@
+Manualslib.com - Easy to Read Manuals
+Kia EV6 2022 Manual
+Manuals / Brands / Kia Manuals / Automobile / EV6 2022 / Quick start manual / PDF
+Contents
+1. Interior Overview
+2. Instrument Panel Overview
+3. Motor Compartment
+4. Instrument Cluster
+5. Battery Information
+6. EV Mode
+7. Charging
+8. Climate Control System
+9. Cruise Control System
+10. Seat / Air Bag / Child Restraint System
+11. Starting the Vehicle
+12. Door Locks and Tailgate
+13. Bonnet
+14. Pan-European eCall System
+15. Towing
+16. Vehicle Diagnostics
+17. Lighting Control
+
+17. Lighting Control
+18. Wipers and Washers
+19. Regenerative Braking System
+20. Tyre Mobility Kit
+21. Checking the washer fluid level
+22. Checking the coolant level
+23. Additional Info
+24. Documents / Resources
+24.1. References
+24.2. In Other Languages
+24.3. Other ManualsLib Projects
+
+1. Inside door handle [5]
+2. Driver position memory system [5]
+3. Outside rearview mirror folding switch [5]
+4. Outside rearview mirror control switch [5]
+5. Central door lock/unlock switch [5]
+6. Power window switches [5]
+7. Power window lock/Electronic power child safety lock button [5]
+8. Steering wheel tilt/ telescopic lever [5]
+9. Steering wheel [5]
+10. Headlamp leveling adjustment switch [5]
+11. Charging door open/close button [5]
+12. ESC OFF button [6]
+13. Power tailgate open/close button [5]
+
+14. EPB switch [6]
+15. Bonnet release lever [5]
+16. Instrument panel fuse [8]
+17. Seat [4]
+18. Reduction gear (shifter dial) selector [6]
+* if equipped
+[#] Number in brackets indicates chapter in Owner's Manual.
+The illustrations in this guide may vary from the actual vehicle.
+Instrument Panel Overview
+1. Audio remote control button [5]
+2. Driver's front air bag [4]
+3. Horn [5]
+4. Driving assist button [6]
+
+5. Instrument cluster [5]
+6. Light control/turn signals lever [5] Wiper and washer control lever [5]
+7. EV button [6]
+8. Infotainment system [5]
+9. Hazard warning flasher switch [7]
+10. Infotainment/climate switchable controller [5]
+11. Front seat warmer and air ventilation seat button [5]
+12. Glove box [5]
+13. Steering wheel heater button [5]
+14. AUTO HOLD button [6]
+15. Parking/View button [6]
+16. Parking safety button [6]
+17. Wireless charging system [5]
+18. Center console storage box [5]
+19. Passenger's front air bag [4]
+Motor Compartment
+Motor compartment [3]
+1. Coolant reservoir [8]
+2. Brake fluid reservoir [8] * This part is located on the opposite side for right-hand drive
+vehicle.
+3. Windscreen washer fluid reservoir [8]
+4. Fuse box [8]
+
+5. Negative battery terminal (-) [8]
+6. Positive battery terminal (+) [8]
+7. Front storage compartment [5]
+Instrument Cluster
+Instrument cluster [5]
+1. Speedometer
+2. Distance to empty
+3. Power/Charge gauge
+4. Battery SOC (State of Charge) gauge
+5. LCD display
+6. Warning and indicator lights
+7. Reduction gear shift indicator
+8. Odometer
+9. Regenerative braking level indicator
+10. Electric energy economy
+Battery Information
+
+Low battery level warning light [2]
+Vehicle can drive an additional 30-40 km (18~25 miles) depending on different factors
+Low EV battery [2]
+A. Low EV battery
+When the high voltage battery level reaches around 10% or less, this warning message
+is displayed.
+Charge immediately. Power limited [2]
+A. Charge immediately. Power limited
+When the high voltage battery level reaches around 5% or less, this warning message is
+displayed.
+EV Mode
+EV menu [2]
+If you select the EV menu at the multimedia system home screen, you can enter EV
+
+menu.
+* The image of EV menu screen in this QRG may differ from the actual screen
+depending on the vehicle specification and the version of the multimedia system
+software. For more detailed information, please refer to Navigation Quick Reference
+Guide.
+EV Mode Screen [2]
+1. Energy information
+2. Next departure
+3. Charging and climate
+4. Vehicle to load (V2L)
+5. Nearby stations
+6. EV settings
+7. Menu
+Charging
+How to connect AC charger [2]
+1. Depress the brake pedal and apply the parking brake.
+2. Turn OFF all switches, shift to P (Park), and turn OFF the vehicle. If charging is
+initiated without the gear in P (Park), the charging will start after the gear is
+automatically shifted to P (Park).
+3. Open the charging door.
+4. Check if there is dust on the charging connector and charging inlet.
+5. Hold the charging connector handle and connect it to the vehicle charging inlet.
+Push the connector all the way in. If the charging connector and charging terminal are
+not connected properly, this may cause a fire.
+6. Connect the charging plug to the electric outlet at a AC charging station to start
+charging.
+7. Check if the charging indicator light ( ) of the high voltage battery in the instrument
+
+cluster is turned ON. Charging is not active when the charging indicator light ( ) is
+OFF. When the charging connector and charging plug are not connected properly,
+reconnect the charging cable to charge.
+8. After charging has started, the estimated charging time is displayed on the instrument
+cluster for about 1 minute. If you open the driver seat door while charging, the
+estimated charging time is also displayed on the instrument cluster for about 1
+minute. When scheduled charging or scheduled air conditioner/ heater is set, the
+estimated charging time is displayed as "--".
+Checking charging status [2]
+Estimated charging time displayed on instrument cluster
+Charging time information
+Charging type Standard battery type Extended battery type
+Takes approx. 9 hours at room Takes approx. 11 hours 45
+AC charge temperature when charged to minutes at room temperature
+100% when charged to 100%.
+Takes about 18 minutes at room Takes about 18 minutes at room
+350
+temperature when charged from temperature when charged from
+kW
+
+charger 10% to 80%. Can be charged to 10% to 80%. Can be charged to
+DC
+100%. 100%.
+charge
+Takes about 63 minutes at room Takes about 73 minutes at room
+50 kW temperature when charged from temperature when charged from
+charger 10% to 80%. Can be charged to 10% to 80%. Can be charged to
+100%. 100%.
+Takes approx. 25 hours at room Takes approx. 33 hours at room
+Portable
+temperature when charged to temperature when charged to
+charge
+100% 100%
+Note: Charging time is dependent on both the settings of the Portable Charging Cable
+(ICCB) and in the charge management menu of the Entertainment System.
+Climate Control System
+Automatic climate control system [5]
+1. Driver's temperature control knob
+2. Passenger's temperature control knob
+3. AUTO (automatic control) button
+4. OFF button
+5. Fan speed control button
+6. Mode selection button
+7. Front-windscreen defroster button
+8. Rear-window defroster button
+9. SYNC button
+
+10. Air intake control button
+11. Air conditioning A/C button
+12. Driver only select button
+13. HEAT button
+14. Infotainment/climate control panel switching button
+Cruise Control System
+Cruise control system* [6]
+1. Cruise indicator
+2. Set speed
+Set cruise control speed by pressing the Driving Assist ( ) button at the desired speed.
+To increase cruise control set speed push the + switch up and release it immediately.
+
+To decrease cruise control set speed push the - switch down and release it immediately.
+To temporarily pause cruise control depress the brake pedal or press the ( ) button.
+To resume cruise control push the +, - switch or ( ) button.
+Note: The pictures above are based on a Left Hand Drive vehicle.
+Seat / Air Bag / Child Restraint System
+
+Seats [4]
+Front seat
+1. Forward and backward
+2. Seatback angle
+3. Seat cushion height
+4. Seat cushion tilt
+5. Lumbar support
+6. Relaxion comfort seat
+7. Driver position memory system
+8. Headrest
+9. Passenger walk-in switch · Seatback angle · Forward and backward
+2nd-row seat
+10. Seatback angle/folding
+11. Seatback folding
+12. Headrest
+13. Armrest
+* The picture above is based on a Left Hand Drive vehicle. For a Right Hand Drive
+
+vehicle, the operation of the front seat are located on the opposite side.
+Passenger's front air bag ON/OFF switch* [4]
+Forward/rearward-facing child restraint system [4]
+Securing a child restraint system with a lap/shoulder belt [4]
+Securing with "ISOFIX" system and "Top-tether Anchorage" system [4]
+1. ISOFIX Anchor Position Indicator
+2. ISOFIX Anchor
+
+Securing with "Top-tether Anchorage" system [4]
+Starting the Vehicle
+Starting the vehicle [6]
+If the battery is weak or the smart key does not work correctly, you can start the
+vehicle by pressing the EV button with the smart key. When you press the EV button
+directly with the smart key, the smart key should contact the button at a right angle.
+When the stop lamp fuse is blown, you cannot start the vehicle normally. Replace the
+fuse with a new one. If it is not possible, you can start the vehicle by pressing the EV
+button for 10 seconds while it is in the ACC position. The vehicle can start without
+pressing the brake pedal. But for your safety always press the brake pedal before
+starting the vehicle.
+Door Locks and Tailgate
+Locking/unlocking with mechanical key [5]
+1. Tab
+2. Key
+
+Locking/unlocking with the central locking switch [5]
+1. Lock
+2. Unlock
+3. Indicator light
+Child-protector rear door lock* [5]
+1. Turn to the lock position.
+2. Open the rear door from outside.
+Opening/closing the tailgate [5]
+Press the outside handle switch (1) to open the tailgate.
+Pull up the tailgate.
+Push down the tailgate to close the tailgate.
+
+Emergency tailgate safety release [5]
+1. Move the mechanical key to the right
+Bonnet
+Opening the front storage compartment [5]
+Open the bonnet.
+Lift up the front storage compartment cover while depressing the front storage
+compartment lever (1).
+Opening/closing the bonnet [5]
+a. Bonnet release lever
+b. Bonnet secondary latch
+Closing the bonnet
+Before closing the bonnet, check if all filler caps are correctly installed and any other
+combustible material must be removed from the engine compartment.
+Lower the bonnet until it is about 30 cm above the closed position and let it drop to
+securely lock in place.
+
+Pan-European eCall System
+Pan-European eCall System [7]
+1. Microphone
+2. SOS button
+3. LED
+Accident reporting [7]
+System operation in the event of a traffic accident
+Connection with the Public Safety Answering Point(PSAP)
+Emergency services
+The Pan-European eCall device automatically makes an emergency call to the Public
+Safety Answering Point (PSAP) to request appropriate rescue operations in the event of
+a car accident. For the purpose of providing appropriate emergency services response
+and support, the Pan-European eCall system automatically transmits the accident data
+to the Public Safety Answering Point (PSAP) when a traffic accident is detected. In this
+situation, the emergency call cannot be hung up by pressing the SOS button; the Pan-
+European eCall system remains connected until the emergency service officer receiving
+the call disconnects the emergency call. In minor traffic accidents, the Pan-European
+eCall system may not execute an emergency call. However, an emergency call may be
+
+made manually by pressing the SOS button.
+Towing
+Towing [7]
+Tow the vehicle with a wheel lift or flatbed equipment with all wheels off the ground to
+avoid serious damage to the vehicle. Do not tow with sling type equipment
+Emergency towing [7]
+If emergency towing is necessary, we recommend having it done by an authorised Kia
+dealer or a commercial towtruck service.
+Operation
+Remove the hole cover by pressing the lower part of the cover on the bumper.
+Install the towing hook by screwing it clockwise into the hole until it is fully secured.
+The towing hook is located in the Tyre Mobility Kit case.
+After use, remove the towing hook and reinstall the cover.
+Vehicle Diagnostics
+The Vehicle diagnostics feature automatically performs diagnostics on your car when a
+warning light comes on the cluster panel and displays the details of the vehicle
+malfunction on the screen for the driver.
+In case of an urgent need to check the high voltage system of your vehicle, which will
+also prohibit to drive your vehicle further, you will get a popup message through the
+UVO/Kia Connect app onto your mobile phone.
+
+Lighting Control
+Lighting control [5]
+To operate the lights, turn the knob at the end of the control lever to one of the following
+positions:
+1. OFF (O)
+2. AUTO
+3. Position & Taillamp (
+4. Low beam ( )
+High beam assist* [5]
+High beam assist is a function that automatically adjusts the headlamp range (switches
+between high beam and low beam) depending on the brightness of detected vehicles
+and certain road conditions.
+Wipers and Washers
+
+Controlling the wipers [5]
+A. Front wiper speed control
+2: High wiper speed
+1. 1: Low wiper speed
+2. AUTO*: Auto control wipe
+3. O: Off
+4. 1x: Single wipe
+B. Intermittent/Auto* control wipe time adjustment
+C. Wash with brief wipes
+Regenerative Braking System
+Adjusting regenerative braking with paddle shifter [6]
+Operation
+Pull the left side ( ) of the paddle shifter to increase regenerative braking and
+deceleration.
+Pull the right side ( ) of the paddle shifter to decrease regenerative braking and
+deceleration.
+The selected regenerative braking level is displayed on the instrument cluster. The initial
+setting of the regenerative braking level will vary according to the selected Drive mode.
+
+Drive mode Initial setting
+SNOW 0~1
+ECO 0~3
+NORMAL 0~3
+SPORT 0~3
+Tyre Mobility Kit
+Tyre Mobility Kit [7]
+The Tyre Mobility Kit is not designed or intended as a permanent tyre repair method and
+is to be used for one tyre only.
+Please read the instructions before using the Tyre Mobility Kit.
+1. Compressor
+2. Sealant bottle
+With the Tyre Mobility Kit you stay mobile even after experiencing a tyre puncture.
+After you ensure that the tyre is properly sealed you can drive cautiously on the tyre (up
+to 200 km (120 miles)) at a max. speed of 80 km/h (50 mph) in order to reach a vehicle
+or tyre dealer to have the tyre replaced.
+
+Checking the washer fluid level
+Checking the washer fluid level [8]
+Check the fluid level and add fluid if necessary.
+Checking the coolant level
+Checking the coolant level [8]
+The coolant level should be filled between the MAX or F and the MIN or L marks on the
+side of the coolant reservoir when the parts in the motor compartment is cool. If the
+coolant is low, we recommend to visit an authorized Kia dealer/service partner.
+Do not remove or disassemble high voltage components and high voltage battery
+connectors and/or wiring (orange cabling). Also, be careful not to damage high
+voltage components and the high voltage battery. It may cause serious injury and
+significantly impact the performance and durability of the vehicle
+When inspection and maintenance is required for high voltage components and the
+high voltage battery, have the vehicle inspected by an authorised Kia dealer/service
+partner.
+Additional Info
+Parking brake (handbrake)
+When engaging the parking brake, apply the footbrake first and keep it depressed. Then
+apply the parking brake.
+We strongly recommend to always engage the ´P´ (Park) position when leaving the car.
+
+Kia Service App
+The Kia Service App – now available for free on iPhone/iPad and Android With the Kia
+Service App, you have (almost) all Kia dealers in Europe within reach*. Looking for a
+showroom or just a service, the app displays all dealers around your current location on
+the map. With one click you can call a dealer, visit their website or get directions to the
+showroom.
+(*) In selected markets only
+Documents / Resources
+References
+App Store - Apple
+Google Play
+Available languages
+Deutsch Français Español Mexicano Dutch
+Other ManualsLib Projects
+www.manualslib.com
+www.manualslib.de
+www.manualslib.es
+
+www.manualslib.fr
+www.manualslib.nl
+www.manualslib.mx
+www.manualslib.tech 30+ languages

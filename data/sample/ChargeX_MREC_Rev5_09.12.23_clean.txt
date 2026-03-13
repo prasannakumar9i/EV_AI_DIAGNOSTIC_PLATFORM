@@ -1,0 +1,530 @@
+Recommenda ons for
+Minimum Required
+Error Codes
+for Electric Vehicle Charging Infrastructure
+SEPTEMBER 2023
+Working Group 3: Solutions for Scaling Reliability
+Diagnostics Taskforce
+INL/RPT-23-74154
+
+DISCLAIMER
+This information was prepared as an account of work sponsored by an
+agency of the U.S. Government. Neither the U.S. Government nor any
+agency thereof, nor any of their employees, makes any warranty, expressed
+or implied, or assumes any legal liability or responsibility for the accuracy,
+completeness, or usefulness, of any information, apparatus, product, or
+process disclosed, or represents that its use would not infringe privately
+owned rights. References herein to any specific commercial product,
+process, or service by trade name, trademark, manufacturer, or otherwise,
+does not necessarily constitute or imply its endorsement, recommendation,
+or favoring by the U.S. Government or any agency thereof. The views and
+opinions of authors expressed herein do not necessarily state or reflect
+those of the U.S. Government or any agency thereof.
+This report was prepared for the U.S. Department of Energy under DOE Idaho Opera ons Office contract
+no. AC07-05ID14517. Funding was provided by the Joint Office of Energy and Transporta on.
+
+Revision Log:
+Version Date Descrip on Author
+Preliminary version released to
+06.30.2023 All authors and contributors
+members of the ChargeX WG3
+- Updates to Tables 1,2, and 3 Mayuresh Savargaonkar,
+07.18.2023
+- Updates to Fig 1 and Fig 2 Benny Varghese
+- Deleted Fig 2 - Pareto chart of
+frequently used error codes
+Mayuresh Savargaonkar,
+08.16.2023 - Updates to Tables 1,2, and 3
+Benny Varghese
+- Updates to Fig 1 and Fig 2
+- Added acknowledgements
+09.11.2023 Public release version All authors and contributors
+
+Table of Contents
+List of Abbrevia ons...................................................................................................................................... 1
+Contributors .................................................................................................................................................. 1
+1. Introduc on ............................................................................................................................................... 2
+A. Approach to Standardizing Error Codes ................................................................................................ 3
+B. Scope ..................................................................................................................................................... 3
+2. Minimum Required Error Codes ................................................................................................................ 4
+3. Responsibility and Func onal Classifica ons ............................................................................................ 5
+A. Responsibility Classifica on .................................................................................................................. 5
+B. Func onal Classifica on ....................................................................................................................... 7
+4. Summary and Recommenda ons .............................................................................................................. 9
+Appendix A: Open Charge Point Protocol ................................................................................................... 11
+A. Overview ............................................................................................................................................. 11
+B. Error Repor ng in OCPP ...................................................................................................................... 11
+
+List of Abbrevia ons
+Abbrevia on Descrip on
+CSO Charging Sta on Operator, also referred to as a Charge Point Operator
+CSMS Charging Sta on Management System
+EIM External Iden fica on Means
+EMSP Electric Mobility Service Provider
+EV Electric Vehicle
+EVSE Electric Vehicle Supply Equipment
+ISO Interna onal Standards Organiza on
+MREC Minimum Required Error Code
+OCA Open Charge Alliance
+OCPI Open Charge Point Interface
+OCPP Open Charge Point Protocol
+OEM Original Equipment Manufacturer
+OICP Open Intercharge Protocol
+SAE Society of Automo ve Engineers
+TLS Transport Layer Security
+Authors:
+Mayuresh Savargaonkar1 , Benny Varghese, and Kaleb Houck (Idaho Na onal Laboratory)
+Contributors:
+ABB E-Mobility (Cuong Nguyen), Argonne Na onal Laboratory (Daniel Dobrzynski, Jason Harper,
+Bryan Nystrom, and Sam Thurston), ChargePoint (Brian Hendrickson and Kasey Smith), CharIN
+North America (Erika Myers), Electrify America (Maximilian Zetl and Kenneth Tennyson), EVgo
+(Jeremy Bibeau, Keith Beckstead, Anthony Mar nez, Poorna Bhat, Bryce Wynter, and Jeremy
+Whaling), Ford Motor Company (Nick Herhusky, Colin Lieberman, and Jeanete Clute), General
+Motors, Idaho Na onal Laboratory (John Smart), Na onal Renewable Energy Laboratory (Keith
+Davidson, Andrew Meintz, and Edward Wats), Rivian Automo ve (Kelsey Johnson, Gabriel
+Lopez, and Grayson Eady), SAE Interna onal (Frank Menchaca and Mike Paras), UC Davis (Alan
+Jenn and Tisura Dasith Gamage), and Volvo Cars USA (Alex Tripi, Raza Uddin, and Yashovardhan
+Rastogi).
+1 Mayuresh@inl.gov
+
+1. Introduc on
+The increasing global demand for EVs signifies a transforma ve shi  in the transporta on
+sector. As the industry moves towards a more sustainable future, EV sales account for a rapidly
+growing por on of the automo ve market. However, the growth of EV adop on is inherently
+ ed to the availability and reliability of EV charging infrastructure. As shown in Figure 1, the
+EV charging ecosystem is a complex landscape of interconnected en  es, each with a unique
+role and responsibility to ensure a seamless, reliable charging experience.2
+EVSE
+EV Users
+Manufacturers
+EV OEM EV EVSE
+EV OEM EV EVSE OCPP
+. . . . CSMS OCPI
+. . . .
+EMSP
+EV OEM EV EVSE
+CSO
+Charging Sta on OCPI OICP
+OICP
+Non-standard Mode
+of Communica on ISO 15118, OCPP = Open Charge Point Protocol Hub or
+DIN SPEC 70121 OCPI = Open Charge Point Interface Roaming
+Standard Mode Others OICP = Open Intercharge Protocol Pla orm
+OICP
+of Communica on
+Charging Sta on OCPI OICP
+CSO
+EV OEM EV EVSE
+EMSP
+EV OEM EV EVSE
+. . . . CSMS OCPI
+. . . . OCPP
+EV OEM EV EVSE
+EVSE
+EV Users
+Manufacturers
+Figure 1 Electric vehicle charging ecosystem and its major stakeholders.
+To tackle the challenges presented by this diversity, communica on standards and protocols
+such as ISO 15118,3 DIN SPEC 70121,4 OCPP,5 OCPI,6 and OICP7 have been widely employed
+by the industry. OCPP manages the interac on between the EVSE and its respec ve back-end
+communica on network and plays a pivotal role in both error repor ng and troubleshoo ng,
+carried out primarily through the CSMS. OCPP defines a few standard error codes and a
+flexible framework for crea ng and communica ng custom error codes. These error codes
+2 htps://www.goelectricdrive.org/charging-ev/charging-equipment-showroom
+3 htps://www.iso.org/standard/55365.html
+4 htps://webstore.ansi.org/standards/din/dinspec701212014
+5 htps://www.openchargealliance.org/protocols/ocpp-201/
+6 htps://evroaming.org/app/uploads/2021/11/OCPI-2.2.1.pdf
+7 htps://assets.website-files.com/602cf2b08109ccbc93d7f9ed/60534f2e20d0f87be17ba21b_oicp-cpo-2.2.pdf
+
+are instrumental in pinpoin ng and rec fying issues that can surface prior to, during, or a er
+charging opera ons, for fying the reliability and resilience of the EV charging infrastructure.
+The flexibility offered by the OCPP and OCPI frameworks through the introduc on of custom
+error codes also creates its own set of challenges. While the integra on of custom error codes
+allows for enhanced granularity, it also introduces inconsistencies and fragmenta on within
+the overarching diagnos c repor ng system. Consequently, these custom error codes add an
+addi onal layer of complexity to the already intricate tasks of error repor ng, diagnos cs, and
+resolu on. The varia on in the defini on of custom error codes makes it difficult to assess
+which en ty in the charging ecosystem is responsible to correct errors and hinders the
+implementa on of uniform error handling procedures across diverse charging sta ons and
+management systems. This results in prolonged resolu on  mes and increased maintenance
+costs, resul ng in decreased charging reliability. The challenge of charging reliability can be a
+significant obstacle to the widespread adop on of EVs, emphasizing the urgent need for a
+more robust approach to error handling across the EV charging ecosystem. More details on
+the challenges in error repor ng in OCPP are presented in Appendix A.
+A. Approach to Standardizing Error Codes
+To address the challenges associated with custom error codes, this report proposes a set of
+Minimum Required Error Codes (MRECs) and recommends that the industry implement
+these uniformly across the North American EV charging ecosystem to streamline error
+repor ng, interpretability, and diagnos cs. Recommenda ons in this report are based on
+independent analysis of custom error codes from mul ple stakeholders within the EV
+charging ecosystem. For beter error resolu on, this report also assigns one or more en  es
+responsible for the resolu on of every men oned error code. Finally, a func onal
+classifica on for each men oned error code is also iden fied to describe the nature of the
+error. In summary, the purpose of this document is to simplify the troubleshoo ng process
+and increase charging reliability for all EV users. This report serves as a recommenda on for
+industry stakeholders, encouraging a unified methodology to define and classify a minimum
+required set of error codes.
+B. Scope
+The scope of this report is limited to OCPP versions 1.68 and above. The primary focus on
+OCPP is due to its central role in error repor ng and resolu on in the EV charging ecosystem.
+Industry-wide consensus on OCPP error codes can poten ally improve broader error
+repor ng across various standards and protocols within the charging ecosystem. Other
+8 htps://www.openchargealliance.org/protocols/ocpp-16/
+
+errors, such as communica on failures, or internet connec on failures that cannot be
+conveyed over OCPP in real  me, will be addressed in future work.
+2. Minimum Required Error Codes
+Table 1 presents the proposed minimum set of required error codes along with their detailed
+descrip ons. These error codes were chosen to convey detailed, ac onable error informa on
+and provide the necessary simplicity, standardiza on, and effec ve communica on.
+Table 1 Proposed Minimum Required Error Codes and descrip ons.
+Number Error Code Description
+1. ConnectorLockFailure Failure to lock or unlock connector on the vehicle side.
+2. GroundFailure Ground fault circuit interrupter has been activated.
+High temperature inside the EVSE is dera ng power
+3. HighTemperature
+delivery.
+4. OverCurrentFailure Over current protec on device has tripped.
+Input voltage to the vehicle has risen above an acceptable
+5. OverVoltage
+level.
+Input voltage to the vehicle has dropped below an
+6. UnderVoltage
+acceptable level.
+7. WeakSignal Wireless communica on device reported a weak signal.
+Emergency stop is pressed by the user (required if
+8. EmergencyStop
+equipped).
+The user plugs in but fails to authorize a charging session
+9. Authoriza onTimeout prior to the connec on  meout between the vehicle and
+EVSE.
+10. InvalidVehicleMode The vehicle is in an invalid mode for charging.
+Failure during the cable check phase. Includes isola on
+11. CableCheckFailure
+failure
+12. PreChargeFailure The EVSE did not reach the correct pre-charge voltage.
+13. NoInternet The EVSE has no internet connec vity.
+14. PilotFault The control pilot voltage is out of range.
+The EVSE is unable to supply any power due to mains
+15. PowerLoss
+failure.
+Contactors fail to open or close on the vehicle side. May
+16. EVContactorFault
+also include welding related errors.
+Contactors fail to open or close on EVSE's side. May also
+17. EVSEContactorFault
+include welding related errors.
+Temperature of charging cable or connector assembly is too
+18. CableOverTempDerate
+high, resulting in reduced power operation.
+Temperature of charging cable or connector assembly is too
+19. CableOverTempStop
+high, resulting in a stopped charging session.
+
+Cable latch is raised due to incomplete inser on into the
+20. Par alInser on
+vehicle charging port.
+An Isola on Monitoring Device tripped due to high
+21. CapacitanceFault
+capacitance during ac ve charging.
+An Isola on Monitoring Device tripped due to low
+22. ResistanceFault
+resistance to the chassis during ac ve charging.
+23. ProximityFault The proximity voltage is out of range.
+The output voltage of EVSE is high before charging starts or
+24. ConnectorVoltageHigh
+a er charging ends.
+25. BrokenLatch The latch on the connector is broken.
+26. CutCable The output cable has been severed from the EVSE.
+In this report, the MRECs listed in Table 1 are recommended to be reported by relevant
+stakeholders and be included in future versions of OCPP. Although this may require the
+deployment of addi onal sensors and capabili es, capturing these errors is essen al to
+improve the reliability of the EV charging ecosystem. Absolute thresholds for different
+parameters triggering the error codes listed in Table 1 can be found in the respec ve
+standards governing the underlying failure modes.
+3. Responsibility and Func onal Classifica ons
+Although custom error codes enhance diagnos c capabili es and provide detailed system
+insights, the lack of common defini ons and a minimum required set can nega vely impact
+interoperability troubleshoo ng and EV user charging experience. This report builds on prior
+MREC work from ChargeX Consor um members General Motors and EVgo9 and is based on
+input from numerous other stakeholders in the EV charging ecosystem.
+A. Responsibility Classifica on
+A systema c responsibility classifica on system is proposed to address the ambiguity
+surrounding the source of errors and their resolu on responsibility within the EV
+charging ecosystem. In this new system, each error code given in Table 1 is classified
+into one of four dis nct categories - EV User, CSO, EVSE, or EV. This classifica on
+iden fies the primary stakeholder responsible for error resolu on, facilita ng a
+streamlined troubleshoo ng process.
+  Errors classified under the EV User category imply a user error during the charge
+ini a on process, such as incorrectly plugging in the charging connector or not
+properly following the indicated sequence of events. For such errors, retrying the
+ini a on process, beter HMI guidance from the EVSE, and EV customer educa on can
+play a significant role in resolu on.
+9 htps://mrec.evgo.com/intro.html
+
+  Errors classified under the CSO category imply a fault at the charging site, such as
+payment or network connec vity issues. Such errors require technical assistance from
+the CSO for resolu on.
+  Errors classified under the EVSE category imply a fault within the EVSE itself or the
+related charging infrastructure, such as a malfunc oning component. Such errors
+require remote and/or in-person interven on by maintenance personnel for
+resolu on.
+  Errors classified under the EV category imply a fault within the EV itself, such as issues
+with the vehicle's onboard charging system or the batery management system. In such
+instances, technical assistance by the vehicle manufacturer is required for resolu on.
+Through such a responsibility classifica on schema, all involved stakeholders, including the
+repair technicians, can be directed to the poten al source of a problem and ini ate
+appropriate resolu on measures. The proposed responsibility classifica on is given in Table
+2.
+Table 2 Responsibility classifica on for the Minimum Required Error Codes.
+Responsibility Classifica on
+Number Error Code
+EV User CSO EVSE EV
+1. ConnectorLockFailure - -
+   
+2. GroundFailure - -
+   
+3. HighTemperature - - -
+ 
+4. OverCurrentFailure - -
+   
+5. OverVoltage - -
+   
+6. UnderVoltage - -
+   
+7. WeakSignal - -
+   
+8. EmergencyStop - -
+   
+9. Authoriza onTimeout
+       
+10. InvalidVehicleMode - -
+   
+11. CableCheckFailure - -
+   
+12. PreChargeFailure - -
+   
+13. NoInternet - -
+   
+14. PilotFault - -
+   
+15. PowerLoss - - -
+ 
+16. EVContactorFault - - -
+ 
+17. EVSEContactorFault - - -
+ 
+18. CableOverTempDerate - - -
+ 
+
+19. CableOverTempStop - -
+   
+20. Par alInser on -
+     
+21. CapacitanceFault - -
+   
+22. ResistanceFault - -
+   
+23. ProximityFault - -
+   
+24. ConnectorVoltageHigh - - -
+ 
+25. BrokenLatch - -
+   
+26. CutCable - -
+   
+B. Func onal Classifica on
+Building on the founda on of a responsibility classifica on system, a func onal
+classifica on approach is proposed to gain an understanding of the reduced func onality
+that accompanies an error code. Func onal classifica on refers to segrega ng the errors
+based on the func ons or opera ons they disrupt or compromise in the charging process,
+such as safety, security, maintenance, financial, and communica on.
+  Errors classified under the Safety category are related to scenarios that compromise
+the safety of the user, the vehicle, or the charging infrastructure. This includes events
+such as overhea ng, over-voltage, under-voltage, grounding faults, or any other
+condi ons that pose a safety risk.
+  Errors classified under Security are related to issues around user authen ca on, data
+privacy, and secure opera on of the charging system. This includes scenarios such as
+unauthorized access to the system, failure in secure data transmission, or breaches in
+user privacy. These errors underscore the importance of robust security protocols
+within the charging infrastructure.
+  Errors classified under Maintenance are related to issues with hardware and so ware
+malfunc ons or wear-and-tear issues within the EVSE. These errors o en signal a need
+for technical service, component repair, or replacement.
+  Errors classified under Financial are related to issues with payment processing, pricing,
+or billing. These range from failed payment transac ons to discrepancies in pricing and
+invoicing.
+  Errors classified under the Authoriza on are related to issues around user access
+control, communica on failures between the EV and EVSE during authoriza on
+processes, or the failure of user authoriza on mechanisms.
+Such a func onal classifica on of errors can facilitate efficient diagnosis, improve
+preven ve measures, and lead to more robust system design by allowing the iden fica on
+
+of paterns and commonali es across error types and func onali es. The proposed
+func onal classifica on of error codes is outlined in Table 3.
+Table 3 Func onal classifica on for the Minimum Required Error Codes.
+Func onal Classifica on
+Number Error Code
+Mainten- Authoriza
+Safety Security Financial
+ance - on
+1. ConnectorLockFailure - - -
+   
+2. GroundFailure - - -
+   
+3. HighTemperature - - - -
+ 
+4. OverCurrentFailure - - - -
+ 
+5. OverVoltage - - - -
+ 
+6. UnderVoltage - - - -
+ 
+7. WeakSignal - - - -
+ 
+8. EmergencyStop - - - -
+ 
+9. Authoriza onTimeout - - -
+   
+10. InvalidVehicleMode - - - -
+ 
+11. CableCheckFailure - - -
+   
+12. PreChargeFailure - - - -
+ 
+13. NoInternet - - - -
+ 
+14. PilotFault - - - -
+ 
+15. PowerLoss - - -
+   
+16. EVContactorFault - - - -
+ 
+17. EVSEContactorFault - - - -
+ 
+18. CableOverTempDerate - - - -
+ 
+19. CableOverTempStop - - - -
+ 
+20. Par alInser on - - - -
+ 
+21. CapacitanceFault - - - -
+ 
+22. ResistanceFault - - - -
+ 
+23. ProximityFault - - -
+   
+24. ConnectorVoltageHigh - - - -
+ 
+25. BrokenLatch - - -
+   
+26. CutCable - - -
+   
+The error codes listed in Table 1, 2, and 3 although suitably generic, do not represent an
+exhaus ve list applicable to all OCPP versions. For instance, certain specific errors, such as
+
+those related to the Transport Layer Security (TLS) protocol in OCPP 2.0.1, are not directly
+represented. However, the dual classifica on strategy proposed above--both for
+responsibility and func onality--is versa le and detailed to accommodate all OCPP versions
+within the scope of this study.
+4. Summary and Recommenda ons
+The standardiza on of error repor ng in the EV charging ecosystem is cri cal to improving EV
+charging reliability. This study, while rigorous, was limited to a review of the current state of
+the art in industry and focused on charger-to-cloud communica on via OCPP. Although the
+latest OCPP version, 2.0.1, was u lized as a benchmark in this document, a version-agnos c
+approach is beneficial at this stage. Therefore, the selec on of minimum required error codes
+was guided by the following principle: if an error poses a significant challenge to a critical
+function within the EV charging process, such as safety, security, maintenance, financial
+operations, or authorization, resulting in a disruption to the charging process, it should be
+designated as an MREC. This approach ensures that errors which influence the charging
+infrastructure's performance, reliability, and overall user experience are quickly detected,
+reported, and addressed. This philosophy is represented in Figure 2.
+Minimum Required Error Codes
+Safety Security Maintenance Financial Authoriza on
+EV User CSO EVSE EV
+Common Error Codes
+Figure 2 Guiding pillars for defining the Minimum Required Error Codes.
+In the event of nested error trails or concurrent, the minimum error code(s) for the root
+error(s) should be reported and any available error informa on provided in subsequent
+messages.
+The MRECs and the classifica on strategies proposed in this document establish a
+fundamental framework for error code repor ng and diagnos c problem-solving. However, it
+is necessary to extend this effort to include EV-to-charger communica on.
+
+As part of future efforts, the ChargeX Consor um intends to formulate diagnos c
+troubleshoo ng codes based on the recommended MRECs from this document. This work will
+include a concentrated effort to develop guidelines for error code interpreta on and response
+ac ons. In addi on, periodic updates are proposed to the list of MRECs to align with newer
+technologies and address any poten al customer issues that may arise in the EV charging
+ecosystem.
+
+Appendix A: Open Charge Point Protocol
+This sec on provides a brief overview of OCPP, emphasizing its prominent features, benefits,
+and significance, par cularly for diagnos cs and error resolu on in the EV charging ecosystem.
+A. Overview
+OCPP establishes a framework for communica on between EVSE and the CSMS. It defines
+a comprehensive set of rules, commands, and data structures that facilitate seamless
+interac on and efficient data exchange. OCPP specifies features essen al for charging
+opera ons, including the ini a on and termina on of charging sessions, real- me
+monitoring of charging status, collec on of transac onal data, and user authen ca on
+management. It also facilitates remote monitoring, diagnos cs, and firmware updates on
+the EVSEs. OCPP enables interoperability and compa bility across different EVSE
+manufacturers, CSMS providers, and CSOs. By adhering to OCPP, different stakeholders
+can seamlessly integrate their components into the EV charging infrastructure,
+irrespec ve of their unique hardware or so ware implementa ons. A few challenges
+associated with custom error codes used within the OCPP and the implica ons they have
+on the reliability and interoperability of the EV charging infrastructure are briefly
+men oned below.
+B. Error Repor ng in OCPP
+In OCPP 1.6, the management system primarily relies on the websocket ping mechanism
+and the configurable heartbeat interval to check the availability of the EVSE. In addi on,
+the charging sta on could ac vely report errors as they occur via the StatusNotification
+message. These core func onali es persist in the latest OCPP version (OCPP 2.0.1), with
+the websocket ping and heartbeat interval mechanisms s ll serving as vital checks for
+charging sta on availability. However, the error repor ng mechanism has been updated.
+To beter support customiza on, these messages o en extend their scope by
+incorpora ng custom error codes, housed within the vendorErrorCode field in OCPP 1.6
+and the techCode field in OCPP 2.0.1. It is worth no ng that the report does not
+men on/enforce any thresholds for triggering these errors since such thresholds may be
+configured by the manufacturer/CSO in OCPP 2.0.1. In OCPP 2.0.1, the NotifyEvent
+message is the primary field for conveying error informa on. Unlike OCPP 1.6, this
+message can relay errors related to mul ple subsystems and components using the device
+model architecture, enabling detailed error diagnos cs. A summary of differences in error
+repor ng between OCPP versions can be found in a recent white paper10 by the Open
+10 htps://www.openchargealliance.org/uploads/files/improving_up me_with_ocpp-v10.pdf
+
+Charge Alliance (OCA) and a technical report by SAE Interna onal11. OCPP commonly
+facilitates robust communica on between various stakeholders. This informa on
+exchange within OCPP is depicted in Figure 3. OCPP's flexibility results in a variety of
+custom error codes, which are unique to individual manufacturers or so ware providers.
+This feature can offer detailed, context-specific diagnos cs that poten ally enhance the
+system's ability to detect, analyze, and resolve issues. However, a lack of standardiza on
+of these codes results in challenges with interoperability and serviceability of chargers.
+Electric Vehicle (EV) Charging Sta on (EVSE) Charging Sta on Management System (CSMS) Charge Sta on Operator (CSO)
+1PlugIn(Physical ac on)
+2Authorize (IDTagfor a user)
+3Authorize (Forward authoriza on request to CSO)
+4AuthorizeResponse(Send authoriza on status)
+5AuthorizeResponse(Send authoriza on status)
+6StartTransac on(Start transac on)
+7StartTransac on(Forward transac on start to CSO)
+8StartTransac onResponse(Send transac on Id)
+9StartTransac onResponse(Send transac on Id)
+If an error occurs at the EVSE
+Error Repor ng
+10No fyEvent(Report custom error code) Custom error codes
+11No fyEvent(Forward error report to CSO)
+12No fyEventResponse(Acknowledge receipt of error)
+13No fyEventResponse(Acknowledge receipt of error)
+14PlugOut(Physical ac on)
+15StopTransac on(Stops transac on)
+16StopTransac on(Forward transac on stop to CSO)
+17StopTransac onResponse(Acknowledge)
+18StopTransac onResponse(Acknowledge)
+Electric Vehicle (EV) Charging Sta on (EVSE) Charging Sta on Management System (CSMS)
+Figure 3 Flow of informa on using OCPP 2.0.1 in the EV charging ecosystem.
+It is important to note that the problem of custom error codes is not exclusive to OCPP
+and exists in other parts of the EV charging ecosystem. However, most of these custom
+codes are within the EV-EVSE communica on, handled by OCPP, at the  me of this report.
+11 htps://sms.sae.org/resources/electric-vehicle-charging-data-performance-and-repor ng

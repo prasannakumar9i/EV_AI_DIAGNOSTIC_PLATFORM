@@ -1,0 +1,960 @@
+9102
+raM
+81
+]CO.htam[
+1v32770.3091:viXra
+Constrained Best Approximation with Nonsmooth
+Nonconvex Constraints
+H. Mohebi ∗†
+Abstract
+In this paper, we consider the constraint set K of inequalities with nonsmooth
+nonconvex constraint functions. We show that under Abadie’s constraint qual-
+ification the ”perturbation property” of the best approximation to any x in Rn
+from aconvex setK˜ := C∩K is characterized by thestrongconical hullintersec-
+tion property (strong CHIP) of C and K, where C is a non-empty closed convex
+subset of Rn and the set K is represented by K := {x ∈ Rn : g (x) ≤ 0, ∀ j =
+j
+1,2,...,m} with g : Rn −→ R (j = 1,2,··· ,m) is a tangentially convex func-
+j
+tion at a given point x¯ ∈ K. By using the idea of tangential subdifferential and a
+non-smooth version of Abadie’s constraint qualification, we do this by first prov-
+ing a dual cone characterization of the constraint set K. Moreover, we present
+sufficient conditions for which the strong CHIP property holds. In particular,
+when the set K˜ is closed and convex, we show that the Lagrange multiplier char-
+acterization of bestapproximation holds undera non-smooth version of Abadie’s
+constraint qualification. Theobtained results extendmany correspondingresults
+in the context of constrained best approximation. Several examples are provided
+to clarify the results.
+Key words. tangentially convex; constraint qualification; Lagrange multipli-
+ers; constrained best approximation; strong conical hull intersection property;
+perturbation property.
+2010 (AMS) Mathematics Subject Classification. 41A29; 41A50; 90C26;
+90C46.
+∗Department of Mathematics and Mahani Mathematical Research Center, Shahid Bahonar Uni-
+versity of Kerman, P.O. Box: 76169133, Postal Code: 7616914111, Kerman, Iran, Phone & Fax:
++98-34-33257280,e-mail: hmohebi@uk.ac.ir (Hossein Mohebi)
+†This work was partially performed while the author was on sabbatical leave at the Department
+of Applied Mathematics, University of New South Wales, Sydney, NSW, 2052, Australia.
+1
+
+1 Introduction
+Finding suitable conditionsfor ”perturbationproperty” hasbeen ofsubstantial interest
+in constrained best approximation as it is often easier to compute the best approxi-
+mation from a closed convex set C than from the constraint set K. The merit and
+motivation for such characterization (perturbation property) is inspired from [5, Chap-
+ter 10]. ”Characterizing constrained interpolation from a convex set” is one of the
+applications of the ”perturbation property” (for more details, see [5]).
+For many years, a great deal of attention has been focusing on the case where the
+constraint set K := {x ∈ Rn : g (x) ≤ 0, ∀ j = 1,2,...,m} is a closed convex set and
+j
+has a convex representation in the sense that g (j = 1,2,··· ,m) is a convex function
+j
+[5, 6, 7, 9, 12, 13]. Various characterizations of the perturbation property have been
+given by using local constraint qualifications such as the strong conical hull intersection
+property (strong CHIP) of C and K at the best approximation [4, 7, 9, 12].
+In this paper, we study the problem of whether the best approximation to any x ∈ Rn
+from the closed convex set K˜ := C∩K can be characterized by the best approximation
+to a perturbation x − x∗ of x from a closed convex set C ⊆ Rn for some x∗ in a
+certain cone in Rn, where K := {x ∈ Rn : g (x) ≤ 0, ∀ j = 1,2,...,m} with g :
+j j
+Rn −→ R(j = 1,2,··· ,m)isatangentiallyconvex functionatthebestapproximation.
+We show that the strong CHIP of C and K at the best approximation continues to
+completely characterize the perturbation property of the best approximation from the
+closed convex set K˜ := C ∩K under Abadie’s constraint qualification.
+Indeed, by using the idea of tangential subdifferential and a non-smooth version of
+Abadie’s constraint qualification (which is the weakest qualification among the other
+well known constraint qualifications), we prove this by first establishing a dual cone
+˜
+characterization of the constraint set K. In the special case, when K is a closed convex
+set, weshowthattheLagrangemultiplierscharacterizationofbestapproximationholds
+under a non-smooth version of Abadie’s constraint qualification. Our results recapture
+the corresponding known results of [4, 6, 7, 9, 10, 11, 12, 13, 14, 16]. Several illustrative
+examples are presented to clarify our results.
+The paper has the following structure. In Section 2, we provide the basic results on
+tangentiallyconvex functions andanon-smoothversion of theconstraint qualifications.
+Dual cone characterizations of the constraint set K and sufficient conditions for which
+the strong CHIP holds are presented in Section 3. In Section 4, we first show that
+the strong CHIP completely characterizes the perturbation property of the best ap-
+proximation. Finally, we show that under a non-smooth version of Abadie’s constraint
+qualification the Lagrange multipliers characterization of best approximation holds.
+Also, several examples are presented to illustrate our results.
+2 Preliminaries
+We start this section by fixing notations and preliminaries that will be used later.
+Recall [3] that for a function f : Rn −→ R, the directional derivative of f at a point
+2
+
+x¯ ∈ Rn in the direction ν ∈ Rn is defined by
+f(x¯+αν)−f(x¯)
+f′(x¯,ν) := lim , (2.1)
+α−→0+ α
+if the limit exists. Recall [15] that a function f : Rn −→ R is called tangentially convex
+at a point x¯ ∈ Rn, if f′(x¯,·) is a real valued convex function.
+It should be noted that if the function f is tangentially convex at a point x¯ ∈ Rn,
+then, since f′(x¯,·) is a positively homogeneous function, we conclude that f′(x¯,·) is a
+sublinear function on Rn.
+The tangential subdifferential of a function f : Rn −→ R at a point x¯ ∈ Rn is defined
+by
+∂ f(x¯) := {x∗ ∈ Rn : hx∗,νi ≤ f′(x¯,ν), ∀ ν ∈ Rn}. (2.2)
+T
+If f is tangentially convex at x¯, then, ∂ f(x¯) 6= ∅, and moreover, f′(x¯,·) is the support
+T
+functional of ∂ f(x¯), i.e., for each ν ∈ Rn, we have
+T
+f′(x¯,ν) = max hx∗,νi. (2.3)
+x∗∈∂Tf(x¯)
+It should be notedthat if f isa convex function, then, ∂ f(x) = ∂f(x) for each x ∈ Rn,
+T
+where ∂f(x) is the classical convex subdifferential of f at x.
+Remark 2.1. Note that if the function f : Rn −→ R is tangentially convex at a point
+x¯ ∈ Rn, then, f′(x¯,·) is a real valued convex function on Rn, and hence, f′(x¯,·) is a
+continuous function on Rn.
+Now, let K ⊆ Rn be defined by
+K := {x ∈ Rn : g (x) ≤ 0, ∀ j = 1,2,...,m}, (2.4)
+j
+where g : Rn −→ R (j = 1,2,··· ,m) is a tangentially convex function at a given
+j
+point x¯ ∈ K. Let C be a non-empty closed convex subset of Rn such that C ∩K 6= ∅,
+and let S := Rm. Note that K is not necessarily a closed or a convex set. Let
++
+K˜ := C ∩K, (2.5)
+and
+I := {1,2,··· ,m}. (2.6)
+For a point x¯ ∈ K, we define
+I(x¯) := {j ∈ I : g (x¯) = 0}. (2.7)
+j
+For a set W ⊆ Rn, let
+W◦ := {λ ∈ Rn : hλ,yi ≤ 0, ∀ y ∈ W}, (2.8)
+3
+
+where we denote h·,·i for the inner product of Rn. The normal cone to a set H ⊆ Rn
+at a point x ∈ Rn is defined by
+N (x) := {u ∈ Rn : hu,t−xi ≤ 0, ∀ t ∈ H}. (2.9)
+H
+It is clear that
+N (x) = (H −x)◦, (x ∈ Rn).
+H
+Let U be a subset of Rn, and let x ∈ Rn. We recall [2, 3] the contingent cone of U at
+x is defined by
+T (x)
+U
+:= {x∗ ∈ Rn : ∃ {α } ⊂ R and ∃ {x∗} ⊂ Rn such that
+k k≥1 ++ k k≥1
+α −→ 0+, x∗ −→ x∗ and x+α x∗ ∈ U, ∀ k ≥ 1}. (2.10)
+k k k k
+We now introduce a non-smooth version of the linearized tangential cone:
+D(x¯) := {x∗ ∈ Rn : hx∗,η i ≤ 0, ∀ η ∈ ∂ g (x¯), ∀ j ∈ I(x¯)}, (2.11)
+j j T j
+where x¯ ∈ K.
+Note that the non-smooth linearized tangential cone D(x¯) reduces to its counterpart
+in the case of differentiability [2, 3]. Moreover, D(x¯) is a convex cone.
+We now present the definition of the nearly convexity which has been given in [11]. Let
+V be a non-empty subset of Rn and x ∈ V.
+Definition 2.1. (Nearly Convex at x ∈ V). The set V is nearly convex at the point
+x ∈ V if for each y ∈ V there exists a sequence {t } of positive real numbers with
+k k≥1
+t −→ 0+ such that x+t (y −x) ∈ V for all sufficiently large k ∈ N.
+k k
+The set V is called nearly convex whenever it is nearly convex at each of its points. It
+is easy to check that if V is convex, then it is nearly convex at each x ∈ V. As shown
+in [8], the nearly convexity may hold at a point for a non-convex set (for more details
+and illustrative examples related to the nearly convexity, see [8, 11]).
+Lemma 2.1. Let K be closed, given by (2.4), and let C be a non-empty closed convex
+subset of Rn such that C ∩ K 6= ∅. Let K˜ := C ∩ K, and x¯ ∈ K˜. Assume that K is
+nearly convex at the point x¯. Then, T (x¯) ⊆ D(x¯), where T (x¯) and D(x¯) defined by
+K˜ K˜
+(2.10) and (2.11), respectively.
+Proof: Let x∗ ∈ T (x¯) be arbitrary. Then there exist sequences {α } ⊂ R and
+K˜ k k≥1 ++
+{x∗} ⊂ Rn such that α −→ 0+, x∗ −→ x∗ and x¯ + α x∗ ∈ K˜ for all k ≥ 1.
+k k≥1 k k k k
+Since, by the hypothesis, K is nearly convex at the point x¯ and x¯ + α x∗ ∈ K for
+k k
+all k ≥ 1, it follows from Definition 2.1 that, for each k ≥ 1, there exists a sequence
+{β } ⊂ R with β −→ 0+ (as p −→ +∞) such that x¯+β (x¯+α x∗−x¯) ∈ K
+k,p p≥1 ++ k,p k,p k k
+for all sufficiently large p ∈ N. This implies that
+g (x¯+β α x∗) ≤ 0, for all sufficiently large p ∈ N, ∀ k ≥ 1, ∀ j ∈ I. (2.12)
+j k,p k k
+4
+
+Since g (j ∈ I) is tangentially convex at x¯, it follows, by the definition, that g′(x¯,·) is
+j j
+a real valued positively homogeneous and convex function on Rn. Therefore, for each
+j ∈ I(x¯), in view of (2.12) we have
+g (x¯+β α x∗)−g (x¯)
+g′(x¯,α x∗) = lim j k,p k k j
+j k k p−→+∞ β
+k,p
+g (x¯+β α x∗)
+= lim j k,p k k
+p−→+∞ β
+k,p
+≤ 0, ∀ k ≥ 1,
+and hence,
+g′(x¯,x∗) ≤ 0, ∀ k ≥ 1. (2.13)
+j k
+Since x∗ −→ x∗ and g′(x¯,·) is continuous on Rn (see Remark 2.1), we conclude from
+k j
+(2.13) that
+g′(x¯,x∗) ≤ 0, ∀ j ∈ I(x¯).
+j
+This together with (2.3) implies that
+hx∗,η i ≤ 0, ∀ η ∈ ∂ g (x¯), ∀ j ∈ I(x¯),
+j j T j
+and so, x∗ ∈ D(x¯), which completes the proof.
+Now, let us to define the non-smooth versions of Robinson’s constraint qualification
+and Abadie’s constraint qualification.
+Definition 2.2. (Non-smooth Version of Robinson’s Constraint Qualification
+(NRCQ)). Let K = {x ∈ Rn : g (x) ≤ 0, ∀ j = 1,2,··· ,m} be as in (2.4), and let
+j
+C be a non-empty closed convex subset of Rn such that C ∩K 6= ∅. Let K˜ := C ∩K,
+and x¯ ∈ K˜. We say that non-smooth Robinson’s constraint qualification holds at x¯ if
+there exists 0 6= ν ∈ Rn such that for each j ∈ I(x¯) and each η ∈ ∂ g (x¯), one has
+j T j
+hη ,νi < 0, where ∂ g (x¯) is the tangential subdifferential of g at x¯.
+j T j j
+Definition 2.3. (Non-smooth Version of Abadie’s Constraint Qualification
+(NACQ)). Let K = {x ∈ Rn : g (x) ≤ 0, ∀ j = 1,2,··· ,m} be as in (2.4), and let
+j
+C be a non-empty closed convex subset of Rn such that C ∩K 6= ∅. Let K˜ := C ∩K,
+and x¯ ∈ K˜. We say that non-smooth Abadie’s constraint qualification holds at x¯ if
+D(x¯) ⊆ T (x¯).
+K˜
+Obviously, the above definitions of non-smooth version of constraint qualifications re-
+duce to their counterparts in the case of differentiability [1, 3].
+Clearly, in view of Lemma 2.1, Definition 2.2 and Definition 2.3, the following impli-
+cation holds.
+(NRCQ) =⇒ (NACQ). (2.14)
+The following example shows that non-smooth Abadie’s constraint qualification is
+weaker than non-smooth Robinson’s Constraint Qualification.
+5
+
+Example 2.1. Let g ,g ,g : R2 −→ R be defined by
+1 2 3
+g (x ,x ) := |x |−x , g (x ,x ) := 1−x2 −(x −1)2, and
+1 1 2 2 1 2 1 2 1 2
+g (x ,x ) := 1−x2 −(x +1)2, ∀ (x ,x ) ∈ R2.
+3 1 2 1 2 1 2
+Then, we have
+K = {(x ,x ) ∈ R2 : g (x ,x ) ≤ 0, ∀ j = 1,2,3}
+1 2 j 1 2
+= {(x ,x ) ∈ R2 : 0 ≤ x ≤ x }∪{(x ,x ) ∈ R2 : 0 ≤ −x ≤ x }.
+1 2 2 1 1 2 2 1
+Let
+C := {(x ,x ) ∈ R2 : x ≥ 0},
+1 2 1
+and K˜ := C ∩K = K. Let x¯ := (0,0) ∈ K˜. Clearly, g ,g ,g are tangentially convex
+1 2 3
+at x¯, and g (x¯) = g (x¯) = g (x¯) = 0. Moreover, it is easy to check that
+1 2 3
+g′(x¯,(t ,t )) = |t |−t , g′(x¯,(t ,t )) = 2t , and
+1 1 2 2 1 2 1 2 2
+g′(x¯,(t ,t )) = −2t , ∀ (t ,t ) ∈ R2.
+3 1 2 2 1 2
+This together with (2.2) implies that
+∂ g (x¯) = co{(−1,−1),(−1,1)}, ∂ g (x¯) = {(0,2)}, and
+T 1 T 2
+∂ g (x¯) = {(0,−2)}.
+T 3
+It is clear that non-smooth Robinson’s constraint qualification does not hold at x¯. But,
+we have
+T (x¯) = D(x¯) = {(t ,0) ∈ R2 : t ≥ 0},
+K˜ 1 1
+and hence, non-smooth Abadie’s constraint qualification holds at x¯.
+Remark 2.2. It is worth noting that in [16] it has been given a characterization of
+constrained best approximation under smooth Robinson’s constraint qualification with
+continuously Fr´echet differentiable constraints, while in this paper we give characteri-
+zations of constrained best approximation under non-smooth Abadie’s constraint qual-
+ification with the constraint functions are only tangentially convex at the point of best
+approximation. Since, in view of (2.14) and Example 2.1, (NACQ) is weaker than
+(NRCQ). So, our results are stronger and extend the obtained results in [16] and the
+corresponding results of [4, 6, 7, 9, 10, 12, 13, 14].
+For a non-empty subset W of Rn and an arbitrary point x ∈ Rn, we define
+d(x,W) := inf kx−wk.
+w∈W
+6
+
+We say that a point x ∈ W is a best approximation (a projection) of x ∈ Rn if
+0
+kx−x k = d(x,W) [17]. The set of all best approximations (projections) of x in W
+0
+denoted by P (x) and is given by:
+W
+P (x) := {w ∈ W : kx−wk = d(x,W)}.
+W
+The following characterization of best approximation in Hilbert spaces is well known
+[5].
+Lemma 2.2. Let D be a non-empty closed convex subset of a Hilbert space H, x ∈ H
+and x ∈ D. Then, x = P (x) if and only if x−x ∈ (D −x )◦.
+0 0 D 0 0
+In the following, we give the notion of strong CHIP. The definition of strong CHIP was
+first introduced in [7] (see also, [4, 5]).
+Definition 2.4. (Strong CHIP). Let C ,C ,...,C be non-empty closed convex sets
+1 2 m
+in Rn, and let x ∈ m C . Then, the collection {C ,C ,...,C } is said to have the
+j=1 j 1 2 m
+strong CHIP (canonTical hull intersection property) at x if
+m ◦ m ◦
+C −x = C −x .
+j j
+(cid:18) (cid:19) (cid:18) (cid:19)
+j\=1 Xj=1
+The collection {C ,C ,...,C } is said to have the strong CHIP if it has the strong
+1 2 m
+m
+CHIP at each x ∈ C .
+j=1 j
+T
+We recall [2, 3] the following well known result from the non-smooth analysis.
+Theorem 2.1. Let C ⊂ Rn be a non-empty convex set, and let f : Rn −→ R∪{+∞}
+be a proper convex function such that C ∩dom(f) 6= ∅. Assume that x¯ ∈ C and f is
+continuous at x¯. Then, x¯ is a global minimizer of the function f over C if and only if
+0 ∈ ∂f(x¯)+N (x¯),
+C
+where domain of the function f, dom(f), is defined by
+dom(f) := {x ∈ Rn : f(x) < +∞}.
+3 Dual Cone Characterizations of the Constraint
+Set K
+In this section, we give dual cone characterizations of the constraint set K at a point
+x ∈ K, where K is given by (2.4). Also, we present sufficient conditions for which the
+strong CHIP property holds.
+7
+
+For each x ∈ K, put
+m
+M(x) := λ ∂ g (x) : λ g (x) = 0, j = 1,2,··· ,m , (3.15)
+j T j j j
+(cid:26) (cid:27)
+λ[∈S Xj=1
+where λ := (λ ,λ ,··· ,λ ) ∈ S and S := Rm.
+1 2 m +
+Remark 3.1. Throughout the paper, we assume that the constraint functions g , j =
+j
+1,2,...,m, are tangentially convex at a given point x¯ ∈ K˜ := C ∩K.
+We now give a dual cone characterization of the constraint set K, which has a crucial
+role for characterizing best approximations by the set K˜ := C∩K. Note that K is not
+necessarily a closed or a convex set.
+Theorem 3.1. Let K be closed, given by (2.4), and let C be a non-empty closed convex
+subset of Rn such that C ∩K 6= ∅. Let K˜ := C ∩K, x¯ ∈ K˜ and M(x¯) be as in (3.15).
+Assume that K is nearly convex at the point x¯. If non-smooth Abadie’s constraint
+qualification holds at x¯, then, M(x¯) = (K −x¯)◦ = (K ˜ −x¯)◦.
+Proof: It is easy to see that (K−x¯)◦ ⊆ (K˜ −x¯)◦. Now, let u ∈ (K˜ −x¯)◦ be arbitrary.
+Then, hu,y −x¯i ≤ 0 for all y ∈ K˜, and so,
+h−u,y −x¯i ≥ 0, ∀ y ∈ K˜. (3.16)
+Let h : Rn −→ R be defined by
+h(y) := h−u,yi, ∀ y ∈ Rn. (3.17)
+It is clear that h is a continuous convex function on Rn. Now, we show that h(y) ≥ 0
+for all y ∈ T (x¯). To this end, let y ∈ T (x¯) be arbitrary. Then by (2.10) there exist
+K˜ K˜
+{t } ⊂ R and {y } ⊂ Rn such that t −→ 0+, y −→ y and x¯+t y ∈ K˜
+m m≥1 ++ m m≥1 m m m m
+for all m ≥ 1. Thus, in view of (3.16), we conclude that h−u,y i ≥ 0 for all m ≥ 1.
+m
+This together with the fact that y −→ y implies that h−u,yi ≥ 0, and so,
+m
+h(y) ≥ 0, ∀ y ∈ T (x¯). (3.18)
+K˜
+Consider the following optimization problem:
+minh(y) subject to y ∈ T (x¯). (3.19)
+K˜
+It follows from (3.18) that y = 0 ∈ T (x¯) is a global minimizer of the problem (3.19)
+K˜
+over T (x¯). On the other hand, since K is nearly convex at the point x¯, in view of
+K˜
+Lemma 2.1 and the validity of non-smooth Abadie’s constraint qualification at x¯, we
+have, D(x¯) = T (x¯). Therefore, the problem (3.19) can be represented as the following
+K˜
+convex optimization problem:
+minh(y) subject to y ∈ D(x¯). (3.20)
+8
+
+Note that D(x¯) is a closed convex subset of Rn, and y = 0 ∈ D(x¯) is a global minimizer
+of the problem (3.20) over D(x¯). In view of (2.3) and (2.11), the problem (3.20) can
+be represented as the following convex optimization problem:
+minh(y) subject to y ∈ Rn, and g′(x¯,y) ≤ 0, ∀ j ∈ I(x¯). (3.21)
+j
+Note that y = 0 (because g′(x¯,0) = 0, j ∈ I(x¯)) is a global minimizer of the problem
+j
+(3.21). Let
+C := {y ∈ Rn : g′(x¯,y) ≤ 0}, (j ∈ I(x¯)),
+j j
+and let H := ∩ C . Since g′(x¯,·) is convex on Rn (j ∈ I), it is easy to see that C
+j∈I(x¯) j j j
+is convex for each j ∈ I(x¯), and hence, H is a convex set. Since, by (3.20), y = 0 ∈ H
+(note that g′(x¯,0) = 0 ≤ 0, j ∈ I(x¯)) is a global minimizer of the problem (3.21) over
+j
+H, it follows from Theorem 2.1 that
+0 ∈ ∂h(0)+N (0). (3.22)
+H
+This together with [3, Section 3.3] implies that
+0 ∈ ∂h(0)+ N (0). (3.23)
+Cj
+X
+j∈I(x¯)
+Let
+M (x¯) := {λ η : λ ≥ 0, η ∈ ∂g′(x¯,·)(0)}, (j ∈ I(x¯)). (3.24)
+j j j j j j
+It is easy to check that M (x¯) is a closed convex cone in Rn for each j ∈ I(x¯). Now,
+j
+we claim that
+N (0) ⊆ M (x¯), (j ∈ I(x¯)). (3.25)
+Cj j
+Assume if possible that there exists x∗ ∈ N (0) such that x∗ ∈/ M (x¯). Since M (x¯) is
+Cj j j
+a closed convex cone, by using the separation theorem there exists 0 6= ν ∈ Rn such
+that
+hν,u i ≤ 0 < hν,x∗i, ∀ u ∈ M (x¯), (j ∈ I(x¯)). (3.26)
+j j j
+For simplicity, put h (·) := g′(x¯,·) (j ∈ I(x¯)). Since g is tangentially convex at x¯, it
+j j j
+follows that, for each j ∈ I(x¯), h is a real valued positively homogeneous and convex
+j
+function, and so,
+h′(0,ν) = max hη ,νi, (j ∈ I(x¯)).
+j j
+ηj ∈∂hj(0)
+This together with (3.26) implies that h′(0,ν) ≤ 0 (j ∈ I(x¯)). On the other hand,
+j
+since h (j ∈ I(x¯)) is positively homogeneous, we conclude that h′(0,ν) = g′(x¯,ν)
+j j j
+(j ∈ I(x¯)). So, g′(x¯,ν) ≤ 0 (j ∈ I(x¯)), and hence, ν ∈ C (j ∈ I(x¯)). But, we have
+j j
+x∗ ∈ N (0) (j ∈ I(x¯)). Therefore, hν,x∗i ≤ 0, which contradicts (3.26). Then, the
+Cj
+inclusion (3.25) holds. This together with (3.23) implies that
+0 ∈ ∂h(0)+ M (x¯).
+j
+j
+X∈I(x¯)
+9
+
+So, for each j ∈ I(x¯), there exists λ ≥ 0 such that
+j
+0 ∈ ∂h(0)+ λ ∂g′(x¯,·)(0). (3.27)
+j j
+X
+j∈I(x¯)
+It is not difficult to see that ∂g′(x¯,·)(0) = ∂ g (x¯) (j ∈ I(x¯)). Thus, it follows from
+j T j
+(3.27) that
+0 ∈ ∂h(0)+ λ ∂ g (x¯). (3.28)
+j T j
+X
+j∈I(x¯)
+But, in view of (3.17), we have ∂h(0) = {−u}. Now, for each j ∈/ I(x¯), put λ = 0.
+j
+Therefore, we obtain from (3.28) that
+m
+u ∈ λ ∂ g (x¯) = λ ∂ g (x¯), and λ g (x¯) = 0, j = 1,2,··· ,m,
+j T j j T j j j
+j
+X
+∈I(x¯)
+Xj=1
+and so, by (3.15), u ∈ M(x¯). Hence, (K ˜ −x¯)◦ ⊆ M(x¯).
+Now, we show that M(x¯) ⊆ (K −x¯)◦. To this end, let u ∈ M(x¯) be arbitrary. Then,
+in view of (3.15), there exists (λ ,λ ,··· ,λ ) ∈ S with λ g (x¯) = 0 (j = 1,2,··· ,m)
+1 2 m j j
+such that
+m
+u ∈ λ ∂ g (x¯).
+j T j
+Xj=1
+This implies that, for each j = 1,2,··· ,m, there exists η ∈ ∂ g (x¯) such that
+j T j
+m
+u = λ η . (3.29)
+j j
+Xj=1
+Now, let y ∈ K be arbitrary. Since x¯ ∈ K and K is nearly convex at x¯, it follows from
+Definition 2.1 that there exists a sequence {α } ⊂ R with α −→ 0+ such that
+k k≥1 ++ k
+x¯+α (y −x¯) ∈ K for all sufficiently large k ∈ N. So, by (2.4),
+k
+g (x¯+α (y −x¯)) ≤ 0, for all sufficiently large k ∈ N and all j = 1,2,··· ,m. (3.30)
+j k
+Sinceg (j = 1,2,··· ,m)istangentiallyconvex atx¯,itfollowsfrom(2.3), (3.29), (3.30)
+j
+10
+
+and the fact that λ = 0 for each j ∈/ I(x¯) (because λ g (x¯) = 0, j = 1,2,...,m) that
+j j j
+m
+hu,y−x¯i = h λ η ,y −x¯i
+j j
+Xj=1
+m
+= λ hη ,y −x¯i
+j j
+Xj=1
+m
+≤ λ g′(x¯,y −x¯)
+j j
+Xj=1
+= λ g′(x¯,y −x¯)
+j j
+j
+X∈I(x¯)
+g (x¯+α (y −x¯))−g (x¯)
+j k j
+= λ lim
+j
+X
+(cid:26)k−→+∞ α
+k
+(cid:27)
+j∈I(x¯)
+g (x¯+α (y −x¯))
+j k
+= λ lim
+j
+j
+X∈I(x¯)
+(cid:26)k−→+∞ α
+k
+(cid:27)
+≤ 0, ∀ y ∈ K.
+Hence, u ∈ (K −x¯)◦, which completes the proof.
+Remark 3.2. It should be noted that in Theorem 3.1, for proving the inclusion M(x¯) ⊆
+(K − x¯)◦, we only require that the set K is nearly convex at the point x¯ without the
+validity of non-smooth Abadie’s constraint qualification at x¯.
+Corollary 3.1. Let K be closed, given by (2.4), and let C be a non-empty closed convex
+subset of Rn such that C ∩ K 6= ∅. Let K˜ := C ∩ K, and x¯ ∈ K˜. Assume that K is
+nearly convex at the point x¯ and non-smooth Abadie’s constraint qualification holds at
+x¯. Then, {C,K} has the strong CHIP at x¯.
+Proof: We first note that one always has
+(C −x¯)◦ +(K −x¯)◦ ⊆ (K˜ −x¯)◦.
+For the converse inclusion, in view of Theorem 3.1, we conclude that (K˜ − x¯)◦ =
+(K −x¯)◦. Therefore, since 0 ∈ (C −x¯)◦, we have
+(K˜ −x¯)◦ ⊆ (C −x¯)◦ +(K −x¯)◦,
+which completes the proof.
+The following example shows that the converse statement to Corollary 3.1 is not valid.
+Example 3.1. Let g(x) := |x| − x for all x ∈ R. Thus, K = {x ∈ R : g(x) ≤ 0} =
+[0,+∞), which is closed. Let C := (−∞,0], and x¯ = 0. It is clear that g is tangentially
+convex at x¯, g′(x¯,ν) = |ν|−ν for all ν ∈ R, and C ∩K = {0}. Also, we have g(x¯) = 0
+11
+
+and ∂ g(x¯) = [−2,0]. Note that K is nearly convex at the point x¯. It is easy to check
+T
+that (K −x¯)◦ = (−∞,0] and (C −x¯)◦ = [0,+∞). Let K˜ := C ∩K = {0}. Then,
+(K˜ −x¯)◦ = {0}◦
+= R
+= (−∞,0]+[0,+∞)
+= (K −x¯)◦ +(C −x¯)◦.
+Thus, {C,K} has the strong CHIP at x¯. But, on the other hand, we have
+D(x¯) = [0,+∞) and T (x¯) = {0}.
+K˜
+This implies that
+D(x¯) * T (x¯),
+K˜
+and hence, non-smooth Abadie’s constraint qualification does not hold at x¯.
+By the following example we show that in Theorem 3.1 the validity of the nearly
+convexity of K at the point x¯ ∈ K cannot be omitted.
+Example 3.2. Let g ,g : R −→ R be defined by
+1 2
+g (x) := 8−x3, and g (x) := −x2 +6x−8, ∀ x ∈ R.
+1 2
+Then, we have
+K := {x ∈ R : g (x) ≤ 0, j = 1,2} = {2}∪[4,+∞),
+j
+which is closed. Let C := [2,3], K˜ := C ∩ K = {2} and x¯ := 2. It is easy to see
+that g and g are tangentially convex at x¯, g (x¯) = g (x¯) = 0, ∂ g (x¯) = {−12} and
+1 2 1 2 T 1
+∂ g (x¯) = {2}. Clearly,
+T 2
+D(x¯) = {0}, and T (x¯) = {0}.
+K˜
+Thus, D(x¯) = T (x¯), and so, non-smooth Abadie’s constraint qualification holds at x¯,
+K˜
+while it is clear that K is not nearly convex at the point x¯.
+On the other hand, it is not difficult to check that M(x¯) = R, (K˜ − x¯)◦ = R and
+(K −x¯)◦ = (−∞,0]. Hence, Theorem 3.1 does not hold.
+Thefollowingexampleshows thatnon-smoothAbadie’s constraintqualificationinThe-
+orem 3.1 cannot be omitted.
+Example 3.3. Let g ,g : R −→ R be defined by
+1 2
+3
+x2, x > 0,
+g (x) :=
+1
+(cid:26) 0, x ≤ 0,
+12
+
+and
+3
+−x2, x > 0,
+g (x) :=
+2
+(cid:26) 0, x ≤ 0.
+Thus, we have
+K := {x ∈ R : g (x) ≤ 0, j = 1,2} = (−∞,0],
+j
+which is closed. Let C := [0,1], K˜ := C ∩ K = {0} and x¯ := 0. It is easy to check
+that g and g are tangentially convex at x¯, g (x¯) = g (x¯) = 0, ∂ g (x¯) = {0} and
+1 2 1 2 T 1
+∂ g (x¯) = {0}. Also, one can see that
+T 2
+D(x¯) = R, and T (x¯) = {0}.
+K˜
+Therefore, D(x¯) * T (x¯), and hence, non-smooth Abadie’s constraint qualification does
+K˜
+not hold at x¯, while K is nearly convex at the point x¯.
+Furthermore, it is easy to see that M(x¯) = {0}, (K˜ −x¯)◦ = R and (K−x¯)◦ = [0,+∞),
+and so, Theorem 3.1 does not hold.
+4 Characterizations of Constrained Best Approxi-
+mation
+In this section, we give characterizations of constrained best approximations under
+non-smooth Abadie’s constraint qualification. Let K be as in (2.4), given by,
+K := {x ∈ Rn : g (x) ≤ 0, j = 1,2,··· ,m},
+j
+where g : Rn −→ R (j = 1,2,··· ,m) is a tangentially convex function at a given
+j
+point x¯ ∈ K. Let S := Rm, and let C be a non-empty closed convex subset of Rn such
++
+that C ∩K 6= ∅. Note that K is not necessarily a closed or a convex set.
+The following theorem shows that under non-smooth Abadie’s constraint qualification
+the ”perturbation property” is characterized by the strong conical hull intersection
+property (Strong CHIP).
+Theorem 4.1. Let K be closed, given by (2.4), and let C be a non-empty closed convex
+subset of Rn such that C ∩ K 6= ∅. Let x¯ ∈ K ˜ := C ∩ K. Assume that K ˜ is closed
+and convex. If K is nearly convex at the point x¯ and non-smooth Abadie’s constraint
+qualification holds at x¯, then the following assertions are equivalent.
+(i) {C,K} has the strong CHIP at x¯,
+(ii) For any x ∈ Rn, x¯ = P (x) if and only if there exist (λ ,λ ,··· ,λ ) ∈ S with
+K˜ 1 2 m
+λ g (x¯) = 0, j = 1,2,··· ,m, and
+j j
+m
+η ∈ ∂ g (x¯) (j = 1,2,··· ,m) such that x¯ = P (x− λ η ). (4.31)
+j T j C j j
+Xj=1
+13
+
+Proof: [(i) =⇒ (ii)]. Suppose that (i) holds. Then, by Definition 2.4,
+(K ˜ −x¯)◦ = (C −x¯)◦ +(K −x¯)◦. (4.32)
+Also, in view of the hypotheses and Theorem 3.1, we have M(x¯) = (K − x¯)◦. So, it
+follows from (4.32) that
+(K˜ −x¯)◦ = (C −x¯)◦ +M(x¯). (4.33)
+Now, for any x ∈ Rn, assume that x¯ = P (x). Thus, by Lemma 2.2, one has x −
+K˜
+x¯ ∈ (K˜ − x¯)◦. Therefore, in view of (3.15) and (4.33), there exist ℓ ∈ (C − x¯)◦ and
+(λ ,λ ,··· ,λ ) ∈ S with λ g (x¯) = 0 (j = 1,2,··· ,m) such that
+1 2 m j j
+m
+x−x¯−ℓ ∈ λ ∂ g (x¯).
+j T j
+Xj=1
+So, for each j = 1,2,··· ,m, there exists η ∈ ∂ g (x¯) such that
+j T j
+m
+x−x¯−ℓ = λ η .
+j j
+Xj=1
+Then, we conclude that
+m
+[x− λ η ]−x¯ = ℓ ∈ (C −x¯)◦,
+j j
+Xj=1
+forsome(λ ,λ ,··· ,λ ) ∈ S withλ g (x¯) = 0,andsomeη ∈ ∂ g (x¯), j = 1,2,··· ,m.
+1 2 m j j j T j
+Frow now on, by an argument similar to the proof of Theorem 4.1 (the implication
+[(i) =⇒ (ii)]) in [11] and using Theorem 3.1 the result follows.
+[(ii) =⇒ (i)]. Let y ∈ (K ˜ −x¯)◦ be arbitrary, and let x := x¯+y. Thus, by Lemma 2.2,
+x¯ = P (x). Then, in view of the hypothesis (ii), there exist (λ ,λ ,··· ,λ ) ∈ S with
+K˜ 1 2 m
+λ g (x¯) = 0, j = 1,2,··· ,m, and
+j j
+m
+η ∈ ∂ g (x¯) (j = 1,2,··· ,m) such that x¯ = P (x− λ η ).
+j T j C j j
+Xj=1
+Again, by Lemma 2.2,
+m
+y − λ η ∈ (C −x¯)◦, (4.34)
+j j
+Xj=1
+forsome(λ ,λ ,··· ,λ ) ∈ S withλ g (x¯) = 0,andsomeη ∈ ∂ g (x¯), j = 1,2,··· ,m.
+1 2 m j j j T j
+Now, byanargumentsimilar totheproofofTheorem 4.1(theimplication[(ii) =⇒ (i)])
+in [11] and using Theorem 3.1 the proof is completed.
+The following examples illustrate Theorem 4.1. Moreover, these examples justify how
+one can use best approximations to check the strong CHIP without explicitly proving
+the strong CHIP property.
+14
+
+Example 4.1. Let g ,g : R2 −→ R be defined by
+1 2
+g (x ,x ) := |x |−x −x2 −x3, and
+1 1 2 2 1 1 1
+g (x ,x ) := |x −x |−x −x x −x3, ∀ (x ,x ) ∈ R2.
+2 1 2 1 2 1 1 2 2 1 2
+Let S := R2 and C := R2. It is easy to see that
++
+K := {(x ,x ) ∈ R2 : g (x ,x ) ≤ 0, j = 1,2} = {(x ,x ) ∈ R2 : x ≥ x ≥ 0},
+1 2 j 1 2 1 2 1 2
+which is closed and convex. Let K˜ := C ∩K = K and x¯ := (0,0) ∈ K˜. Note that K˜
+is closed and convex. It is clear that g and g are tangentially convex at x¯, but not
+1 2
+convex. Moreover, g (x¯) = g (x¯) = 0, and
+1 2
+g′(x¯,(t ,t )) = |t |−t , and g′(x¯,(t ,t )) = |t −t |−t , ∀ (t ,t ) ∈ R2.
+1 1 2 2 1 2 1 2 1 2 1 1 2
+Therefore, we have
+∂ g (x¯) = co{(−1,1),(−1,−1)}, and ∂ g (x¯) = co{(−2,1),(0,−1)}.
+T 1 T 2
+So, it is easy to check that
+D(x¯) = {(t ,t ) ∈ R2 : t ≥ t ≥ 0} = T (x¯),
+1 2 1 2 K˜
+and hence, Abadie’s constraint qualification holds at x¯. Also, it is clear that K is nearly
+convex at the point x¯.
+Now, for any x := (0,x ) ∈ R2 with x ≤ 0, it is easy to see that
+2 2
+P (x) = x¯ = (0,0) = P ((0,0)) = P (x−(λ η +λ η )),
+K˜ C C 1 1 2 2
+where (λ := 0,λ := −x ) ∈ S, λ g (x¯) = 0 (j = 1,2), and η := (−1,1) ∈ ∂ g (x¯),
+1 2 2 j j 1 T 1
+η := (0,−1) ∈ ∂ g (x¯). Then, in view of Theorem 4.1 (the implication [(ii) =⇒ (i)]),
+2 T 2
+we conclude that {C,K} has the strong CHIP at x¯. Indeed, one can see
+(K˜ −x¯)◦ = {(t ,t ) ∈ R2 : t ≤ −t , t ≤ 0}∪(R ×R )
+1 2 1 2 1 − −
+= {(0,0)}+{(t ,t ) ∈ R2 : t ≤ −t , t ≤ 0}∪(R ×R )
+1 2 1 2 1 − −
+= (C −x¯)◦ +(K −x¯)◦.
+Example 4.2. Let g ,g : R −→ R be defined by
+1 2
+g (x) := 1−x3, and g (x) := x3 −3x2 +x−3, ∀ x ∈ R.
+1 2
+Let S := R2 and C := [1,+∞). Clearly, we have
++
+K = {x ∈ R : g (x) ≤ 0, j = 1,2} = [1,3],
+j
+which is closed and convex. Let K˜ := C ∩ K = [1,3] and x¯ := 1 ∈ K˜. Thus, K˜
+is closed and convex, g ,g are tangentially convex at x¯ (but not convex), g (x¯) = 0,
+1 2 1
+g (x¯) = −4 6= 0, and
+2
+g′(x¯,t) = −3t, and g′(x¯,t) = −2t, ∀ t ∈ R.
+1 2
+15
+
+This implies that
+∂ g (x¯) = {−3}, and ∂ g (x¯) = {−2}.
+T 1 T 2
+Moreover, it is not difficult to show that
+D(x¯) = [0,+∞) = T (x¯),
+K˜
+and so, non-smooth Abadie’s constraint qualification holds at x¯. Note that K is nearly
+convex at the point x¯. It is easy to see that, for any x ∈ R with x ≤ 1, we have
+P (x) = x¯ = 1 = P (1) = P (x−(λ η +λ η )),
+K˜ C C 1 1 2 2
+where (λ := 1−x,λ := 0) ∈ S, λ g (x¯) = 0 (j = 1,2), and η := −3 ∈ ∂ g (x¯),
+1 3 2 j j 1 T 1
+η := −2 ∈ ∂ g (x¯). Hence, by using Theorem 4.1 (the implication [(ii) =⇒ (i)]), we
+2 T 2
+conclude that {C,K} has the strong CHIP at x¯. Indeed, one can see
+(K˜ −x¯)◦ = (−∞,0]
+= (−∞,0]+(−∞,0]
+= (C −x¯)◦ +(K −x¯)◦.
+Now, let x ∈ Rn be fixed, and define the function h : Rn −→ [0,+∞) by
+h(y) := ky −xk, ∀ y ∈ Rn.
+For x¯ ∈ Rn, we recall that ∂h(x¯) := ∂k·−xk(x¯) is given by
+∂k·−xk(x¯) = {x∗ ∈ Rn : kx∗k = 1, hx∗,x¯−xi = kx¯−xk}. (4.35)
+In the following, we give the Lagrange multipliers characterization of constrained best
+approximation under non-smooth Abadie’s constraint qualification.
+Theorem 4.2. Let K be closed, given by (2.4), and let C be a non-empty closed convex
+subset of Rn such that C ∩K 6= ∅. Let x¯ ∈ K˜ := C ∩K and x ∈ Rn. Assume that K˜
+is closed and convex. If K is nearly convex at the point x¯ and non-smooth Abadie’s
+constraint qualification holds at x¯, then the following assertions are equivalent.
+(i) x¯ = P (x).
+K˜
+(ii) There exist (λ ,λ ,...,λ ) ∈ S with λ g (x¯) = 0, j = 1,2,··· ,m, and
+1 2 m j j
+m
+η ∈ ∂ g (x¯) (j = 1,2,...,m) such that x¯ = P (x− λ η ).
+j T j C j j
+Xj=1
+(iii) There exist (λ ,λ ,...,λ ) ∈ S with λ g (x¯) = 0, j = 1,2,··· ,m, and η ∈
+1 2 m j j j
+∂ g (x¯) (j = 1,2,...,m) such that
+T j
+m
+0 ∈ ∂k·−xk(x¯)+(C −x¯)◦ + λ η ,
+j j
+Xj=1
+where we denote ∂f(x ) for the convex subdifferential of a convex function f : Rn −→ R
+0
+at the point x ∈ Rn.
+0
+16
+
+Proof: [(i) ⇐⇒ (ii)]. Since, by the hypothesis, non-smooth Abadie’s constraint quali-
+fication holds at x¯ and K is nearly convex at the point x¯, it follows from Corollary 3.1
+that {C,K} has the strong CHIP at x¯. Therefore, the implication [(i) ⇐⇒ (ii)] follows
+from Theorem 4.1.
+[(i) =⇒ (iii)]. We may assume without loss of generality that x 6= x¯. Suppose that
+(i) holds. Then, we have x¯ = P (x). This together with Lemma 2.2 implies that
+K˜
+x−x¯ ∈ (K ˜ −x¯)◦. But, in view of Theorem 3.1, one has
+(K ˜ −x¯)◦ = M(x¯).
+Hence, x−x¯ ∈ M(x¯). Since M(x¯) is a cone, we conclude that
+x−x¯
+∈ M(x¯).
+kx¯−xk
+Therefore, it follows from (3.15) that there exist (λ ,λ ,...,λ ) ∈ S with λ g (x¯) = 0,
+1 2 m j j
+j = 1,2,··· ,m, and η ∈ ∂ g (x¯) (j = 1,2,...,m) such that
+j T j
+m
+x−x¯
+−u := = λ η , (4.36)
+j j
+kx¯−xk
+Xj=1
+where
+x¯−x
+u := .
+kx¯−xk
+Then, u ∈ Rn, kuk = 1 and
+hu,x¯−xi = kx¯−xk.
+This together with (4.35) implies that
+u ∈ ∂k·−xk(x¯). (4.37)
+Thus, it follows from (4.36) and (4.37) that
+m
+0 ∈ ∂k·−xk(x¯)+ λ η , (4.38)
+j j
+Xj=1
+forsome(λ ,λ ,··· ,λ ) ∈ S withλ g (x¯) = 0,andsomeη ∈ ∂ g (x¯),j = 1,2,··· ,m.
+1 2 m j j j T j
+On the other hand, since 0 ∈ (C −x¯)◦, we have
+m m
+∂k·−xk(x¯)+ λ η ⊆ ∂k·−xk(x¯)+(C −x¯)◦ + λ η .
+j j j j
+Xj=1 Xj=1
+Hence, in view of (4.38) there exist (λ ,λ ,...,λ ) ∈ S with λ g (x¯) = 0, and η ∈
+1 2 m j j j
+∂ g (x¯), j = 1,2,··· ,m, such that
+T j
+m
+0 ∈ ∂k·−xk(x¯)+(C −x¯)◦ + λ η ,
+j j
+Xj=1
+17
+
+which implies (iii) holds.
+[(iii) =⇒ (i)]. Suppose that (iii) holds. Then there exist (λ ,λ ,...,λ ) ∈ S with
+1 2 m
+λ g (x¯) = 0, j = 1,2,··· ,m, and η ∈ ∂ g (x¯) (j = 1,2,...,m) such that
+j j j T j
+m
+0 ∈ ∂k·−xk(x¯)+(C −x¯)◦ + λ η . (4.39)
+j j
+Xj=1
+Now, let y ∈ K˜ be arbitrary. So, y ∈ K. Since K is nearly convex at the point x¯, it
+follows from Definition 2.1 that there exists a sequence {α } ⊂ R with α −→ 0+
+k k≥1 ++ k
+such that x¯+α (y −x¯) ∈ K for all sufficiently large k ∈ N. So, by (2.4),
+k
+g (x¯+α (y−x¯)) ≤ 0, for all sufficiently large k ∈ N and all j = 1,2,··· ,m. (4.40)
+j k
+Since g (j = 1,2,··· ,m) is tangentially convex at x¯, it follows from (2.3), (4.39) and
+j
+(4.40) with some ν ∈ (C −x¯)◦ that
+m
+kx¯−xk−ky −xk ≤ h λ η +ν,y −x¯i
+j j
+Xj=1
+m
+= h λ η ,y −x¯i+hν,y −x¯i
+j j
+Xj=1
+m
+≤ h λ η ,y −x¯i
+j j
+Xj=1
+m
+≤ λ g′(x¯,y −x¯)
+j j
+Xj=1
+= λ g′(x¯,y −x¯)
+j j
+X
+j∈I(x¯)
+g (x¯+α (y −x¯))−g (x¯)
+j k j
+= λ lim
+j
+X
+(cid:26)k−→+∞ α
+k
+(cid:27)
+j∈I(x¯)
+g (x¯+α (y −x¯))
+j k
+= λ lim
+j
+X
+(cid:26)k−→+∞ α
+k
+(cid:27)
+j∈I(x¯)
+˜
+≤ 0, ∀ y ∈ K. (4.41)
+Note that in the above we used the fact that λ = 0 for each j ∈/ I(x¯), because
+j
+λ g (x¯) = 0 for all j = 1,2,...,m. Therefore, we conclude from (4.41) that kx¯−xk =
+j j
+˜
+inf ky −xk = d(x,K), and so, x¯ = P (x), i.e., (i) holds.
+y∈K˜ K˜
+Acknowledgements. This research waspartiallysupportedbyMahani Mathematical
+Research Center, grant no. 97/3267.
+18
+
+References
+[1] M.S. Bazaraa, H.D. Sherali andC.M. Shetty, Nonlinear Programming, Wiley, New
+York, 2006.
+[2] J.F. Bonnans and A. Shapiro, Perturbation Analysis of Optimization Problems,
+Springer, New York, 2000.
+[3] J.M. Borwein and A.S. Lewis, Convex Analysis and Nonlinear Optimization, The-
+ory and Examples, Springer, New York, 2000.
+[4] F. Deutsch, The role of conical hull intersection property in convex optimization
+and approximation, in Approximation Theory IX, C.K. Chui and L.L. Schumaker,
+eds., (1998), Vanderbilt University Press, Nashville, TN.
+[5] F. Deutsch, Best Approximation in Inner Product Spaces, Springer, New York,
+2001.
+[6] F. Deutsch, W. Li and J.D. Ward, A dual approach to constrained interpolation
+from a convex subset of Hilbert space, J. Approx. Theory, 90 (1997), 385-444.
+[7] F. Deutsch, W. Li and J.D. Ward, Best approximation from the intersection of
+a closed convex set and a polyhedron in Hilbert space, weak Slater conditions, and
+the strong conical hull intersection property, SIAM J. Optim., 10 (1999), 252–268.
+[8] Quyen Ho, Necessary and sufficient KKT optimality conditions in non-convex
+optimization, Optimization Letters, DOI: 10.1007/s11590-016-1054-0, 2016.
+[9] V. Jeyakumar and H. Mohebi, A global approach to nonlinearly constrained best
+approximation, Numer. Funct. Anal. Optim., 26 (2005), No. 2, 205-227.
+[10] V. Jeyakumar and H. Mohebi, Limiting and ǫ-subgradient characterizations of
+constrained best approximation, Journal of Approximation Theory, 135 (2005),
+145-159.
+[11] V. Jeyakumar and H. Mohebi, Characterizing best approximation from a convex
+set without convex representation, Journal of Approximation Theory, 239 (2019),
+113-127.
+[12] C. Li and X. Jin, Nonlinearly constrained best approximation in Hilbert spaces:
+the strong CHIP, and the basic constraint qualification, SIAM J. Optim., 13(1)
+(2002), 228-239.
+[13] C. Li and K.F. Ng, On best approximation by nonconvex sets and perturbation
+of nonconvex inequality systems in Hilbert spaces, SIAM J. Optim., 13 (2002),
+726-744.
+[14] C. Li and K.F. Ng, Constraint qualification, the strong CHIP and best approx-
+imation with convex constraints in Banach spaces, SIAM J. Optim., 14 (2003),
+584-607.
+19
+
+[15] J.-E. Martinez-Legaz, Optimality conditions for pseudoconvex minimization over
+convex sets defined by tangentially convex constraints, Optimization Letters, 9
+(2015), 1017-1023.
+[16] H. Mohebi and M. Sheikhsamani, Characterizing nonconvex constrained best
+approximation using Robinson’s constraint qualication, Optimization Letters,
+doi.org/10.1007/s11590-018-1317-z, (2018).
+[17] I. Singer, Best Approximation in Normed Linear Spaces by Elements of Linear
+Subspaces, Springer-Verlag, New York, 1970.
+20

@@ -1,0 +1,950 @@
+A Multiclass Boosting Framework for Achieving Fast and
+Provable Adversarial Robustness
+Jacob Abernethy Pranjal Awasthi
+Georgia Institute of Technology Google Research
+profi@gatech.edu pranjalawasthi@google.com
+Satyen Kale
+Google Research
+satyenkale@google.com
+Abstract
+Alongsidethewell-publicizedaccomplishmentsofdeepneuralnetworkstherehasemergedanapparent
+bug in their success on tasks such as object recognition: with deep models trained using vanilla methods,
+inputimagescanbeslightlycorruptedinordertomodifyoutputpredictions,evenwhenthesecorruptions
+are practically invisible. This apparent lack of robustness has led researchers to propose methods that
+can help to prevent an adversary from having such capabilities. The state-of-the-art approaches have
+incorporated the robustness requirement into the loss function, and the training process involves taking
+stochastic gradient descent steps not using original inputs but on adversarially-corrupted ones. In this
+paper we propose a multiclass boosting framework to ensure adversarial robustness. Boosting algorithms
+are generally well-suited for adversarial scenarios, as they were classically designed to satisfy a minimax
+guarantee. Weprovideatheoreticalfoundationforthismethodologyanddescribeconditionsunderwhich
+robustness can be achieved given a weak training oracle. We show empirically that adversarially-robust
+multiclass boosting not only outperforms the state-of-the-art methods, it does so at a fraction of the
+training time.
+1 Introduction
+The phenomenon of adversarial robustness corresponds to a classifier’s susceptibility to small and often
+imperceptible perturbations made to the input at test time. In the context of deep neural networks, such
+vulnerabilities were first reported in the work of Biggio et al. [2013], Szegedy et al. [2013]. Since then it
+has been empirically demonstrated that across a wide range of settings, vanilla-trained neural networks are
+susceptible to test time perturbations [Ebrahimi et al., 2017, Carlini and Wagner, 2018]. This has led to a
+flurry of research on proposed defenses to adversarial perturbations [Madry et al., 2017, Wong and Kolter,
+2018, Raghunathan et al., 2018, Sinha et al., 2018] and corresponding attacks [Carlini and Wagner, 2017,
+Sharma and Chen, 2017] that aim to break them. See the supplementary material for a more exhaustive
+discussion of existing relevant literature on adversarial robustness.
+Oneofthemostpopularmethodsformakingneuralnetworksrobusttoadversarialattacksistheprojected
+gradientdescent(PGD)basedadversarial trainingprocedureofMadryetal.[2017]. Thisprocedurecomprises
+of an alternate minimization approach where at each epoch, a given batch of examples is replaced by
+its adversarial counterpart. This is obtained by approximately solving the problem of finding the worst
+perturbation (within a specified radius) for each example in the batch. The parameters of the network are
+then updated via stochastic gradient descent, but using the adversarial batch of examples. It has also been
+empirically well established that the complexity of the classifier plays a crucial role in ensuring robustness.
+For many datasets, the architectures used for training robust classifiers tend to be more complex than the
+1
+1202
+raM
+3
+]GL.sc[
+2v67210.3012:viXra
+
+ones used for standard training1. As a result of using more complex architectures and solving a difficult
+maximization problem for each example in the batch, adversarial training takes a long time to converge,
+and is hard to scale to large datasets. Recent works have started to address the problem of designing faster
+methods for adversarial training [Shafahi et al., 2019, Wong et al., 2020]. In a similar vein, the goal of
+our work is to design theoretically sound methods for fast adversarial training using a multiclass boosting
+approach. Boosting [Freund and Schapire, 1996, Schapire, 2003] is a theoretically grounded paradigm for
+the design of machine learning algorithms, and has enjoyed tremendous empirical success over the years.
+Boosting belongs to a general class of ensemble methods, and works by combining several base learners, each
+trained to achieve only modest performance individually. An appropriately weighted combination of such
+weak learners leads to a classifier of arbitrarily high accuracy [Freund and Schapire, 1996].
+What is appealing about the boosting methodology, from the perspective of adversarial training, is that
+the necessary guarantee for the repeated selection of the base learner is indeed extremely weak: in the
+binary classification setting one need only find a hypothesis that has (reweighted) prediction accuracy better
+than 1 +γ—this is only slightly better than random guessing. It can be dramatically easier to find such
+2
+a weakly-accurate predictors, and combine them into a high-accuracy predictor. In the context of training
+neural networks robust to adversarial examples, this suggests we can use small network architectures, train
+them for a limited amount of time to ensure they are weakly adversarially robust, and eventually ensemble
+thesenetworkstogether. Whileagiventrainedbaselearnermayhavevulnerabilitieswithrespecttoparticular
+inputs, the boosting approach is to then reweight the dataset to more strongly emphasize hard examples.
+The next base learner will focus more heavily on the examples where our predictors were susceptible during
+previous boosting iterations.
+It is worth noting that previous work has suggested that blindly ensembling models does not lead to
+better robustness, and often adversarial examples translate across models trained independently, either via
+different methods or using different architectures [He et al., 2017]. Nevertheless, we rigorously show that
+using the right formulation adversarial boosting is indeed possible. Investigating the theory of boosting in
+adversarial settings was also recently posed an open problem in the work of Montasser et al. [2020].
+Theoretical foundations of multiclass boosting for achieving adversarial robustness. We
+identify a natural notion of a robust weak learner that is appropriate in adversarial settings. Via a reduction
+to standard multiclass boosting, we then show that given access to a robust weak learning oracle, boosting
+to arbitrarily high robust accuracy can be achieved in adversarial settings. We then extend our theoretical
+framework to incorporate score-based predictors. This leads to a natural greedy algorithm based on the
+gradient boosting framework [Friedman, 2001] that facilitates an efficient implementation.
+State-of-art results in a fraction of previous training time. Ourgeneralboostingbasedalgorithm
+can be combined with any existing methods for training adversarially robust classifiers. We use our algorithm
+for training classifiers robust to (cid:96) perturbations and compare it with the PGD based algorithm of Madry
+∞
+et al. [2017]. Furthermore, we also apply our algorithm for training certifiably robust models under (cid:96)
+2
+perturbation and compare it to the recent work of Salman et al. [2019], achieving state-of-the-art results in a
+fraction of the training time for for previous adversarially robust models, as shown in Figure 1.
+2 Related Work
+There is a large body of work on algorithms for training adversarially robust models, certifying robustness
+and attacks for generating adversarial examples. Here we discuss existing literature that is most relevant to
+the current work. The current state of the art method that has resisted various adversarial attacks is the
+projected gradient descent (PGD) based algorithm of [Madry et al., 2017]. It is well known that PGD based
+training takes significantly more time as compared to standard stochastic gradient descent based training.
+This is due to the fact that the training procedure approximately solves a difficult maximization problem, per
+example, per batch in each epoch. Recently there have been efforts to speed up PGD based training and
+scale the method to large datasets [Gowal et al., 2018, Shafahi et al., 2019, Wong et al., 2020]. There have
+1Forinstance,ontheCIFAR-10datasetadversarialtrainingistypicallyperformedusingvariantsoftheResNetarchitecture.
+2
+
+Figure 1: Left: Comparison of training times on MNIST, CIFAR-10 and ImageNet for (cid:96) robustness. The
+∞
+figure shows the training time for our boosting based approach for two different choice of the base weak
+learners, as a fraction of the time needed to train via the PGD based approach of Madry et al. [2017]. Right:
+Comparison of training times on CIFAR-10 and ImageNet for certified (cid:96) robustness. The figure shows the
+2
+training time for our boosting based approach for two different choice of the base weak learners, as a fraction
+of the time needed to train via the randomized smoothing approach of Salman et al. [2019]
+also been efforts to improve the robustness of models trained via PGD for (cid:96) perturbations, to other types
+∞
+of perturbations to the test input [Schott et al., 2018]. There have also been methods beyond the vanilla
+PGD based algorithm that have been proposed to train robust models [Gowal et al., 2018, 2019, Salman
+et al., 2019, Zhang et al., 2019, Li et al., 2019].
+A series of recent works focus on designing attacks to evaluate and benchmark the robustness of machine
+learning models. These range from white-box attacks, black-box attacks to even physical attacks in the real
+world [Gilmer et al., 2018]. The work of [Carlini and Wagner, 2017] developed state of the art attacks for
+neuralnetworks. Therecentworkof[Athalyeetal.,2018]showedthatmanydefensesproposedforadversarial
+robustness suffer from the gradient masking phenomenon and can be broken by carefully designing the attack.
+Since evaluating modelsbased on a particular attack is sensitive to thechoice of the particular algorithm used
+for generating adversarial examples, there have also been recent works on provably certifying the robustness
+of models. These include using linear programming, semi-definite based relaxations Wong and Kolter [2018],
+Raghunathan et al. [2018] and Gaussian smoothing based methods for certifying (cid:96) robustness Cohen et al.
+2
+[2019]. In particular, the work of Salman et al. [2019] uses the Gaussian smoothing based method of Cohen
+et al. [2019], Lecuyer et al. [2019] to propose optimizing a smooth adversarial loss for achieving certified
+(cid:96) robustness. In Section 4 we use this smooth loss as a weak learner in our boosting based algorithm for
+2
+achieving certified (cid:96) robustness. In the context of standard training, ensembling of neural networks has
+2
+recently been shown to achieve superior performance [Loshchilov and Hutter, 2016, Smith, 2017, Izmailov
+et al., 2018, Huang et al., 2017]. A crucial component in these works is the use of cyclic learning rates.
+Training proceeds by choosing a large learning rate and training the model for a few epochs over which the
+learning rate is reduced to zero. At the end of the epoch the checkpoint is saved and training is restarted
+with a large learning rate to train another network, and so on. This has the effect of forcing the network to
+explore different parts of the parameter space. As we discuss in Section 4, the use of cyclic learning rates
+will play a crucial role in our boosting based approach as well. In the context of adversarial robustness
+ensembling has been explore to a limited extent. The work of Tramèr et al. [2017] proposed performing
+training data augmentation by using adversarial examples generated on a different model. The recent work
+of Andriushchenko and Hein [2019] studies boosting for adversarial robustness in the context of decision
+stumps.
+3
+
+3 Boosting framework
+We consider a multiclass classification task, where the input space is Rd, and the output space has k classes,
+and is denoted by [k]:={1,2,...,k}. Assume we have sampled a training set S ={(x ,y ),...,(x ,y )}∈
+1 1 m m
+(Rd×[k])m,fromthedatadistribution. ForasetU,wedefine∆(U)tobethesetofallprobabilitydistributions
+onU foranappropriateσ-fieldthatisevidentfromcontext. Foranyp≥1,defineB (δ):={z :Rd :(cid:107)z(cid:107) ≤δ}.
+p p
+A multilabel predictor is a function h:Rd →{0,1}k. The output h(x) of a multilabel predictor is to be
+interpreted as the indicator vector of a set of potential labels for x, so we also use the notation y ∈ h(x)
+to mean h(x) = 1. We call h a unilabel predictor if the output h(x) is a singleton for every input x. For
+y
+convenience, for a unilabel predictor we use the notation h(x)=y to mean h(x)={y}.
+In practice, multiclass predictors are usually constructed via score-based predictors: this is a function
+f : Rd → Rk, such that for any input x, the vector f(x) is understood as assigning scores to each label,
+with higher scores indicating a greater degree of confidence in that label. A score based predictor f can be
+converted into a unilabel predictor fam via the argmax operation, i.e. fam(x) = argmax f(x) , with ties
+y y
+broken arbitrarily.
+3.1 Multiclass Boosting
+Suppose H is a class of multilabel predictors. To define appropriate conditions for boostability, we need to
+define a particular loss function. Let (cid:96):H ×Rd×[k]×[k] be
+(cid:16) (cid:17) (cid:16) (cid:17)
+(cid:96)(h;x,y,y(cid:48))=1 y(cid:48) ∈h(x) −1 y ∈h(x) .
+This is an unusual loss function for a couple of reasons. First, it takes values in {−1,0,1}. Second, it depends
+on not one but two labels y (cid:54)=y(cid:48). Here we should think of y as the “correct label,” and y(cid:48) as a “candidate
+incorrect label,” and the loss is measuring the extent to which h predicted y from x relative to the wrong
+label y(cid:48).
+As it is core to the boosting framework, we will imagine that some distribution Q ∈ ∆(H) over the
+space of hypotheses is given to us, and we want to compute the expected error of the random h drawn
+according to Q. In this case, we define (cid:96)(Q;x,y,y(cid:48)) = E [(cid:96)(h;x,y,y(cid:48))]. The distribution Q ∈ ∆(H)
+h∼Q
+also defines a score-based predictor h := E [h], and thereby, a unilabel predictor, which we call the
+Q h∼Q
+weighted-plurality-vote classifier, via the argmax operation: ham. We have the following relationship2 between
+Q
+the (cid:96) loss of Q and the output of ham:
+Q
+Lemma 1. Let (x,y)∈Rd×[k], Q∈∆(H). Then ∀y(cid:48) (cid:54)=y :(cid:96)(Q;x,y,y(cid:48))<0 =⇒ ham(x)=y.
+Q
+In other words, if, on an example (x,y), the expected loss of an h drawn according to Q is negative with
+respect to every incorrect label y(cid:48), then the weighted-plurality-vote classifier predicts perfectly on this (x,y)
+example.
+The following approach to multiclass boosting was developed in Schapire and Singer [1999] with a more
+general framework in Mukherjee and Schapire [2013]. Given S, we start with the class of distributions ∆(S˘),
+where S˘:={(x ,y(cid:48)):i=1,...,m,y(cid:48) ∈[k]\{y }}, the set of incorrect example/label pairs. Define the error
+i i i i
+of h with respect to D ∈∆(S˘) as err(h,D):=E [(cid:96)(h;x ,y ,y(cid:48))]. We can now define the concept of a
+(xi,y
+i
+(cid:48))∼D i i i
+weak learner:
+Definition 1 (γ-Weak Learning). For some γ > 0, a γ-weak learning procedure for the training set S
+is an algorithm A which, when provided any D ∈ ∆(S˘), returns a predictor in A(D) ∈ H, such that
+∀D ∈∆(S˘): err(A(D),D)≤−γ.
+Thefollowinglemma, whichfollowsbyaneasymin-maxanalysisusingLemma1, showsthattheexistence
+of a weak learner implies the existence of a distribution Q∈∆(H) such that ham is a perfect classifier on the
+Q
+training data:
+2Allproofsofresultsinthispapercanbefoundintheappendix.
+4
+
+Lemma 2. Suppose that for some γ >0 we have a γ-weak learning procedure A for the training set S. Then
+there is a distribution Q∈∆(H) such that for all (x,y)∈S, we have ham(x)=y.
+Q
+While the lemma is non-constructive as stated, it is easy to make it constructive by using standard regret
+minimization algorithms [Freund and Schapire, 1996].
+3.2 Adversarial Robustness in Multiclass Boosting
+The goal of this paper is to produce multiclass classification algorithms that are robust to adversarial
+perturbations of the input data. To that end, we must adjust our framework to account for the potential that
+our test data are corrupted. Indeed, we shall imagine that for a given unilabel hypothesis h, when the input
+x is presented an adversary is allowed to select a small perturbation z ∈ B (δ), for some p ≥ 1 and δ > 0
+p
+which controls the size of the perturbation, with the goal of modifying the output in order that h(x+z)(cid:54)=y.
+Inspired by the multiclass boosting framework above, we define
+(cid:16) (cid:17) (cid:16) (cid:17)
+(cid:96) (h;x,y,y(cid:48))=1 ∃z ∈B (δ):h(x+z)=y(cid:48) −1 ∀z ∈B (δ):h(x+z)=y . (1)
+δ p p
+Letuspausetodiscusswhythisdefinitionisappropriateforthetaskofadversarialrobustnessinthemulticlass
+setting. Our vanilla notion of loss measured the extent to which the hypothesis h would output y(cid:48) instead of
+y on a given input x. The robust loss (1) measures something more complex: is it possible that h could be
+fooled into predicting something other than y, and in particular whether a perturbation could produce y(cid:48).
+With this loss function, we can extend the theory of multiclass boosting to the adversarial setting as
+follows. In analogy with err(h,D), define the robust error of h with respect to D ∈∆(S˘) as
+err (h,D):= E [(cid:96) (h;x ,y ,y(cid:48))].
+δ δ i i i
+(xi,y
+i
+(cid:48))∼D
+We can now define a robust weak learner in analogy with Definition 1:
+Definition 2 ((γ,δ)-Robust Weak Learning Procedure). For some γ > 0, a (γ,δ)-robust weak learning
+procedure for the training set S is an algorithm A which, when provided inputs sampled from any D ∈∆(S˘),
+returns a predictor in A(D)∈H, such that ∀D ∈∆(S˘):err (A(D),D)≤−γ.
+δ
+With this definition, we can now show the following robust boosting theorem:
+Theorem 1. Suppose that for some fixed γ >0 we have a (γ,δ)-robust weak learning procedure A for the
+training set S. Then there exists a distribution Q∈∆(H) such that for all (x,y)∈S, and for all z ∈B (δ),
+p
+we have ham(x+z)=y.
+Q
+The proof of this theorem follows via a reduction to the multiclass boosting technique of Section 3.1. The
+reduction relies on the following construction: for any h ∈ H, we define h˜ to be the multilabel predictor,
+defined only on {x ,x ,...,x }, as follows: for any x and y ∈[k],
+1 2 m i
+ (cid:16) (cid:17)
+h˜(x i ) y =  1 (cid:16) ∀z ∈B p (δ):h(x i +z)=y i (cid:17) if y =y i
+ 1 ∃z ∈B p (δ):h(x i +z)=y if y (cid:54)=y i .
+Let H˜ be the class of all h˜ predictors constructed in this manner. The mapping h (cid:55)→ h˜ converts a
+(γ,δ)-robust weak learning algorithm for H into a γ-weak learning algorithm for H˜, which implies, via
+Lemma 2, that there is a distribution Q˜ ∈∆(H˜) such that for all (x,y)∈S, we have h˜ (x)=y. Now our
+Q˜
+defintion of the class H˜ implies that if Q∈∆(H) is the distribution obtained from Q˜ by applying the reverse
+map h˜ (cid:55)→h, then ham achieves perfect robust accuracy on S.
+Q
+JustasforLemma2,Theorem1canalsobemadeconstructiveviastandardregretminimizationalgorithms.
+The result is a boosting algorithm that operates in the following manner. Over a series of rounds, the booster
+generates distributions in ∆(S˘), and then the weak learning algorithm A is invoked to find a good hypothesis
+5
+
+for each distribution. These hypotheses are then combined (generally with non-uniform weights, as in
+AdaBoost) to produce the final predictor. Thoerem 1 parallels classical boosting analyses of algorithms
+like AdaBoost which show how boosting reduces training error. As for generalization, similar to classical
+analyses bounds can be obtained either by controlling the capacity of the boosted classifier by the number of
+boosting stages times the capacity of the base function class, or via a margin analysis. We do not include
+them since even for standard (non-adversarial) training of deep networks, existing generalization bounds are
+overly loose. In the section 4 we will empirically demonstrate that our boosting based approach indeed leads
+to state-of-the-art generalization performance.
+3.3 Robust boosting via one-vs-all weak learning
+Unfortunately, in practical scenarios when the number of classes k is very large it becomes difficult to
+implement a weak boosting procedure via the weak learning algorithm of Definition 2. This is primarily
+because the support of the distributions generated by the booster is S˘, which is of size m(k−1), and thus
+evaluating the robust error rate err (h,D) for any hypothesis trypically requires us to find a perturbation z
+δ
+for every (x ,y(cid:48)) pair with y(cid:48) (cid:54)=y such that h(x +z)=y(cid:48). This search for k−1 possible perturbations on
+i i i
+every example may be prohibitively expensive.
+We now present a version of weak learning which is easier to check practically: the k−1 searches for a
+perturbation per example are reduced to 1 search per example. We start by loosening the definition of the
+robust loss (1) to the following one-vs-all loss (cid:96)ova :H ×Rd×[k]→−1,1] as
+δ
+(cid:16) (cid:17) (cid:16) (cid:17)
+(cid:96)ova(h;x,y)=1 ∃z ∈B (δ):h(x+z)(cid:54)=y −1 ∀z ∈B (δ):h(x+z)=y
+δ p p
+(cid:16) (cid:17)
+=21 ∃z ∈B (δ):h(x+z)(cid:54)=y −1. (2)
+p
+It is clear from the definition that for any h∈H, x∈Rd, and y,y(cid:48) ∈[k], we have
+(cid:96) (h;x,y,y(cid:48))≤(cid:96)ova(h;x,y). (3)
+δ δ
+Now, given a distribution D ∈∆(S), we define the robust one-vs-all error rate of h on D as errova(h,D):=
+δ
+E [(cid:96)ova(h;x,y)]. We can now define a robust one-vs-all weak learner:
+(x,y)∼D δ
+Definition 3 ((γ,δ)-Robust One-vs-All Weak Learning Procedure). For some γ >0, a (γ,δ)-robust weak
+one-vs-all learning procedure for the training set S is an algorithm A which, when provided D ∈∆(S), returns
+a predictor in A(D)∈H, such that ∀D ∈∆(S): errova(A(D),D)≤−γ.
+δ
+The inequality (3) implies that the requirement on A in Definition 3 is more stringent than the one in
+Definition 2, which implies that a robust one-vs-all weak learner is sufficient for boostability, via Theorem 1.
+Notice that the support of the distribution D in Definition 3 is S rather than S˘. Thus, constructing a robust
+one-vs-all weak learner amounts to just one search for a perturbation per example: we just need to find a
+perturbation that makes the hypothesis output any incorrect label.
+3.4 Robust boosting for score-based predictors
+We now derive a robust boosting algorithm when the base class of predictors is score-based via analogy with
+the unilabel predictor case. If a class H of unilabel predictors admits a (γ,δ)-robust one-vs-all weak learner
+for a given training set S, then by Theorem 1, there exists a distribution Q∗ ∈ ∆(H) such that ham has
+Q∗
+perfect robust accuracy on S. Equivalently, since (cid:96)ova(ham;x,y)=−1 for any (x,y)∈S, Q∗ is a solution to
+δ Q∗
+the following ERM problem3:
+m
+1 (cid:88)
+inf (cid:96)ova(ham;x ,y ). (4)
+Q∈∆(H)m δ Q i i
+i=1
+3Indeed,anysolutionQ(cid:48) totheERMproblem(4)yieldsaclassifierham withperfectrobustaccuracyonS.
+Q(cid:48)
+6
+
+However this ERM problem is intractable in general, so instead we can hope to find Q∗ via a surrogate loss
+for (cid:96)ova. For the purpose of our experiments, we choose to use a robust version of the softmax cross-entropy
+δ
+surrogate loss defined as
+(cid:96)ce(f;x,y):= sup (cid:96)ce(f(x+z),y) (5)
+δ
+z∈Bp(δ)
+where (cid:96)ce is the standard cross entropy loss. Lemma 3 in Appendix A shows that this is a valid surrogate loss.
+Thus, using Lemma 3 for f = h , we may attempt to solve (4) by solving the potentially more tractable
+Q
+problem: inf 1 (cid:80)m (cid:96)ce(h ;x ,y ).
+Q∈∆(H) m i=1 δ Q i i
+We can now extend the above to a class F of score-based predictors as follows. First, since score-based
+predictors have outputs in Rk rather than {0,1}k, we combine them via linear combinations rather than
+convex combinations, as in the case of unilabel predictors. Thus, let span(F) be the set of all possible finite
+linear combinations of functions in F. We index these functions by a weight vector β supported on F which
+has only finitely many non-zero entries, so that f is the corresponding linear combination. Then, the goal of
+β
+boosting is to solve the following ERM problem:
+m
+1 (cid:88)
+inf (cid:96)ce(f ;x ,y ). (6)
+fβ∈span(F)m
+i=1
+δ β i i
+By Lemma 3, any near-optimal β for this problem yields a unilabel predictor fam which can be expected to
+β
+have low robust error rate. Furthermore, note that for any x∈Rd, the mapping β (cid:55)→f (x) is linear in β and
+β
+(cid:96)ce is a convex function in its first argument. Since the sup operation preserves convexity, it follows that
+problem (6) is convex in β. This raises the possibility of solving (6) using a gradient-based procedure, which
+we describe next.
+3.5 Greedy stagewise robust boosting
+We solve the problem (6) using the standard boosting paradigm of greedy stagewise fitting [Friedman, 2001,
+Friedman et al., 2000]. Assume that the function class F is parametric with a parameter space W ⊆Rp, and
+for every w ∈W we denote by f the function in F parameterized by w. Greedy stagewise fitting builds a
+w
+solution to the problem (6) in T stages, for some T ∈N. Define f(0) to be the identically 0 predictor. In each
+stage t, for t=1,2,...,T, the method constructs the predictor f(t) via the following greedy procedure:
+m
+1 (cid:88)
+{β ,w }=arg min (cid:96)ce(f(t−1)+βf ;x ,y ) (7)
+t t β∈R,w∈W m δ w i i
+i=1
+f(t) =f(t−1)+β f . (8)
+t wt
+Notice that evaluating (cid:96)ce(f(t−1)+βf ;x ,y ) involves an inner optimization problem, due to the sup
+δ w i i zi∈Bp(δ)
+for each i ∈ [m]. For each step of gradient descent on β,w, we solve this inner optimization problem via
+gradientascentonthez ’swithprojectionsonB (δ)ateachstep(thisisbasicallythePGDmethodofMadry
+i p
+et al. [2017]).
+Since the inner optimization problem involves computing f(t−1)(x +z ) for potentially many values of z ,
+i i i
+it becomes necessary to store the parameters of the previously learned functions in memory at each stage.
+In order to derive a practical implementation, we consider an approximate version where we replace each
+f(t−1)(x +z ) evaluation by the value f(t−1)(x ). Thus the only information we store for the previously
+i i i
+learned functions are the values f(t−1)(x ) for i∈[m], and instead we solve:
+i
+m
+1 (cid:88)
+min sup (cid:96)ce(f(t−1)(x )+βf (x +z ),y ). (9)
+β∈R,w∈W m
+i=1zi∈Bp(δ)
+i w i i i
+Empirically, this leads to a significant savings in memory and run time, and as we will show later, our
+approximate procedure manages to achieve state of the art results. Finally, our boosting framework can be
+7
+
+naturally extended to settings where one only has an approximate way of computing the robust error of a
+hypothesis. Furthermore, we also show that we can also apply our framework to combine weak learners that
+output a certified radius guarantee along with its prediction, to construct boosted predictors with the same
+radius guarantee. See Appendix B for details.
+4 Experiments
+We experiment with three standard image datasets, namely, MNIST [LeCun et al., 1998], CIFAR-10
+[Krizhevsky et al., 2009] and ImageNet [Russakovsky et al., 2015]. We refer the reader to Appendix C for a
+discussionofhyperparameterchoices. AsdescribedinSection3.5,thetrainingalgorithmisagreedystagewise
+procedure where at each stage we approximately solve (9) by gradient descent on β,w and the PGD method
+of Madry et al. [2017] for the inner optimization involving the z ’s.
+i
+A crucial component in our practical implementation is the use of cyclic learning rate schedules in the
+outer gradient descent (operating on β,w). When optimizing (9) at stage t, we initialize the parameters of
+the new predictor with the parameters of the previously learned model, i.e., f(t−1). Furthermore, we start the
+training from a high learning rate and then decrease it to zero following a specific schedule. The use of cyclic
+learning rates has recently been demonstrated as an effective way to create ensembles of neural networks
+[Loshchilov and Hutter, 2016, Huang et al., 2017, Smith, 2017, Izmailov et al., 2018]. Starting training from
+a large learning rate has the effect of forcing the training process in the tth stage to explore a different part
+of the parameter space, thereby leading to more diverse and effective ensembles. Following the approach
+of Loshchilov and Hutter [2016] and Huang et al. [2017] we use cyclic learning rates as follows. In stage t
+of boosting, we train β ,w using SGD over N = 2t−1N epochs of the training data, where N ∈ N is a
+t t t 1 1
+hyperparameter. The learning rate used in stochastic gradient descent after processing each minibatch is set
+to 1η (1+cos(α π)), where η is a tunable hyperparameter similar to the learning rate in standard
+2 max cur max
+epoch-wise training schedules, and α ∈[0,1] is the fraction of the N epochs in the current stage t that
+cur t
+have been completed so far. Thus, over the course of N epochs the learning rate goes from η to 0 via a
+t max
+cosine schedule. In all our experiments we set η to be zero and set η to be a tuneable hyperparameter,
+min max
+similar to the learning rate in standard epoch-wise training schedules.
+This leads to our greedy stagewise adversarial boosting algorithm (see Appendix C). Each boosting stage,
+consists of a gradient descent loop to minimize the robust loss, with each iteration of gradient descent
+implemented by a PGD loop to find a perturbation with high loss.
+Figure 2: Left: Comparison of accuracy for a fixed training budget on CIFAR-10 for (cid:96) robustness. Right:
+∞
+Comparison of accuracy for a fixed training budget on CIFAR-10 for (cid:96) robustness. The x-axis represents the
+2
+number of epochs and the y-axis represents robust test accuracy.
+Results on (cid:96) Robustness. In this section we compare robustness to (cid:96) perturbations for classifiers
+∞ ∞
+trained via the PGD based algorithm of Madry et al. [2017] and via our adversarial boosting algorithm. We
+8
+
+(cid:15) 0.25 0.5 0.75 1 1.25 1.5 1.75 2 2.25
+Bubeck et al. 73 58 48 38 33 29 24 18 16
+ResNet-20 72.6 55.34 46.44 33 31 27.6 22.1 16.1 12.75
+ResNet-32 73.71 57.4 50.1 39.07 32.7 29.3 25.2 17.8 16.8
+(cid:15) 0.5 1 1.5 2 2.5 3 3.5
+Bubeck et al. 56 45 38 28 26 20 17
+ResNet-20 53.5 44 32.7 24.2 24.7 17.5 16.1
+ResNet-32 57.1 45.4 39.2 27.8 26.1 22 18.6
+Table 1: Comparison of certified (cid:96) accuracies on CIFAR-10 (top) and ImageNet (bottom).
+2
+solve the inner maximization problem in (9) via 7 steps of the projected gradient descent (PGD) updates.
+The PGD is started from a random perturbation of the input point, and uses step-size 1.3δ, thereby ensuring
+7
+that PGD updates can reach the boundary of the (cid:96) ball. Each model is tested by running 20 steps of PGD
+∞
+(also started from a random perturbation of the input point, with step-size 1.3 δ ) with 10 random restarts.
+20
+For the MNIST dataset, we train a ResNet-110 architecture [He et al., 2016] to train a single model via
+adversarial training and compare it to a boosted ensemble of 5 models using ResNet-12 or ResNet-18 as
+base predictors. When training the boosted ensemble we set the maximum learning rate η = 0.01 set
+max
+N =5. For the CIFAR-10 dataset we train a single model on ResNet-110 architecture and compare it to
+1
+an ensemble of 5 base predictors using the ResNet-20 and ResNet-32 architectures. Here we set N = 10
+1
+and η = 0.01. Finally, for the ImageNet dataset we train a single ResNet-50 architecture. Our base
+max
+predictors in this setting are either the ResNet-20 or the ResNet-32 architectures. We use the same setting of
+N and η as in CIFAR-10. Our results are shown in Table 2 As can be seen, in each case our ensemble
+1 max
+based training achieves better robust test accuracy as compared to PGD based training of a single model.
+Furthermore, as Figure 1 shows that our algorithm is able to achieve these accuracy gains at a significantly
+lower training cost, as a result of working with smaller base predictors.
+MNIST CIFAR-10 ImageNet
+(cid:15) 0.03 0.07 0.3 (cid:15) 2 4 8 16 2 4 8 16
+PGD 99.4 96.7 91.4 69 63.4 46 28.9 37 35.4 11 4
+ResNet12 99.6 96.8 93.4 ResNet20 69.2 62.7 45.6 27.4 33.8 31.2 12.2 6
+ResNet18 99.6 97 93.8 ResNet32 70.1 64.6 47.4 29.7 39.7 38.1 14 7.1
+Table 2: Comparison of robust (cid:96) accuracies on MNIST, CIFAR-10, and ImageNet.
+∞
+Results on (cid:96) Robustness. To demonstrate the generality of our approach we also apply our boosting
+2
+based framework to design classifiers that are certifiably robust to (cid:96) perturbations. Following recent work of
+2
+Cohen et al. [2019] and Salman et al. [2019], for a score-based predictor f, let f˜be the smoothed version
+of f defined as f˜(x)=E [f(x+(cid:15))], where σ is a hyperparameter. We apply the greedy stagewise
+(cid:15)∼N(0,σ2I)
+algorithm of Section 3.5 to the class F˜ = {f˜ : f ∈ F} instead of F. The inner optimization in (9) is
+again done using 4 steps of PGD started from the input point with step-size δ. After boosting, we obtain a
+8
+score-based predictor f, which we transform into another score-based predictor g as in [Salman et al., 2019]:
+(cid:0) (cid:1)
+g(x) = Pr argmax f(x+(cid:15)) = {y} . It was shown in the work of Cohen et al. [2019] that
+y (cid:15)∼N(0,σ2I) y(cid:48) y(cid:48)
+the resulting unilabel predictor gam has a radius guarantee: at any point x, the prediction of gam does not
+change up to an (cid:96) radius of σ(cid:0) Φ−1(g(x) )−Φ−1(g(x) ) (cid:1) , where y and y(cid:48) are the classes corresponding the
+2 2 y y(cid:48)
+maximum and second maximum entries of g(x) respectively, and Φ is the Gaussian cdf function. In practice,
+Φ−1(g(x) ) and Φ−1(g(x) ) can be estimated to high accuracy via Monte Carlo sampling.
+y y(cid:48)
+We run our adversarial boosting procedure on CIFAR-10 and ImageNet datasets and at the end we
+compare the certified accuracy of our classifier as compared to the single model trained via the approach of
+Salman et al. [2019]. We use the same setting of the perturbation radius and the corresponding setting of σ
+as in [Salman et al., 2019]. In each case, we approximate the smoothed classifier by sampling 2 noise vectors.
+9
+
+For both CIFAR-10 and ImageNet we train an ensemble of 5 base predictors using either the ResNet-20 or
+the ResNet-32 architectures. In contrast, the work of Salman et al. [2019] uses Reset-110 for training on the
+CIFAR-10 dataset and a ResNet-50 architecture for training on the ImageNet dataset. In both cases, we
+set the hyperparameters η =0.3 and N =10. Our results on certified accuracy as shown in Table 1.In
+max 1
+each case we either outperform or match the state of the art guarantee achieved by the work of Salman et al.
+[2019].
+Finally, Figure 2 shows test accuracy achieved by our method as compared to the PGD approach (for (cid:96)
+∞
+robustness) and adversarial smoothing (for (cid:96) robustness) at various intervals (wall clock time) during the
+2
+training process. In each case our method achieves significantly higher test accuracies. We acknowledge that
+recent and concurrent works have investigated fast algorithms for adversarial training [Wong et al., 2020,
+Shafahi et al., 2019]. Our boosting based framework complements these approaches and in principle these
+methods can be used as base predictors in our general framework. We consider this as a direction for future
+work.
+5 Conclusion
+Wedemonstratedthatprovablyrobustadversarialbootingisindeedpossibleandleadstoanefficientpractical
+implementation. The choice of the architectures used in the base predictors play a crucial role and it would
+be interesting to develop principled approaches to search for the “right” base predictors. When training a
+large number of weak predictors, inference time will lead to additional memory and computational overheads.
+TheseareamplifiedinthecontextofadversarialrobustnesswheremultiplestepsofPGDneedtobeperformed
+per example, to verify robust accuracy. It would be interesting to explore approaches to reduce this overhead.
+A promising direction is to explore the use of distillation [Hinton et al., 2015] to replace the final trained
+ensemble with a smaller one.
+References
+M. Andriushchenko and M. Hein. Provably robust boosted decision stumps and trees against adversarial
+attacks. In Advances in Neural Information Processing Systems, pages 12997–13008, 2019.
+A. Athalye, N. Carlini, and D. Wagner. Obfuscated gradients give a false sense of security: Circumventing
+defenses to adversarial examples. arXiv preprint arXiv:1802.00420, 2018.
+P. Awasthi, A. Dutta, and A. Vijayaraghavan. On robustness to adversarial examples and polynomial
+optimization. In NeurIPS, pages 13737–13747, 2019.
+B. Biggio, I. Corona, D. Maiorca, B. Nelson, N. Šrndić, P. Laskov, G. Giacinto, and F. Roli. Evasion attacks
+against machine learning at test time. In Joint European conference on machine learning and knowledge
+discovery in databases, pages 387–402. Springer, 2013.
+N. Carlini and D. Wagner. Towards evaluating the robustness of neural networks. In 2017 ieee symposium on
+security and privacy (sp), pages 39–57. IEEE, 2017.
+N. Carlini and D. Wagner. Audio adversarial examples: Targeted attacks on speech-to-text. In 2018 IEEE
+Security and Privacy Workshops (SPW), pages 1–7. IEEE, 2018.
+J. M. Cohen, E. Rosenfeld, and J. Z. Kolter. Certified adversarial robustness via randomized smoothing.
+arXiv preprint arXiv:1902.02918, 2019.
+J. Ebrahimi, A. Rao, D. Lowd, and D. Dou. Hotflip: White-box adversarial examples for text classification.
+arXiv preprint arXiv:1712.06751, 2017.
+Y. Freund and R. E. Schapire. Game theory, on-line prediction and boosting. In Proceedings of the ninth
+annual conference on Computational learning theory, pages 325–332, 1996.
+10
+
+J. Friedman, T. Hastie, and R. Tibshirani. Additive logistic regression: a statistical view of boosting. Annals
+of Statistics, 28(2):337–407, 2000.
+J. H. Friedman. Greedy function approximation: a gradient boosting machine. Annals of statistics, pages
+1189–1232, 2001.
+J. Gilmer, R. P. Adams, I. Goodfellow, D. Andersen, and G. E. Dahl. Motivating the rules of the game for
+adversarial example research. arXiv preprint arXiv:1807.06732, 2018.
+S. Gowal, K. Dvijotham, R. Stanforth, R. Bunel, C. Qin, J. Uesato, R. Arandjelovic, T. Mann, and P. Kohli.
+On the effectiveness of interval bound propagation for training verifiably robust models. arXiv preprint
+arXiv:1810.12715, 2018.
+S. Gowal, J. Uesato, C. Qin, P.-S. Huang, T. Mann, and P. Kohli. An alternative surrogate loss for pgd-based
+adversarial testing. arXiv preprint arXiv:1910.09338, 2019.
+K. He, X. Zhang, S. Ren, and J. Sun. Deep residual learning for image recognition. In Proceedings of the
+IEEE conference on computer vision and pattern recognition, pages 770–778, 2016.
+W. He, J. Wei, X. Chen, N. Carlini, and D. Song. Adversarial example defense: Ensembles of weak defenses
+are not strong. In 11th {USENIX} Workshop on Offensive Technologies ({WOOT} 17), 2017.
+G. Hinton, O. Vinyals, and J. Dean. Distilling the knowledge in a neural network. arXiv preprint
+arXiv:1503.02531, 2015.
+G. Huang, Y. Li, G. Pleiss, Z. Liu, J. E. Hopcroft, and K. Q. Weinberger. Snapshot ensembles: Train 1, get
+m for free. arXiv preprint arXiv:1704.00109, 2017.
+P. Izmailov, D. Podoprikhin, T. Garipov, D. Vetrov, and A. G. Wilson. Averaging weights leads to wider
+optima and better generalization. arXiv preprint arXiv:1803.05407, 2018.
+A. Krizhevsky, G. Hinton, et al. Learning multiple layers of features from tiny images. 2009.
+Y. LeCun, L. Bottou, Y. Bengio, and P. Haffner. Gradient-based learning applied to document recognition.
+Proceedings of the IEEE, 86(11):2278–2324, 1998.
+M. Lecuyer, V. Atlidakis, R. Geambasu, D. Hsu, and S. Jana. Certified robustness to adversarial examples
+with differential privacy. In 2019 IEEE Symposium on Security and Privacy (SP), pages 656–672. IEEE,
+2019.
+B. Li, C. Chen, W. Wang, and L. Carin. Certified adversarial robustness with additive noise. In Advances in
+Neural Information Processing Systems, pages 9459–9469, 2019.
+I. Loshchilov and F. Hutter. Sgdr: Stochastic gradient descent with warm restarts. arXiv preprint
+arXiv:1608.03983, 2016.
+A. Madry, A. Makelov, L. Schmidt, D. Tsipras, and A. Vladu. Towards deep learning models resistant to
+adversarial attacks. arXiv preprint arXiv:1706.06083, 2017.
+O. Montasser, S. Hanneke, and N. Srebro. Reducing adversarially robust learning to non-robust pac learning.
+arXiv preprint arXiv:2010.12039, 2020.
+I. Mukherjee and R. E. Schapire. A theory of multiclass boosting. Journal of Machine Learning Research, 14
+(Feb):437–497, 2013.
+A. Raghunathan, J. Steinhardt, and P. Liang. Certified defenses against adversarial examples. arXiv preprint
+arXiv:1801.09344, 2018.
+11
+
+O. Russakovsky, J. Deng, H. Su, J. Krause, S. Satheesh, S. Ma, Z. Huang, A. Karpathy, A. Khosla,
+M. Bernstein, et al. Imagenet large scale visual recognition challenge. International journal of computer
+vision, 115(3):211–252, 2015.
+H.Salman,J.Li,I.Razenshteyn,P.Zhang,H.Zhang,S.Bubeck,andG.Yang. Provablyrobustdeeplearning
+viaadversariallytrainedsmoothedclassifiers. InAdvances in Neural Information Processing Systems, pages
+11289–11300, 2019.
+R. E. Schapire. The boosting approach to machine learning: An overview. In Nonlinear estimation and
+classification, pages 149–171. Springer, 2003.
+R. E. Schapire and Y. Singer. Improved boosting algorithms using confidence-rated predictions. Machine
+learning, 37(3):297–336, 1999.
+L. Schott, J. Rauber, M. Bethge, and W. Brendel. Towards the first adversarially robust neural network
+model on mnist. arXiv preprint arXiv:1805.09190, 2018.
+A. Shafahi, M. Najibi, M. A. Ghiasi, Z. Xu, J. Dickerson, C. Studer, L. S. Davis, G. Taylor, and T. Goldstein.
+Adversarial training for free! In Advances in Neural Information Processing Systems, pages 3353–3364,
+2019.
+Y. Sharma and P.-Y. Chen. Breaking the madry defense model with l_1-based adversarial examples. arXiv
+preprint arXiv:1710.10733, 2017.
+A. Sinha, H. Namkoong, and J. Duchi. Certifying some distributional robustness with principled adversarial
+training. 2018.
+L. N. Smith. Cyclical learning rates for training neural networks. In 2017 IEEE Winter Conference on
+Applications of Computer Vision (WACV), pages 464–472. IEEE, 2017.
+C.Szegedy,W.Zaremba,I.Sutskever,J.Bruna,D.Erhan,I.Goodfellow,andR.Fergus. Intriguingproperties
+of neural networks. arXiv preprint arXiv:1312.6199, 2013.
+F. Tramèr, A. Kurakin, N. Papernot, I. Goodfellow, D. Boneh, and P. McDaniel. Ensemble adversarial
+training: Attacks and defenses. arXiv preprint arXiv:1705.07204, 2017.
+E. Wong and Z. Kolter. Provable defenses against adversarial examples via the convex outer adversarial
+polytope. In International Conference on Machine Learning, pages 5283–5292, 2018.
+E. Wong, L. Rice, and J. Z. Kolter. Fast is better than free: Revisiting adversarial training. arXiv preprint
+arXiv:2001.03994, 2020.
+H. Zhang, Y. Yu, J. Jiao, E. P. Xing, L. E. Ghaoui, and M. I. Jordan. Theoretically principled trade-off
+between robustness and accuracy. arXiv preprint arXiv:1901.08573, 2019.
+12
+
+A Proofs
+We first restate and prove Lemma 1 and Lemma 2.
+Lemma 1. Let (x,y)∈Rd×[k], and Q∈∆(H). Then
+∀y(cid:48) (cid:54)=y :(cid:96)(Q;x,y,y(cid:48))<0 =⇒ ham(x)=y.
+Q
+Proof. Observe
+(cid:104) (cid:16) (cid:17) (cid:16) (cid:17)(cid:105)
+∀y(cid:48) (cid:54)=y : E 1 y(cid:48) ∈h(x) −1 y ∈h(x) <0
+h∼Q
+(cid:16) (cid:17) (cid:16) (cid:17)
+=⇒∀y(cid:48) (cid:54)=y : Pr y ∈h(x) > Pr y(cid:48) ∈h(x)
+h∼Q h∼Q
+=⇒{y}=argmax E [h (x)]=:ham(x)
+y(cid:48)(cid:48) Q
+y(cid:48)(cid:48)∈[k] h∼Q
+=⇒ham(x)=y.
+Q
+Note: the strict inequality implies unique argmax.
+Lemma 2. Suppose that for some fixed γ >0 we have a γ-weak learning procedure A for the training set
+S. Then there exists a distribution Q∈∆(H) such that for all (x,y)∈S, we have ham(x)=y.
+Q
+Proof. This proof is a straightforward adaptation of the result of Freund and Schapire [1996]. From the weak
+learning guarantee we have that
+∀D ∈∆(S˘),∃h∈H :err(h,D)≤−γ
+=⇒∀D ∈∆(S˘): minerr(h,D)≤−γ
+h∈H
+=⇒ max minerr(h,D)≤−γ.
+D∈∆(S˘)h∈H
+By the Minimax Theorem we get that
+min max E [err(h,D)]≤−γ
+Q∈∆(H)D∈∆(S˘)h∼Q
+=⇒ min max (cid:96)(Q;x ,y ,y(cid:48))≤−γ
+i i i
+Q∈∆(H)(xi,y
+i
+(cid:48))∈S˘
+=⇒∃Q∈∆(H),∀(x ,y(cid:48))∈S˘:(cid:96)(Q;x ,y ,y(cid:48))≤ −γ.
+i i i i i
+Hence from Lemma 1 we get that for all (x,y)∈S, ham(x)=y.
+Q
+Next we restate and prove our main theorem (Theorem 1) regarding boosting for adversarial robustness.
+Theorem 1. Suppose that for some fixed γ >0 we have a (γ,δ)-robust weak learning procedure A for the
+training set S. Then there exists a distribution Q∈∆(H) such that for all (x,y)∈S, and for all z ∈B (δ),
+p
+we have ham(x+z)=y.
+Q
+Proof. TheproofisviaareductiontothestandardmultilclassboostingtechniqueofLemma2. Thereduction
+uses the following construction: for any h∈H, we define h˜ to be the multilabel predictor, defined only on
+{x ,x ,...,x }, as follows: for any x and y ∈[k],
+1 2 m i
+ (cid:16) (cid:17)
+h˜(x i ) y =  1 (cid:16) ∀z ∈B p (δ):h(x i +z)=y i (cid:17) if y =y i
+ 1 ∃z ∈B p (δ):h(x i +z)=y if y (cid:54)=y i .
+13
+
+Let H˜ be the class of all h˜ predictors constructed in this manner. Notice that for any h∈H, (x,y)∈S
+and y(cid:48) (cid:54)=y we have that
+(cid:96) (h;x,y,y(cid:48))=(cid:96)(h˜;x,y,y(cid:48)).
+δ
+Hence the mapping h (cid:55)→ h˜ converts a (γ,δ)-robust weak learning algorithm for H into a γ-weak learning
+algorithm for H˜, which implies, via Lemma 2, that there is a distribution Q˜ ∈ ∆(H˜) such that for all
+(x,y)∈S, we have h˜am(x)=y. This implies that for any y(cid:48) (cid:54)=y, we have
+Q˜
+Pr [∀z ∈B (δ):h(x+z)=y]
+p
+h∼Q
+> Pr [∃z ∈B (δ):h(x+z)=y(cid:48)],
+p
+h∼Q
+which implies for any given z ∈B (δ), we have
+p
+Pr [h(x+z)=y]> Pr [h(x+z)=y(cid:48)]. (10)
+h∼Q h∼Q
+Let Q∈∆(H) be the distribution obtained from Q˜ by applying the reverse map h˜ (cid:55)→h. Then (10) implies
+that for any (x,y)∈S, y(cid:48) (cid:54)=y, and z ∈B (δ), we have
+p
+h (x+z) >h (x+z) .
+Q y Q y(cid:48)
+Thus, ham(x+z)=y, as required.
+Q
+(cid:16) (cid:17)
+Let(cid:96)ce :Rk×[k]→Rbethestandardsoftmaxcross-entropyloss,definedas(cid:96)ce(v,y):=−ln exp(vy) .
+(cid:80) y(cid:48)exp(v y(cid:48))
+Then, the robust softmax cross-entropy loss is defined as follows: for any f :Rd →Rk, and (x,y)∈Rd×[k],
+define The following lemma shows that this yields a valid surrogate loss for (cid:96)ova, up to scaling and translation:
+δ
+Lemma 3. Let f :Rd →Rk be any score-based predictor. Then for any (x,y)∈Rd×[k], we have
+(cid:96)ova(fam;x,y)≤ 2 (cid:96)ce(f;x,y)−1.
+δ ln(2) δ
+Proof. Recall that
+(cid:16) (cid:17)
+(cid:96)ce(v,y):=−ln exp(vy) .
+(cid:80) y(cid:48)exp(v y(cid:48))
+It is easy to see that (cid:96)ce(v,y)≥0. Furthermore, if there exists y(cid:48) (cid:54)=y such that v ≥v , then (cid:96)ce(v,y)≥ln2.
+y(cid:48) y
+(cid:16) (cid:17)
+This implies that (cid:96)ce(v,y)≥ln(2)1 y (cid:54)∈argmax {v } . Hence we have that for any score based predictor
+y(cid:48) y(cid:48)
+f and example (x,y),
+(cid:16) (cid:17)
+(cid:96)ova(fam;x,y)=21 ∃z ∈B (δ):fam(x+z)(cid:54)=y −1
+δ p
+(cid:16) (cid:17)
+=2· sup 1 fam(x+z)(cid:54)=y −1
+z∈Bp(δ)
+≤ 2 sup (cid:96)ce(f(x+z);x,y)−1
+ln(2)
+z∈Bp(δ)
+= 2 (cid:96)ce(f;x,y)−1.
+ln(2) δ
+Next, we prove Lemma 5 regarding boosting using an approximate checker:
+Lemma 5. Suppose that we have access to a (c,δ)-approximate checker A for H. Then given any D ∈∆(S),
+we can use A to either find an h ∈ H such that errova(h,D) ≤ −γ, or certify that for all h ∈ H, we have
+δ/c
+errova(h,D)>−γ.
+δ
+14
+
+Proof. Let h∈H be any unilabel predictor. We use the shorthand “A(h;x,y)=z” to denote the event that
+the output A(h;x,y) is a point z ∈B (δ) such that h(x+z)(cid:54)=y. For any (x,y)∈S, we have the following
+p
+inequality from the definition of a (c,δ)-approximate checker:
+(cid:16) (cid:17)
+1 ∃z ∈B (δ): h(x+z)(cid:54)=y
+p
+(cid:16) (cid:17)
+≥1 A(h;x,y)=z
+(cid:16) (cid:17)
+≥1 ∃z ∈B (δ/c): h(x+z)(cid:54)=y .
+p
+This implies that
+(cid:16) (cid:17)
+errova(h,D)≥ E [21 A(h;x,y)=z −1]
+δ
+(x,y)∼D
+≥errova(h,D).
+δ/c
+Thus, if for some h∈H we have
+(cid:16) (cid:17)
+E [21 A(h;x,y)=z −1]≥−γ,
+(x,y)∼D
+then we have errova(h,D)≤−γ as well. Otherwise, if for all h∈H we have
+δ/c
+(cid:16) (cid:17)
+E [21 A(h;x,y)=z −1]>−γ,
+(x,y)∼D
+then errova(h,D)>−γ as well.
+δ
+Finally, we turn to proving Theorem 3 regarding boosting with certified accuracy. We need the following
+lemma which is a stronger form of Lemma 2 applying to one-vs-all weak learners:
+Lemma 4. Suppose that for some fixed γ > 0 we have a (γ,0)-robust one-vs-all weak learning procedure
+A for the training set S. Then there exists a distribution Q ∈ ∆(H) such that for all (x,y) ∈ S, we have
+Pr [h(x)=y]≥ 1+γ.
+h∼Q 2
+Proof. This proof is a straightforward adaptation of the result of Freund and Schapire [1996]. From the weak
+learning guarantee we have that
+∀D ∈∆(S),∃h∈H :errova(h,D)≤−γ
+0
+=⇒∀D ∈∆(S): minerrova(h,D)≤−γ
+0
+h∈H
+=⇒ max minerrova(h,D)≤−γ.
+0
+D∈∆(S)h∈H
+By the Minimax Theorem we get that
+min max E [errova(h,D)]≤−γ
+0
+Q∈∆(H)D∈∆(S)h∼Q
+(cid:104) (cid:16) (cid:17) (cid:105)
+=⇒ min max E 21 h(x)(cid:54)=y −1 ≤−γ
+Q∈∆(H)(x,y)∈Sh∼Q
+=⇒∃Q∈∆(H),∀(x,y)∈S : Pr [h(x)=y]≥ 1+γ.
+2
+h∼Q
+Using Lemma 4 reduction in the proof of Theorem 1, we get the following stronger boosting statement for
+robust one-vs-all weak learners:
+15
+
+Theorem 2. Suppose that for some fixed γ >0 we have a (γ,δ)-robust one-vs-all weak learning procedure A
+for the training set S. Then there exists a distribution Q ∈ ∆(H) such that for all (x,y) ∈ S, and for all
+z ∈B (δ), we have Pr [h(x+z)=y]≥ 1+γ.
+p h∼Q 2
+We can now prove Theorem 3:
+Theorem 3. Let H be a class of predictors with radius guarantees. Let δ∗ be the maximal radius such that
+for any distribution D ∈ ∆(S), there exists an h ∈ H with acc (h,D) ≥ 1 + γ, for some constant γ > 0.
+δ∗ 2 2
+Then, there exists a distribution Q∈∆(H) and function ρ :Rd →R such that the predictor f =(ham,ρ )
+Q Q Q
+has perfect certified accuracy at radius δ∗ on S.
+Proof. Note that for any distribution D ∈∆(S) and h∈H, if acc (h,D)≥ 1 + γ, then errova(h,D)≤−γ.
+δ∗ 2 2 δ∗
+Thus we can apply Theorem 1 to conclude that there exists a distribution Q ∈ ∆(H) such that for all
+(x,y) ∈ S and for all z ∈ B (δ∗), we have Pr [h(x+z) = y] ≥ 1+γ. Evidently the predictor h has
+p h∼Q 2 Q
+perfect certified accuracy at radius δ∗ on S. To define ρ , we assume without loss of generality that Q has
+Q
+finite support (indeed, the constructive form of Theorem 1 yields this) {h ,h ,...,h }, and let Q(h ) be the
+1 2 N i
+Q-mass of h .
+i
+Now given any input x∈Rd, let ham(x)=y. Let h ,h ,...,h be an ordering of the hypotheses in
+Q (1) (2) (N)
+thesupportofQarrangedinincreasingorderoftheirradiusguaranteesforx: i.e. ifr istheradiusguarantee
+i
+of h (x), then r ≤r ≤···≤r . For any index i∈{1,2,...,N}, let h(i) = (cid:80)N Q(h )h . By a linear
+(i) 1 2 N Q j=i (j) (j)
+scan in the set {r ,r ,...,r }, find the largest index i∗ such that the following condition holds:
+1 2 N
+(cid:88)
+Q(h
+)+maxh(i∗)(x) ≤h(i∗)(x)
+,
+(i) Q y(cid:48) Q y
+y(cid:48)(cid:54)=y
+i<i∗
+Notethatsuchanindexexistsbecausetheindex1satisfiesthiscondition. Itiseasytoseethattheprediction
+of ham is unchanged upto radius r , so we can set ρ (x)=r .
+Q i∗ Q i∗
+B Extensions of Boosting Framework
+We now return to setting of Section 3.3, working with a unilabel class of predictors H. We describe two
+extensions of our boosting analysis in the following subsections.
+B.1 Boosting with Approximate Checkers
+In order to construct a robust one-vs-all weak learning algorithm (see Definition 3) to employ in a boosting
+algorithm, at the very least we need a way to compute the robust one-vs-all error rate errova(h,D) of a
+δ
+given predictor h. This requires us to find adversarial perturbations for a given input (x,y), a task which is
+NP-hard in general. To counter this problem, Awasthi et al. [2019] introduced the notion of an approximate
+checker and showed that such a checker can be implemented in polynomial time for polynomial threshold
+functions and a subclass of 2-layer neural networks. An approximate checker is defined as follows:
+Definition 4 ((c,δ)-approximate checker). For some constant c ≥ 1, a (c,δ)-approximate checker for
+hypothesis class H is an algorithm A with that has the following specification: for any unilabel predictor
+h∈H, and any example (x,y)∈Rd×[k], the output A(h;x,y) is
+
+z∈B (δ):h(x+z)(cid:54)=y if ∃z(cid:48)∈B (δ):h(x+z(cid:48))(cid:54)=y;
+ p p c
+Good if ∀z∈B (δ):h(x+z)=y;
+p
+∅
+otherwise.
+We use ∅ to mean that the output can be arbitrary.
+Using an approximate checker, we can construct a robust one-vs-all weak learner as described in the
+following lemma:
+16
+
+Lemma 5. Suppose that we have access to a (c,δ)-approximate checker A for H. Then given any D ∈∆(S),
+we can use A to either find an h ∈ H such that errova(h,D) ≤ −γ, or certify that for all h ∈ H, we have
+δ/c
+errova(h,D)>−γ.
+δ
+Now suppose that H is rich enough so that for any D ∈ ∆(S), there exists an h ∈ H such that
+errova(h,D)≤−γ. Then Theorem 1 implies that the weak learner described in Lemma 5 can be used to find
+δ
+a predictor with perfect robust accuracy, up to a radius of δ/c, on the training set S.
+B.2 Certified accuracy
+Cohenetal.[2019],followingtheworkofLecuyeretal.[2019],constructedpredictorswhichhaveanappealing
+radius guarantee property, obtained via randomized smoothing of the outputs. Specifically, for each input x,
+the predictor outputs not only a class y for x, but also a radius δ such that the predicted class is guaranteed
+to be y for any perturbation of x within a ball of (cid:96) radius δ around x. Thus, the predictor h is a pair of
+2
+functions (h ,h ) with h :Rd →[k] and h :Rd →R, so that on input x, the predicted label is h (x) and
+L R L R L
+is guaranteed to not change within an (cid:96) ball of radius h (x) around x.
+2 R
+Definition 5 (Certified accuracy). Given a distribution D over examples and a radius δ ≥0, the certified
+accuracy of a predictor h:Rd×[k]×R at radius δ is defined as
+acc (h,D):= Pr [h (x)=y and h (x)≥δ].
+δ L R
+(x,y)∼D
+In our boosting framework, if the weak learner outputs predictors with radius guarantees as above, we
+would like the boosted predictor to also have radius guarantees. The following theorem shows that it is
+indeed possible to construct such a boosted predictor whenever the class of predictors satisfies a certain
+weak-learning type assumption based on certified accuracy:
+Theorem 3. Let H be a class of predictors with radius guarantees. Let δ∗ be the maximal radius such that
+for any distribution D ∈ ∆(S), there exists an h ∈ H with acc (h,D) ≥ 1 + γ, for some constant γ > 0.
+δ∗ 2 2
+Then, there exists a distribution Q∈∆(H) and function ρ :Rd →R such that the predictor f =(ham,ρ )
+Q Q Q
+has perfect certified accuracy at radius δ∗ on S.
+C Experiments and Algorithm Pseudo Code
+Below we present the pseudo code for our boosting base training procedure. Recall the cyclic learning rate
+schedule where the learning rate used in stochastic gradient descent after processing each minibatch is set to
+1η (1+cos(α π)), (11)
+2 max cur
+17
+
+Algorithm 1 Greedy Stagewise Adversarial Boosting with Offset Approximation
+Input: S ={(x ,y ),...,(x ,y )}, N , η ,T,(cid:15).
+1 1 m m 1 max
+Output: Boosted classifier: f =
+(cid:80)T
+β f .
+t=1 t wt
+1: for t=1 to T do
+2: Initialize the parameters β t ,w t to be zero.
+3: N t =2t−1N 1 .
+4: for epochs in 1 to N t do
+5: for j in 1 to num_batches do
+6: Get next mini batch and update learning rate η using (11).
+7: Update {w t ,β t } via optimizing (9) on the current mini batch.
+8: end for
+9: end for
+10: Update ft ←ft−1+β t f wt .
+11: end for
+12: Output f =
+(cid:80)T
+t=1 β t f wt .
+C.1 Discussion of Training Settings
+Allthe hyperparametersinour experimentswerechosenvia crossvalidation andwediscuss thespecific choice
+of learning rates in the relevant sections. For the adversarial smoothing based method of Salman et al. [2019]
+we used the same settings of hyperparameters as described by the authors in Salman et al. [2019]. The results
+on MNIST and CIFAR-10 are averaged over 10 runs, while the results on ImageNet are averaged over 3 runs.
+Figure 2 shows the comparison of robust accuracy achieved by our ensemble and that achieved by training a
+single model trained via PGD [Madry et al., 2017] or smooth adversarial training [Salman et al., 2019], for a
+fixed training budget as measured in wall clock time. As can be seen our ensemble always achieves higher
+robust accuracies for the same training budget.
+Although we can train our ensembles much faster, the size of the final ensembles that we produce are
+typically larger than the model used for training via existing approaches [Madry et al., 2017, Salman et al.,
+2019]. In the case of CIFAR-10 our ensemble of 5 ResNet-32 models is a bit larger than the ResNet-110
+architecture that we compare to. In the case of ImageNet our ensemble of 5 ResNet-20 or ResNet-32
+architectures are significantly larger than the ResNet-50 architecture that we compare to. In general, the
+choice of the base architecture plays a crucial role in the success of the boosting based approach. Our
+experiments reveal that the base architecture has to be of a certain complexity for the ensemble to be able
+to compete with the training of a single model. Furthermore, at inference time the entire ensemble has to
+be loaded into memory. For our purposes this causes negligible overhead as our ensembles do not contain
+too many base predictors. In general however, this memory overhead at inference should be taken into
+consideration. Furthermore, at inference time, our ensembles allow for a natural parallelism that can be
+exploited via using multiple GPUs. We did not explore this in the current work.
+18

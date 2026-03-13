@@ -1,0 +1,1881 @@
+0202
+guA
+3
+]TI.sc[
+1v83210.8002:viXra
+1
+Rate-Splitting Multiple Access for Overloaded
+Cellular Internet of Things
+Yijie Mao, Member, IEEE, Enrico Piovano, and Bruno Clerckx, Senior Member,
+IEEE
+Abstract
+In the near future, it is envisioned that cellular networks will have to cope with extensive Internet
+of Things (IoT) devices. Therefore, a required feature of cellular IoT will be the capability to serve
+simultaneously a large number of devices with heterogeneous demands and qualities of Channel State
+Informationat the Transmitter (CSIT). In this paper, we focus on an overloadedMultiple-InputSingle-
+Output (MISO) Broadcast Channel (BC) with two groups of CSIT qualities, namely one group of
+users (representative of high-end devices) for which the transmitter has partial knowledge of the CSI,
+the other group of users (representative of IoT devices) for which the transmitter only has knowledge
+of the statistical CSI. We introduce Rate-Splitting Multiple Access (RSMA), a new multiple access
+based on multi-antennaRate-Splitting (RS) for cellular IoT. Two strategies are proposed,namely,Time
+Partitioning–RSMA (TP–RSMA) and Power Partitioning–RSMA (PP–RSMA). The former indepen-
+dently serves the two groups of users over orthogonal time slots while the latter jointly serves the two
+groupsof users within the same time slot in a non-orthogonalmanner. We first show at high Signal-to-
+Noise Ratio (SNR) that PP–RSMA achieves the optimum Degrees-of-Freedom(DoF) in an overloaded
+MISOBCwithheterogeneousCSITqualitiesandthenshowatfiniteSNRthat,bymarryingthebenefits
+ofPPandRSMA, PP–RSMAachievesexplicitsumrategainoverTP–RSMAandallbaselineschemes.
+Furthermore,PP–RSMAisrobusttoCSITinaccuracyandflexibletocopewithQualityofService(QoS)
+rate constraints of all users. The DoF and rate analysis helps us draw the conclusionthat PP–RSMA is
+a powerful framework for cellular IoT with a large number of devices.
+Index Terms
+Overloaded MISO BC, heterogeneous CSIT, Degree of Freedom (DoF), Rate-Splitting Multiple
+Access (RSMA), cellular Internet of Things (IoT)
+This work has been partially supported by the U.K. Engineering and Physical Sciences Research Council (EPSRC) under
+grant EP/N015312/1, EP/R511547/1. A preliminary version of this paper was presented at the 50th Asilomar Conference on
+Signals, Systems and Computers (ACSSC) [1].
+
+2
+I. INTRODUCTION
+The upsurge of urban population and the inevitable trend of urbanization all over the world
+result in an urgent demand on sustainable city transition, which has driven the idea of “smart
+city” [2]. As an indispensable platform for cities to be smarter, Internet of Things (IoT) provides
+advanced solutions in the realms of smart grids, smart homes, smart transportations, etc, with
+the assistance of a large number of IoT devices. The expeditious development of IoT in different
+fields introduces multifarious criteria for IoT network design such as massive connectivity,
+security, trustworthy, ultra-low latency, throughput, ultra-reliability, etc, which in fact imposes
+dramatic pressure on wireless access networks [3], [4]. To explore solutions to meet all those
+criteria, the concept of cellular IoT is introduced by the 3rd Generation Partnership Project
+(3GPP) for Long Term Evolution (LTE) [5].
+Though 5G cellular IoT is still in its infancy, a key enabling technology that has been
+widely recognized is the advanced spectrum sharing and interference management via Multi-
+User Multiple-Input Multiple-Output (MU-MIMO) [3]. By leveraging multiple antennas at the
+transmitter, the spatial resources are exploited which open the door to a well-established multiple
+access technique in current wireless communication networks, namely, Space Division Multiple
+Access (SDMA). By superposing users in the same time-frequency resources and separating
+them through spatial domain, SDMA is capable of boosting the system spectral efficiency and
+achieving the optimal Degree-of-Freedom (DoF) under perfect Channel State Information at the
+Transmitter (CSIT) [6]. Though appealing in its concept, the following drawbacks of SDMA
+limit its application to cellular IoT. The implementation of SDMA using Multi-User Linear
+Precoding (MU–LP) is only suited to an underloaded regime and requires user channel to be
+(semi-)orthogonal with accurate CSIT. The performance of SDMA drops dramatically when the
+network becomes overloaded, or when the user channels lose orthogonality, or when the CSIT
+turns to be imperfect. The achievable DoF of SDMA under imperfect CSIT is in fact suboptimal
+since residual interference is introduced by the distorted interference nulling. To tackle those
+issues, additional user scheduling is required, which would increase latency and impede a larger
+number of IoT connectivity if the transmitter has a limited number of transmit antennas [7].
+An alternative multiple access scheme that has been studied in cellular IoT is power-domain
+Non-Orthogonal Multiple Access (NOMA)1 [8], [9]. The original NOMA which relies on Su-
+perposition Coding (SC) at the transmitter and Successive Interference Cancellation (SIC) at
+the receivers (also known as SC–SIC) has been recognized as the capacity-achieving strategy
+of Single-Input Single-Output (SISO) Broadcast Channel (BC) [10]. A simple application of
+1In the sequel, “power-domain NOMA” is referred by NOMA for simplicity.
+
+3
+SC–SIC to Multiple-Input Single-Output (MISO) BC, however, would hamper the DoF to unity
+since one receiver has to decode data streams of all users. Moreover, the receiver complexity is
+extremely high as thenumber ofSIC deployed at each user scales with the numberof users in the
+system. To compensate the disadvantages of SC–SIC, efforts have been made to another strategy
+based on SC–SIC where users are scheduled into different user groups with users in the same
+group being served by SC–SIC while users across groups being served by SDMA. Although the
+DoFincreases andthereceivercomplexitydecreases byusingsuchstrategy,additionallimitations
+are introduced. Users within each group are required to have aligned channels and users across
+groups should have orthogonal channels. It is still sensitive to CSIT inaccuracy since the inter-
+group interference is managed by SDMA. Meanwhile, the scheduling complexity dramatically
+increases due to the issue of user grouping together with decoding order optimization. Now that
+users within each group are served by SC–SIC, SIC is still required at each IoT device. As most
+of the IoT devices are characterized by small-size, low-power nodes with simple function units
+[4], deploying SIC(s) at each IoT device is actually impractical.
+OnemajorchallengeofMIMOnetworksthathasbeenwidelydiscussedistheCSITacquisition
+[11], [12]. Imperfect channel estimation at the transmitter aggravates SDMA and NOMA to
+support extensive devices in cellular IoT. However, due to the uplink channel estimation error
+caused by quantized feedback in Frequency Division Duplex (FDD) systems or feedback delay
+in Time Division Duplex (TDD), CSIT is inevitably imperfect. In cellular IoT, such phenomenon
+would be more severe since the IoT devices have limited functionalities. Moreover, the channels
+of highly-mobile IoT devices (e.g., Unmanned Aerial Vehicle (UAV) and vehicular equipments)
+change rapidly. Even instantaneous imperfect CSIT cannot be reached and only statistical CSI
+is known at the transmitter [4].
+Inthiswork,motivatedbyalltheaforementionedchallenges,wedesigntwonoveltransmission
+techniques based on Rate-Splitting Multiple Access (RSMA) for cellular IoT. RSMA has been
+recognized as a powerful and generalized physical-layer transmission framework for downlink
+multi-antenna BC that encompasses (and outperforms) SDMA and NOMA (including SC–SIC
+and SC–SIC per group) as sub-schemes [7], [13]–[17]. By splitting the messages of users into
+private and common parts, jointly encoding the common parts into common streams to be
+decoded by multiple users and independently encoding the private parts into the private streams
+to be decoded by the corresponding users only, Rate-Splitting (RS), as the building block of
+RSMA, enables to partially decode the interference and partially treat the remaining interference
+as noise. This contrasts sharply with SDMA that relies on fully treating interference as noise and
+NOMA that relies on fully decoding the interference [7]. Additionally, what is remarkable with
+RS-based strategiesistheirrobustnesstoimperfectCSIT inmulti-antennaBC. Whilethecapacity
+
+4
+region of MIMO BC with perfect CSIT is known and achieved with Dirty Paper Coding (DPC),
+that with imperfect CSIT remains unknown.However, RS has been discoveredto be DoF optimal
+[18]–[20] and outperforms DPC in underloaded multi-antennaBC with imperfect CSIT [17]. The
+optimality of RS in the DoF sense motivates recent studies of precoder design in multi-antenna
+BCs at finite Signal-to-Noise Ratio (SNR) where RS has been shown to achieve higher spectral
+and energy efficiencies than SDMA, NOMA, Orthogonal Multiple Access (OMA), and multicast
+in any network loads, CSIT inaccuracy and user deployments with a diversity of channel strength
+disparities and channel directions in MISO BC [7], [18], non-orthogonal unicast and multicast
+transmission [16], Cloud Radio Access Networks (C-RAN) [21], [22], multi-group multicast
+[23], massive MIMO [24], millimeter-wave systems [25], Simultaneous Wireless Information
+and Power Transfer (SWIPT) [26], cooperative RS in MISO BC with user relaying [27], [28],
+etc. However, most of the above works focus on an underloaded regime where the number
+of messages is less than or equal to the number of transmit antennas, and with equal CSIT
+qualities among users (either with perfect CSIT only or with imperfect CSIT only). As the
+networks of cellular IoT is envisioned to serve simultaneously a large number of devices with
+heterogeneous CSIT qualities and demands, it is expected that many networks will operate in
+overloaded regimes, roughly described as scenarios where the number of messages exceeds the
+number of transmitting antennas. One fundamental example is captured by SISO BC widely
+studied in the literature.
+Contributions: In this work, we focus on an overloaded MISO BC with two groups of CSIT
+qualities, where there is a group of high-end users for which the transmitterobtains instantaneous
+imperfect CSI in each fading state and users are powerful enough to perform SIC and another
+group of users are simple-functioned IoT devices for which the transmitter only knows statistical
+CSI and the users cannot perform SIC. Based on the considered overloaded MISO BC with
+heterogeneous CSIT, we make the following four major contributions:
+1) WeproposetwotransmissionframeworksintherealmofRSMA,namely,TimePartitioning
+(TP)–RSMA and Power Partitioning (PP)–RSMA, where TP–RSMA independently serves
+the two groups of users over orthogonal time slots while PP–RSMA non-orthogonally
+serves the two groups of users within the same time slots. Both are studied in finite and
+high SNR regimes.
+2) In the high SNR regime, the achievable DoF of the proposed RSMA approaches is
+characterized. We show that PP–RSMA achieves strict DoF gains over TP–RSMA. Most
+significantly, PP–RSMA is shown to achieve the optimum DoF region in the considered
+overloaded MISO BC with heterogeneous CSIT, which contrasts with SDMA and NOMA
+strategies achieving suboptimal DoF only.
+
+5
+3) In the finite SNR regime, we study the achievable sum rate of the considered overloaded
+MISO BC with heterogeneous CSIT. With the objective of maximizing the Ergodic Sum
+Rate (ESR) of the high-end users over a long sequence of fading states subject to the
+Quality of Service (QoS) rate constraints of all users, we optimize the precoders and
+demonstrate the proposed PP–RSMA achieves explicit sum rate gain over TP–RSMA and
+other baseline schemes, i.e., PP/TP–SDMA. The anticipated gain of PP–RSMA over TP–
+RSMA at high SNR is obtained at finite SNR as well.
+4) Furthermore, we study the effect of network load, CSIT inaccuracy, QoS rate requirements
+of all users on the system performance. We show through numerical results that the ESR
+gainofPP-based strategiesoverTP-based strategiesincreasesdramaticallywiththenumber
+of IoT users or the QoS rate requirement of those users. RSMA-based strategies achieve
+higher ESR gain over SDMA-based strategies as the QoS rate requirement of high-end
+usersincreases.BymarryingthebenefitsofPPandRSMA,PP–RSMA becomesapowerful
+approach for cellular IoT as it is less sensitive to CSIT inaccuracy and achieves a higher
+spectral efficiency.
+Organizations: The rest of the paper is organized as follows. The system model is described
+in Section II. The proposed RSMA approaches are specified in Section III followed by the DoF
+analysis in Section IV and problem formulation in Section V. The optimization framework is
+discussed in Section VI. Section VII provides the numerical results and Section VIII concludes
+the paper.
+Notations: We use bold upper (lower) letters to denote matrices (column vectors). I denotes
+the identity matrix. ( ) T, ( ) H, , E , tr( ) represent the transpose, Hermitian, Euclidean
+· · k · k {·} ·
+norm, expectation and trace operators, respectively. (0,σ2) denotes the Circularly Symmetric
+CN
+Complex Gaussian (CSCG) distribution with zero mean and variance σ2.
+II. SYSTEM MODEL
+We consider a wireless network where a transmitter with M antennas (i.e. Base Station, BS)
+servesK single-antennareceivers(i.e.users).Thesetofuserindicesisgivenby = 1,...,K .
+K { }
+We focus on the regime K > M, and refer to the underlying channel as the overloaded MISO
+BC. Communication occurs over T uses of the wireless channel, where channel uses are indexed
+by = 1,...,T , and the input-output relationship at the t-th channel use (or time instance)
+T { }
+is described by
+H
+y (t) = h (t)x(t)+n (t), k ,t . (1)
+k k k ∀ ∈ K ∈ T
+In the above, x(t) CM×1 is the transmit signal, subject to a per-codeword average power
+∈
+constraintgivenby 1 T x(t) 2 P;y (t)isthesignalreceivedbyuserk;n (t) (0,1)
+T t=1k k ≤ k k ∼ CN
+P
+
+6
+is the corresponding Additive White Gaussian Noise (AWGN); and h (t) CM×1 is the fading
+k
+∈
+channel vector between the BS and user k. We refer to the power P as the SNR. Moreover, we
+make the widely adopted assumption that Channel State Information at the Receivers (CSIR) is
+perfect. On the other hand, CSIT is subject to uncertainty as explained in what follows.
+A. Channel State Information at the Transmitter
+For each user k and channel use t, the BS obtains a possibly imperfect estimate of the channel
+vector h (t), denoted by h (t). CSIT imperfection is modelled by
+k k
+b h k (t) = h k (t)+h k (t), (2)
+where h
+k
+(t) denotes the corresponding chann
+b
+el estima
+e
+tion error at the BS. For compactness, we
+define H(t) , [h (t) h (t)], H(t) , [h (t) h (t)] and H(t) , [h (t) h (t)], from
+1 K 1 K 1 K
+e ··· ··· ···
+which we have H(t) = H(t) + H(t). For simplicity, we assume that the pairs H(t),H(t)
+b b b e e e
+are i.i.d. over the time index t. This implies that the joint process H(t),H(t) is stationary
+(cid:0) (cid:1)
+b e b
+ergodic, which allows us to drop t and replace time averages by ensemble averages in the regime
+(cid:8) (cid:9)
+b
+T . The joint distribution f b(H,H) is continuous and known to the BS.
+→ ∞ H,H
+For each user k, we define the average channel (power) gain as G , E h 2 . Similarly,
+k k
+b k k
+we define G , E h 2 and G , E h 2 . For many CSIT acquisition mechanisms,
+k k k k (cid:8) (cid:9)
+k k k k
+h and h are uncorrelated. By further assuming that h and h have zero means, we have
+k k (cid:8) (cid:9) (cid:8) (cid:9) k k
+b b e e
+G = G + G , from which we can write G = (1 σ2 )G and G = σ2 G for some
+b k e k k k −b e,k k e k e,k k
+σ2 [0,1]. Note that σ2 is the normalized estimation error variance for user k’s CSIT, e.g.
+e,k ∈ b e e,k b e
+σ2 = 1 represents no instantaneous CSIT, while σ2 = 0 represents perfect instantaneous CSIT.
+e,k e,k
+B. Heterogeneous CSIT and Receiver Capability
+We consider settings where users scheduled by the BS fall into one of two categories: α-users
+that provide instantaneous CSIT feedback and can benefit from spatial multiplexing gains, and
+0-users that do not provide instantaneous CSIT feedback. These are further described as follows.
+• α-users: The BS schedules M such users, indexed by α , [1 : M]. We consider an equal
+K
+normalized CSIT error variance amongst these users, i.e. σ2 = σ2 for all k . To
+e,k e ∈ K α
+facilitate the DoF analysis in Section IV, we assume that σ2 scales with SNR as σ2 =
+e e
+P−α for some CSIT quality parameter α [0, ), where the two extremes α = 0 and
+∈ ∞
+α = correspond to no CSIT and perfect CSIT, respectively. As far as the DoF analysis
+∞
+is concerned, however, we may truncate the CSIT quality parameters as α [0,1], where
+∈
+α = 1 amounts to perfect CSIT in the DoF sense [29]. The regime α (0,1) corresponds
+∈
+to partial CSIT, resulting from imperfections in acquisition (e.g. limited feedback).
+
+7
+• 0-users: These are indexed by 0 = [M +1 : K], and do not provide instantaneous CSIT
+K
+feedback. Nevertheless, the BS has access to statistical CSI (i.e. long-term CSI) for these
+users, based on the knowledge of f
+H,H
+b(H,H). The above implies that σ
+e
+2
+,k
+= 1, h
+k
+= 0
+and h = h , for all k . Note that the terminology 0-users refers to the fact that these
+k k 0
+∈ K b b
+users have a CSIT quality parameter of zero, i.e. σ2 = P−0 for all k .
+e e,k ∈ K 0
+From the above, it is evident that = . The above categorization is motivatedby cellular
+α 0
+K K ∪K
+IoT networks, where α-users represent high-end receivers (e.g. smart phones) with sophisticated
+functions; while 0-users represent low-end receivers (e.g. IoT devices) with simple functions.
+This heterogeneous receiver capability will also influence our design as we will see further on,
+where we focus on schemes in which α-users can implement successive decoding, while 0-users
+are limited to simple decoding only.
+C. Messages, Codewords, Rates and DoF
+TheBShasthemessagesW ,...,W ,eachintendedtoitsrespectiveuser.Inacommunication
+1 K
+session of T channel uses, messages are mapped to a codeword x(t) , x(1) x(T) , which
+{ } { ··· }
+satisfiestheaforementionedaveragepowerconstraint.Thismappingmaydependontheestimates
+H(t) (instantaneous CSIT) and the distribution f b(H,H) (long-term CSIT), but not on the
+{ } H,H
+exact channel realizations H(t) , which are unknown to the BS. Achievable rates are defined in
+b { } b
+the ergodic sense in a standard Shannon theoretic fashion, where (R (P), ,R (P)) denotes
+1 K
+···
+an achievable Ergodic Rate (ER) tuple for a given SNR, and (P) denotes the capacity region.
+C
+A DoF tuple (d , ,d ) is said to be achievable if there exists (R (P), ,R (P)) (P),
+1 K 1 K
+··· ··· ∈ C
+for all P > 0, such that d , lim R k(P) for all k . The DoF region is defined as the
+k P→∞ log(P) ∈ K D
+closure of all achievable DoF tuples.
+III. RATE-SPLITTING MULTIPLE ACCESS
+ThecapacityregionoftheMISO BCwithpartialCSIT isunknowningeneral.Forunderloaded
+settings, i.e. K M, however, the DoF region has been fully characterized and shown to be
+≤
+achievable using RS-based schemes [19], [20]. The optimality of RS in the asymptotically high-
+SNR regime in underloaded settings, shown through DoF analysis, provides firm theoretical
+grounds for further design and optimization in the finite SNR regime, see, e.g., [17], [18].
+Moving back to the overloaded setting of interest, i.e. K > M, the DoF region in this case
+is not known, and the results in [19], [20] do not directly extend to this setting. Nevertheless,
+motivated by the DoF optimality of RS in underloaded settings, in this section we propose two
+schemes that generalize RSMA to the overloadedMISO BC of interest,namely Time Partitioning
+(TP)–RSMA and Power Partitioning (PP)–RSMA.
+
+8
+Fig. 1: TP-RSMA-assisted K-user overloaded MISO BC with heterogeneous CSIT.
+A. Time Partitioning (TP)–RSMA
+A natural strategy is to treat the two sets of users and separately. The set of α-users in
+α 0
+K K
+isolation constitutes an underloaded MISO BC with partial CSIT, for which RS is DoF-optimal
+[19], [20]. On the other hand, for a setting comprising 0-users on their own, simple OMA is
+DoF-optimal, as spatial multiplexing gains collapse due to the absence of CSIT [29]. Therefore,
+the communication session of T channel uses can be partitioned in time into two phases, given
+some TP factor θ [0,1]: one occupying θT channel uses where are served using RS, and
+α
+∈ K
+another occupying the remaining (1 θ)T channel uses in which are served using OMA.
+0
+− K
+This is illustrated in Fig. 1.
+1) Phase 1: In this phase, users in are served using the linearly-precoded RS scheme in
+α
+K
+[18], which is described as follows. For each user k in , the corresponding message W is
+α k
+K
+split into a common part W and a private part W . The common parts are combined into
+c,k p,k
+one common message W . The M +1 resulting messages W ,W , ,W are respectively
+c c p,1 p,M
+···
+encoded into the independent Gaussian data streams s (t) , s (t) , , s (t) , each of
+c 1 M
+{ } { } ··· { }
+length θT. Focusing on an arbitrary channel use and dropping the time index t, the M +1 data
+streams, given by the vector s , [s s s ] T, are linearly precoded using the precoding
+α c 1 M
+···
+matrix P , [p p p ] CM×(M+1). The transmit signal becomes
+α c 1 M
+··· ∈
+x = P s = p s + p s . (3)
+α α c c k k
+k
+X
+∈Kα
+Note that in the above, we have E s sH = I and tr(P PH ) P.
+{ α α} α α ≤
+On the receiver side, each user k in decodes both s and s using successive decoding.
+α c k
+K
+In particular, s is decoded first by treating interference from all other streams as Gaussian
+c
+noise, from which user k recovers the desired common part W . Then s is cancelled from the
+c,k c
+received signal and user k proceeds to decode s , from which the desired private part W is
+k p,k
+recovered. From W and W , the desired message W is retrieved. Consider a given precoding
+c,k p,k k
+
+9
+scheme P and let us assume that θ = 1, which will be relaxed further on. The instantaneous
+α
+Signal-to-Interference-plus-Noise Ratio (SINR) of W and W are given as
+c p,k
+hHp 2 hHp 2
+γ = | k c | , γ = | k k | . (4)
+c,k hHp 2 +1 p,k hHp 2 +1
+| k j | | k j |
+j∈Kα j∈Kα\k
+P P
+R c,k = E {H,H b }{ log(1+γ c,k ) } , R p,k = E {H,H b }{ log(1+γ p,k ) } , (5)
+respectively. The above expectations are taken with respect to the joint process H,H . To
+{ }
+further guarantee that W is successfully decoded by all users, its ER R must not exceed
+c c
+b
+min R k . The rate R is shared across the M users in , where each user k is
+c,k α c α
+{ | ∈ K } K
+allocated a portion C corresponding to the rate of W , such that C = R .
+k c,k k∈Kα k c
+It follows from the above that for any θ [0,1], the ER achieved by each user k in is
+P α
+∈ K
+given by the sum of two contributions, i.e. common and private, as follows
+TP
+R = θ C +R , k . (6)
+k k p,k ∀ ∈ K α
+2) Phase 2: Users in are served in(cid:0)an OMA f(cid:1)ashion, where each user k in is allocated
+0 0
+K K
+a fraction θ of this phase’s duration, such that θ = 1. Without loss of generality,
+0,k k∈K0 0,k
+we assume uniform time allocation among 0-users, i.e., θ = 1 in this work. The signal
+P 0,k K−M
+dedicated to each user k in , transmitted during the designated θ (1 θ)T channel uses, is
+0 0,k
+K −
+given by
+x = p s , (7)
+0 k
+where s is the corresponding data stream of user k in satisfying E s 2 = 1, while p is
+k 0 k 0
+K {| | }
+a precoding vector satisfying p 2 P. As seen from (7), we assume that the same precoding
+0
+k k ≤
+vector is used across all 0-users. While this assumption is mainly motivated by simplicity, no
+loss of optimality is incurred whenever 0-users have similar channel statistics (i.e. statistically
+equivalent). The ER achieved by each user k in is hence given by
+0
+K
+R TP = θ (1 θ)E log 1+γTP , k . (8)
+k 0,k − H 0,k ∀ ∈ K 0
+where γTP = hHp 2 is the instantaneous SN (cid:8) R of (cid:0) decodin (cid:1) g (cid:9) s at the corresponding user.
+0,k | k 0 | k
+B. Power Partitioning (PP)–RSMA
+Contrary to TP–RSMA, in PP–RSMA we propose to treat the two sets of users and
+α 0
+K K
+jointly. In particular, the transmit signal is composed by superimposing a RS signal intended to
+α-users, i.e. similar to the one in (3), and an OMA signal intended to 0-user, i.e. similar to the
+one in (7), yielding
+x = Ps = p s +p s + p s (9)
+0 0 c c k k
+k
+X
+∈Kα
+
+10
+Fig. 2: PP–RSMA-assisted K-user overloaded MISO BC with heterogeneous CSIT.
+where P , [p P ] CM×(M+2) and s , [s sT ] T C(M+2)×1. The stream s in (9) is time-
+0 α ∈ 0 α ∈ 0
+shared amongst 0-users, such that each user k in is allocated a fraction θ of the total
+0 0,k
+K
+duration. Moreover, we have E ssH = I and tr(PPH ) = p 2 + tr(P PH ) P, where the
+{ } k 0 k α α ≤
+latter indicates that the total transmit power is partitioned between 0-users and α-users, hence
+the PP terminology. This scheme is illustrated in Fig. 2.
+At the receiver side, each 0-user k in decodes the designated portion of s , occupying
+0 0
+K
+θ T channel uses, while treating interference from all other streams as noise. On the other
+0,k
+hand, each α-user k in first decodes and cancels the stream s , and then proceeds to decode
+α 0
+K
+s and s as in the regular RS fashion described as part of the TP–RSMA scheme. It follows
+c k
+that for any given precoding scheme P, an α-user k achieves an ER of
+PP
+R = C +R , k . (10)
+k k p,k ∀ ∈ K α
+where C = R = min R k , and R ,R are defined as in (5). Now we
+k∈Kα k c { c,k | ∈ K α } c,k k
+recall that the signal intended to each 0-user k in , occupying a portion θ of s , is decoded
+P 0 0,k 0
+K
+by all users in k . The instantaneous SINR of decoding s at each user is given as
+α 0
+K ∪{ }
+hHp 2
+γPP = | k 0 | , k . (11)
+0,k hHp 2 + hHp 2 +1 ∀ ∈ K 0
+| k c | j∈Kα| k j |
+Each such user achieves an ER of
+P
+R P k P = θ 0,k k∈K m α i ∪ n {k} E {H,H b } log 1+γ 0 P , P k , ∀ k ∈ K 0 , (12)
+n o
+(cid:8) (cid:0) (cid:1)(cid:9)
+which guarantees successful decoding of corresponding messages. Before we proceed, it is worth
+noting that the PP–RSMA scheme leverages the layered superposition nature of the RS scheme,
+and incorporates the 0-users transmission as an additional layer within the RS framework.
+Remark. Notice that besides the proposed PP–RSMA scheme, the PP–SDMA scheme, which
+leverages MU–LP based SDMA and incorporatesthe 0-users transmissionas an additionallayer
+
+11
+within the SDMA framework, has not been investigated yet. It is another scheme we proposed
+in this work. Since PP–SDMA is a subset of PP–RSMA by turning off the common stream (i.e.,
+forcing p 2 = 0), the system model of PP–SDMA is not described exclusively. More details
+c
+k k
+of PP–SDMA are presented in Section VII.
+IV. DOF ANALYSIS
+Having proposed two strategies for the overloaded MISO BC, in this section we analytically
+study and compare their performances. Achievable ERs, however, are highly coupled with design
+variables (i.e. precoding vectors and partition factors), which require non-trivial and intricate
+optimization, as we will see further on. Therefore, it is generally not possible to derive closed-
+form expressions of the ERs suitable for analysis and gaining insights. As an alternative, we
+resort to DoF analysis. In this context, the DoF can be thought of as a first-order approximation
+of the ER in the asymptotically high SNR regime (i.e. the interference limited regime). We
+characterize the DoF performances of TP-RSMA and PP-RSMA, from which we show that the
+latter achieves strictly superior performances. We then prove that PP-RSMA is DoF optimal for
+the considered setting, i.e. it achieves the entire optimal DoF region of the overloaded MISO
+BC. This settles the DoF region problem for this channel.
+A. Achievable DoF
+One advantage of DoF analysis is that it is sufficient to consider low-complexity precoders,
+see, e.g., [18], [23], [30]. With this in mind, we use random precoding vectors for p and p ,
+0 c
+i.e., p = e p 2,p = e p 2 (where e is a null vector with one entry to be equal to
+0 1 0 c 1 c 1
+k k k k
+1 and all other entries to be 0) and Zero-Forcing (ZF) precoding vectors for p k ,
+k α
+{ | ∈ K }
+designed using the channel estimate such that p h . Hence, the residual interference
+k
+⊥ {
+i
+}
+i∈Kα\k
+power from the private streams of other α-users hHp 2 received at α-user k reduces
+i∈ b Kα\k| k i |
+to hHp 2. The achievable DoF of TP–RSMA and PP–RSMA strategies are specified
+i∈Kα\k| k i | P
+in the following.
+P
+e
+1) TP–RSMA: In phase 1 of TP–RSMA, α-users are active and the power allocation is made
+to scale as2
+p 2 = (P)
+c
+k k O (13)
+p 2 = (Pα), k .
+k α
+k k O ∀ ∈ K
+Recall that α corresponds to the CSIT quality parameter, and is in [0,1]. One example of a
+power allocation scheme that satisfies (13) and the transmit power constraint is p 2 = P Pα
+c
+k k −
+2We use the standard Landau notation O(·) (also known as “big-O notation”) to describe power scaling. Specifically, for
+real-valued functions f(P) and g(P),the statement f(P)=O(g(P)) means that limP→∞ |
+|
+f
+g(
+(
+P
+P
+)
+)
+|
+| <∞.
+
+12
+and p 2 = Pα, k . Each user first decodes the common stream s by treating all other
+k k k M ∀ ∈ K α c
+streams as noise. Once the common stream is decoded and removed from the received signal,
+each α-user decodes the intended private stream. From the SINR expressions specified in (4)
+and the power allocation in (13), it follows that at each α-user k, the received SINRs of the
+common stream and private stream scale as γ = (P1−α) and γ = (Pα), respectively3.
+c,k p,k
+O O
+Hence, after normalizing by the TP factor θ, the DoF achieved by common stream s is 1 α
+c
+−
+while the DoF achieved by each private stream is α. By evenly sharing the common stream
+among α-users, the per user symmetric normalized DoF is the sum of evenly allocated DoF of
+the common stream 1−α and the DoF of its private stream α, which is equivalent to 1+(M−1)α.
+M M
+In phase 2 of TP–RSMA, 0-users are served in an orthogonal fashion with full power allocated
+to the stream s for a fraction θ of the duration of phase 2. The SNR γTP of a 0-user k scales
+k 0,k 0,k
+as (P). The DoF therefore collapses to 1 after normalizing by the time duration θ (1 θ).
+0,k
+O −
+As uniform time allocation among 0-users is assumed in this work, i.e., θ = 1 , the DoF
+0,k K−M
+of each user is 1 after normalizing by the time partition 1 θ.
+K−M −
+By incorporating the TP factor θ [0,1], the actual DoF d achieved by user k using TP–
+k
+∈
+RSMA is given by
+θ1+(M−1)α, k
+dTP = M ∈ K α (14)
+k
+((1 θ) 1 , k
+− K−M ∈ K 0
+2) PP–RSMA: In order to partition the signal-space through the power domain, the power
+allocation of the PP–RSMA scheme is carried out such that
+p 2 = (P)
+0
+k k O
+(15)
+p 2 + p 2 = (Pβ),
+c k
+k k k k O
+k
+X
+∈Kα
+where β [0,1] is the PP factor. The bottom β power levels are reserved for the transmission
+∈
+to α-users while the top 1 β power levels are occupied by the transmission to 0-users.
+−
+At the receiver side, each 0-user directly decodes the common stream s by treating interfer-
+0
+ence from streams intended to α-users as noise. The SINR of each 0-user to decode s given in
+0
+(11) scales as (P1−β). The DoF achieved by 0-users is 1 β after normalizing by the time
+O −
+3 Withoutlossofgenerality,weassumethechannel(power)gainofeachuserkh k2 isboundedaboveandbelowbypositive
+k
+constants, i.e., kh
+k
+k2 ∈ [∆
+1
+,∆
+2
+]. As |hH
+k
+p c|2 = |hH
+k
+e
+1
+|2kp ck2 ≥ ∆
+1
+kp ck2, |hH
+k
+p
+k
+|2 ≤ kh
+k
+k2kp
+k
+k2 = ∆
+2
+kp
+k
+k2, and
+P
+i∈Kα\k
+|hH
+k
+p i|2+1 = P
+i∈Kα\k
+|h
+e
+H
+k
+p i|2+1 ≤ σ
+e
+2∆
+2
+P
+i∈Kα\k
+kp ik2+1, following (4), we therefore obtain that SINR
+γ ≥ ∆1kpck 2 scales as O(P1−α). Similarly, we could obtain that SINR γ scales as O(Pα).
+c,k ∆2kpkk2+σe 2∆2Pi∈Kα\kkpik2+1 k
+
+13
+(a) TP–RSMA (b) PP–RSMA
+Fig. 3: TP–RSMA and PP–RSMA for M = 2 and K = 3. Define the normalized spatial-
+multiplexing as the sum-DoF normalized by both TP–RSMA and PP–RSMA. The normalized
+spatial-multiplexing gain in rectangles with light and dark shadings is 1 and 2 respectively.
+duration θ . As θ = 1 , the DoF of each 0-user is 1−β . For α-users, the power of (Pβ)
+0,k 0,k K−M K−M O
+is further split as
+p 2 = (Pβ)
+c
+k k O (16)
+p 2 = (Pτ), k ,
+k α
+k k O ∀ ∈ K
+where τ β. One example power allocation scheme that satisfies (15), (16) and the transmit
+≤
+power constraint is p 2 = P Pβ, p 2 = Pβ Pτ and p 2 = Pτ, k . The
+k 0 k − k c k − k k k M ∀ ∈ K α
+respective SINRs of each α-user to decode the intended common and private streams scale as
+(Pβ−τ) and (Pτ), which follows the SINR specified in (4). Hence, the DoF achieved by the
+O O
+common stream is β τ and that achieved by each private stream is τ.
+−
+It remains to highlight that as the channel estimation error σ2 scales as (P−α), the inter-
+e,k O
+ference experienced at each α-user scales as (Pτ−α) under the assumption of ZF precoding. If
+O
+τ α, the interference is drowned by noise. Knowing that τ β, we can set τ = min α,β .
+≤ ≤ { }
+When β α, ZF is sufficient for α-users to reduce the interference to the power level of noise
+≤
+and RS is unnecessary (i.e. there is no benefit DoF wise to allocate any power to the common
+stream s ). When β > α, each α-user needs to rely on RS to manage interference.
+c
+Based on the above analysis, we obtain that each private stream achieves a DoF of min α,β
+{ }
+while the common stream achieves a DoF of β min α,β . By evenly allocating the DoF of
+− { }
+the common stream among users, the symmetric DoF achieved by user k using PP–RSMA is
+β+(M−1)min{α,β}, k
+dPP = M ∈ K α (17)
+k ( 1−β , k
+K−M ∈ K 0
+Fig. 3 illustrates an example of TP–RSMA and PP–RSMA strategies specified in this section.
+
+14
+1 1
+d3 0.5 d3 0.5
+0 0
+0 0
+1 1 0.5 0 1 1 0.5 0
+d 2 d 1 d 2 d 1
+Fig. 4: DoF region achieved by PP–RSMA (left) and TP–RSMA (right) for M = 2 and K = 3,
+and CSIT quality α = 0.5 for the first two users. The points are A = (α,α,1 α), B = (1,α,0)
+−
+and C = (α,1,0). It can be seen that A cannot be achieved through time partitioning.
+3) Gain of PP–RSMA over TP–RSMA: Next, we demonstrate the DoF gain of PP–RSMA
+over TP–RSMA. Symmetric DoFs achieved by α-users using TP–RSMA and PP–RSMA are
+compared given that 0-users maintain the equal DoF in both transmission strategies, i.e., dTP =
+k
+dPP, k . To achieve this, we have β = θ according to equation (14) and (17). Hence, the
+k ∀ ∈ K 0
+DoF achieved by α-user k using PP–RSMA is
+θ+(M−1)α, α θ
+dPP = M ≤ ,k . (18)
+k ( θ, α θ ∈ K α
+≥
+We obtain that dPP dTP, k by comparing (14) and (18). Specifically, it follows that for
+k ≥ k ∀ ∈ K
+any α in [0,1], we have
+θ +(M 1)min θ,α 1+(M 1)α
+− { } θ − , θ [0,1] (19)
+M ≥ M ∀ ∈
+when comparing the DoF for α-users in (14) and (18). Moreover, when 0 < θ,α < 1, this
+inequality is strict. In other words, under the condition of partial CSIT for α-users and non-zero
+non-unity power partitioning, PP–RSMA achieves a strict DoF improvement for α-users over
+TP–RSMA.
+With this example, we have shown the gain of PP–RSMA over TP–RSMA for a specific
+symmetric setup. While this provides an indication that PP–RSMA outperforms TP–RSMA, the
+question is whether this gain holds for general power and time allocation. To understand it, we
+need to characterize the achievable DoF region of both schemes. Surprisingly, we show that
+not only PP–RSMA outperforms TP–RSMA but in fact can achieve the optimal DoF region as
+we will show in Section IV-B. Before getting into the details, we illustrate an example of the
+achievableDoF regions by the two schemes in Fig. 4 where the BS is equipped with two transmit
+antennas and serves two α-users (user 1 and user 2) and one 0-user (user 3). In both subfigures,
+the DoF achieved in each rectangle (which is also known as a time-power resource block) is
+equal to the area of rectangle times the normalized spatial-multiplexing gain (2 for ZF and 1 for
+
+15
+degraded). If user 3 is switched off, both TP–RSMA and PP–RSMA reduce to conventional RS
+and the sum DoF achieved by user 1 and user 2 is 1+α. Once user 3 is enabled, the sum DoF
+of TP–RSMA becomes θ(1+α)+(1 θ) = 1+θα. In comparison, the sum DoF of PP–RSMA
+−
+maintains 1+α if β = θ α while the DoF becomes θ +α+(1 θ) = 1+θ if β = θ < α.
+≥ −
+The sum DoF achieved by PP–RSMA is still higher than that achieved by TP–RSMA.
+B. Optimum DoF Region of Overloaded MISO BC
+The achievableDoF tuples in (14) and (18) are obtained under the assumptionthat random and
+ZF precoding is adopted at the BS, α-users achieve a symmetric DoF, i.e., d = d , k and
+k α α
+∀ ∈ K
+0-users achieve a symmetric DoF, i.e., d = d , k for both TP–RSMA and PP–RSMA.
+k 0 0
+∀ ∈ K
+Considering the symmetric DoF helps gain insights into the potential gains of PP-RSMA over
+TP-RSMA. However, when considering more general scenarios, achievable DoF tuples assume
+a wide variety of tradeoffs characterized by achievable and optimum DoF regions. Interestingly,
+the optimum DoF region for the considered setup is achieved through variants of PP–RSMA,
+which is characterized in Theorem 1.
+Theorem 1. For the overloaded MISO BC described in Section II, the optimum DoF region
+D
+is given by
+d 0, k (20)
+k
+≥ ∀ ∈ K
+d + d 1+( 1)α, , 1. (21)
+k k α
+≤ |S|− ∀S ⊆ K |S| ≥
+X
+k∈S k
+X
+∈K0
+The proof is relegated to Appendix I. We prove the optimality of by showing that it is
+D
+both achievable and an outer bound of the optimal region. The achievability of the DoF region
+is proved based on generalizing the PP–RSMA scheme of Section III-B and the outer bound of
+the optimal region is proved based on the sum DoF upper bound in [29].
+To better visualize the optimum DoF region, an example is given in Fig. 4 (left) for a channel
+with M = 2 and K = 3, where the CSIT quality of the first two users is α = 0.5. Moreover,
+for the sake of comparison, the DoF region achieved through TP–RSMA is shown in Fig. 4
+(right). The TP–RSMA region is obtained by time-sharing the DoF of 1 achieved by user 3 with
+the DoF region of the two remaining users achieved through RS (see [6]). For the PP–RSMA
+region, the facet given by A B C is in fact sum-DoF optimum. Hence, user 3 can be served
+− −
+with non-zero DoF without influencing the Sum-DoF (e.g. point A). On the other hand, serving
+user 3 with non-zero DoF through TP–RSMA is not possible without decreasing the sum-DoF
+as it requires moving away from the segment B C.
+−
+
+16
+14
+12
+10
+8
+6
+4
+2
+0
+0 5 10 15 20 25 30 35
+SNR (dB)
+)zH/s/tib(
+RSE
+PP-RSMA 10 dB: M=4
+PP-RSMA 10 dB: M=2
+PP-RSMA 20 dB: M=4
+PP-RSMA 20 dB: M=2
+TP-RSMA: M=4
+TP-RSMA: M=2
+Fig. 5: Ergodic sum rate of α-users based on random and ZF precoding. K = 60, α = 0.5 and
+0
+θ = 0.5. Same rates for the 0-users are maintained for the cases when the long-term SNR of the
+0-user is 10 dB and 20 dB lower than that of α-users.
+C. The Role of DoF Analysis
+Even though the low-complexitylinear precoders discussed in IV-A achieve the optimum DoF,
+they are suboptimal in the rate sense. Therefore, the question of how the DoF analysis in Section
+IV affects the precoder design and the optimization process arises.
+To highlight the potential role of DoF analysis in guiding the precoder design, we illustrate
+in Fig. 5 the ESR achieved by the DoF-motivated low-complex linear precoding scheme where
+precoders p ,p of the common streams are chosen as random precoding vectors while the
+0 c
+precoders of the private streams for α-users are designed by ZF over the channel estimates. We
+consider two different settings with a massive connection to 0-users being guaranteed. In the
+first setting, the BS has two transmit antennas (M = 2) and serves two single-antenna α-users
+( = 1,2 ) and 60 single-antenna 0-users ( = 3,4,...,62 ). In the second setting, the BS
+α 0
+K { } K { }
+has four transmit antennas (M = 4) and serves four single-antenna α-users ( = 1,2,3,4 )
+α
+K { }
+and 60 single-antenna 0-users ( = 5,6,...,64 ). The CSIT quality factor of α-users is fixed
+0
+K { }
+to α = 0.5. Fig. 5 illustrates the ESR (i.e., u = 1, k ) of α-users versus their long-term
+k α
+∀ ∈ K
+SNR for both TP–RSMA and PP–RSMA strategies when α = 0.5 and θ = 0.5. To ensure the
+fairness of comparison, the ERs of all 0-users are maintained to be the same for both TP–RSMA
+and PP–RSMA. This is achieved by tuning the power allocated to the data stream of the 0-users
+while using RS for α-users in PP–RSMA. Two different cases are considered where the long-
+term SNR of the 0-users is 10 dB or 20 dB lower than that of the α-users. As the α-and 0-users
+are scheduled separately in TP–RSMA, the ESR remains the same in the specified two cases.
+The difference in SNR of the 0-users only affects the ESR in PP–RSMA. According to Fig. 5,
+
+17
+it is evident that the proposed PP–RSMA achieves obvious ESR gain over TP–RSMA in both
+cases. As the difference between the SNR of α-users and that of 0-users becomes larger, the
+ESR gain increases, which cannot be observed from DoF analysis.
+V. PROBLEM FORMULATION
+The capacity region and the corresponding capacity achieving strategy of overloaded multi-
+antenna networks with heterogeneous CSIT remains an open problem. We therefore explore
+the achievable rate regions achieved by TP–RSMA and PP–RSMA. The optimized precoders
+obtained by solving the ESR problem of PP–RSMA specified in this section is guaranteed to
+achieve the optimal DoF performance characterized in Theorem 1.
+Following [18], we aim at designing precoders at BS to maximize the ESR of α-users for the
+transmission carried out over a long sequence of channel uses and the problem is subject to the
+long-termQoSrateconstraintsofallusers (includingα-usersand 0-users)and long-termtransmit
+power constraint. For a given scheme X “TP”,“PP” , the corresponding ESR is defined as
+∈{ }
+X
+R . However, such ESR problem requires to design precoders (including power) across
+k∈Kα k
+different channel states, which is intractable. To ensure the tractability of the problem, we follow
+P
+[18]toreplacethelong-termtransmitpowerconstraintwithshort-termtransmitpowerconstraints
+for each channel state and equivalently transform the ESR problem to the Average Sum Rate
+(ASR) maximization problem in the following.
+A. Average Sum Rate Maximization Problem
+We first introduce the definition of Average Rates (ARs) as specified in Definition 1. AR is
+defined as the expectation of rate over the CSIT uncertainty for a given instantaneous channel
+estimate. It is accessible at the BS since the long-term conditional density f b(H H) is
+H|H |
+perfectly known at the BS.
+b
+Definition 1. The AR R of decoding stream s ,i 0,c,p at user k,k for a given
+i,k i
+∈ { } ∈ K
+channel estimate H and precoder P(H) is4
+b
+b R i,k = b E H|H b log(1+γ i,k ) | H , (22)
+where γ isspecified in (4) when i c,p . n γ = γTP if we co o nsider TP–RSMA andγ = γPP
+i,k b ∈ { } 0,k 0,k b 0,k 0,k
+if we consider PP–RSMA.
+Notice that AR is different from ER since ER considers all possible channel states while AR
+considers one channel only. Their relation is obtained as [18]:
+R i,k = E H b E H|H b log(1+γ i,k ) | H = E H b R i,k . (23)
+n n oo n o
+b b
+4When i=p, the stream to be decoded at user k is s
+p
+=s
+k
+.
+
+18
+Define the portion of AR corresponding to the rate of W as C such that C = R ,
+c,k k k∈Kα k c
+where R is the AR of the common stream that must not exceed min R k . R is
+c c,k P α c
+b { | ∈ Kb} b
+obtained by approximating the ER of the common stream R using its lower bound [18], which
+c
+b b b
+is given as
+k m ∈K in α E H b R c,k ≥ E H b min R c,k | k ∈ K α . (24)
+n n oo n n oo
+Therefore, the respective AR of eabch user for TP–RSMAb and PP–RSMA are given as
+θ C +R , k C +R , k
+RTP = k p,k ∀ ∈ K α , RPP = k p,k ∀ ∈ K α , (25)
+k k
+(θ
+b
+0,(cid:0)k
+(
+b
+1
+−
+θ
+b
+)R
+0(cid:1),k
+,
+∀
+k
+∈ K
+0
+(θ
+0,k
+min
+b
+i∈Kα∪
+b
+{k}
+{
+R
+0,k
+}
+,
+∀
+k
+∈ K
+0
+b b
+where θ is a short-term TP factor adaptive to each channel state. Following the Law of Large
+b b b
+Number (LLN), ER of each user is approximated by averaging AR over all channel states, i.e.,
+b
+R X 1 T RX(t) if T is a sufficiently large number, where RX(t) is the AR for a given chan-
+k ≈ T t=1 k k
+nel stateH(t).With theARintroducedin (25), thelong-termQoSERconstraintscan be replaced
+P
+b b
+with the short-term AR for each channel state, i.e., RX Rth , where X “TP”,“PP” . The
+{ k ≥ k } H ∈{ }
+ESR objective function is also approximated as R X 1 T RX(t).
+k∈ b Kα k ≈ T t=1 k∈Kα k
+Based on the above approximation, the dependencies among channel states are removed.
+P P P
+b
+Maximizing the ESR under short-term QoS average rate and transmit power constraints is
+achieved by optimizing precoders such that the ASR, i.e. RX(t), is maximized for each
+k∈Kα k
+H(t). Focusing on an arbitrary channel use and dropping the time index t, we aim at solving
+P
+b
+the respective ASR optimization problems for TP–RSMA and PP–RSMA as
+b
+max RTP (26a)
+k
+θ b ,P,bc
+k
+X
+∈Kα
+s.t. RTP
+Rthb
+, k (26b)
+k ≥ k ∀ ∈ K
+C R , k (26c)
+b k′ c,k α
+≤ ∀ ∈ K
+k
+X
+′∈Kα
+bH b
+tr(P P ) P (26d)
+α α ≤
+p 2 P (26e)
+0
+k k ≤
+c 0 (26f)
+≥
+0 θ 1 (26g)
+b≤ ≤
+and b
+max RPP (27a)
+k
+P,bc
+k
+X
+∈Kα
+s.t. RPP
+Rthb
+, k (27b)
+k ≥ k ∀ ∈ K
+b
+
+19
+tr(P P H )+ p 2 P (27c)
+α α k 0 k ≤
+(26c),(26f) (27d)
+where c = [C C C ] is the AR allocation for the common stream s . It is required to be
+1 2 M c
+···
+jointly optimized with the precoder so as to maximize the ASR. Rth is the QoS rate requirement
+k
+b b b b
+of user k. The TP factor θ is jointly optimized with precoders in order to maximize ASR. In
+PP–RSMA, constraint (27c) is a sum power constraint for all precoders since all users in
+b K
+are served simultaneously. This contrasts with separated power constraints (26d) and (26e) for
+TP–RSMA where users in and are served in orthogonal time phases.
+α 0
+K K
+VI. OPTIMIZATION FRAMEWORK
+In this section, the optimization frameworks proposed to solve the stochastic optimization
+problems (26) and (27) are illustrated. Specifically, we follow the approach proposed in [18] to
+transform the original stochastic problems into the deterministic problems by using the Sample
+Average Approximation (SAA) approach and the transformed problems are solved by using
+the Weighted Minimum Mean Square Error (WMMSE)-based optimization algorithms. In the
+following, we first specify the SAA and WMMSE-based algorithm to solve PP–RSMA problem
+(27) and then extend it to solve TP–RSMA problem (26).
+A. Sample Average Approximation (SAA) approach
+Though the BS only has partial CSI of users in and no knowledge of CSI of users in , a
+α 0
+K K
+channel sample of size N (indexed by = 1,...,N ) can be generated since the conditional
+N { }
+density f b(H H) is known at the BS, which is given by
+H|H |
+H(N) , H(n) = H+H(n) H,n , (28)
+b
+| ∈ N
+where H = [h h 0] with 0
+nCM×(K−M)
+for 0-users. Under
+o
+the assumption of finite SNR
+1 M b e b
+··· ∈
+and bounded transmit power, the AR R specified in equation (22) is approximated as
+i,k
+b b b N
+1
+R log
+1+γ(n)
+, (29)
+i,k ≈ b N i,k
+X n=1 (cid:16) (cid:17)
+b
+R
+b(N)(H b
+)
+i,k
+where γ(n) is the SINR calculated for th|e nth cha{nznel sampl}e in H(N). The precoder P in (29)
+i,k
+remains static over all the N channel samples. R(N) (H) is the approximated AR. Based on LLN,
+i,k
+we have R = lim R(N) (H).
+i,k N→∞ i,k
+b b
+By adopting the aforedescribed SAA approach, the stochastic optimization problem (27) is
+b b b
+approximated by the following deterministic problem with the average common and private rates
+approximated by equation (29) for all channel samples, which is given by
+max C
++R(N)
+(30a)
+P,bc k p,k
+k
+X
+∈Kα
+b b
+
+20
+s.t. C +R(N) Rth, k (30b)
+k p,k ≥ k ∀ ∈ K α
+θ min R(N) Rth, k (30c)
+0b,k i∈Kα b ∪{k}{ 0,i } ≥ k ∀ ∈ K 0
+C
+Rb(N),
+k (30d)
+k′ ≤ c,k ∀ ∈ K α
+k
+X
+′∈Kα
+b b
+(26f),(27c) (30e)
+B. WMMSE Algorithm
+Though problem (30) is still non-convex, it fits to be solved by WMMSE algorithm which is
+suited for non-convex optimization problems when non-convexity comes from rate expressions.
+The WMMSE algorithm proposed in [18] is extended to solve (30).
+All users first employ respective equalizers g k to decode s , the estimated
+0,k 0
+{ | ∈ K}
+common stream for 0-user is s = g y . For α-users, once s is decoded and removed
+0,k 0,k k 0
+from the received signal, the equalizers g k are used at the corresponding α-
+c,k α
+{ | ∈ K }
+b
+users to decode s followed by the equalizers g k to decode private streams. The
+c k α
+{ | ∈ K }
+estimated common and private streams at each α-user k are given by s = g (y hHp s )
+c,k c,k k − k 0 0,k
+and s = g (y hHp s hHp s ). The Mean Square Error (MSE) of decoding the
+p,k k k − k 0 0,k − k c c,k
+b b
+corresponding stream s at user k is defined as
+i
+b b b
+ε = E s s 2 = gi 2T 2 gih H p +1, (31)
+i,k {| i,k − i | } | k| i,k − ℜ{ k k i }
+wherei 0,c,p ifk andi = 0ifk .T = hHp 2+1,T = T + hHp 2
+∈ { } ∈ K α b ∈ K 0 p,k j∈Kα| k j | c,k p,k | k c |
+and T = T + hHp 2.
+0,k c,k | k 0 | P
+The Weighted MSE (WMSE) of decoding s at user k is defined as
+i
+ξ = w ε log (w ), (32)
+i,k i,k i,k − 2 i,k
+where w is the weight associated with MSE ε . By minimizing ξ over w and g , the
+i,k i,k i,k i,k i,k
+corresponding WMMSE metric is defined as
+ξMMSE = min ξ . (33)
+i,k i,k
+w ,g
+i,k i,k
+The following proposition is then obtained.
+Proposition1. Definetheinstantaneousrateofdecodingstreams atuserk asR = log(1+γ ),
+i i,k i,k
+the relation between R and its WMMSE follows that:
+i,k
+ξMMSE = 1 R . (34)
+i,k − i,k
+Proof: Readers are referred to [18] for more details of proof. To briefly summarize, the
+∂ξ
+equivalence in (34) is due to the fact that the optimal equalizer calculated by i,k = 0 is
+∂g
+i,k
+
+21
+gMMSE = p H h (T )−1. (35)
+i,k i k i,k
+∂ξ
+By further solving i,k = 0, we have
+∂w i,k g i,k=g
+i
+M
+,k
+MSE
+(cid:12)
+(cid:12) wMMSE = ε−1(gMMSE) = (T h H p 2)−1T . (36)
+(cid:12) i,k i,k i,k i,k −| k i | i,k
+Substituting (wMMSE,gMMSE) back to ξ , we obtain that ξMMSE = log (wMMSE) = 1 R . The
+i,k i,k i,k i,k 2 i,k − i,k
+proof is completed.
+Proposition 1 establishes the connection between rate and WMMSE metric for a given instan-
+taneous channel use. It is further extended to the AR-WMMSE relationship by approximating
+the AR using average WMMSE over a channel sample H(N) of size N. Define the Average
+WMSE (AWMSE) of decoding stream s at user k as
+i
+N
+1
+ξ(N)
+=
+ξ(n),
+(37)
+i,k N i,k
+n=1
+X
+where ξ(n) is the WMSE calculated b for the nth channel sample in H(N) and w(n),g(n) are
+i,k i,k i,k
+associated with the nth channel sample in H(N). For compactness, we also define w = w(n)
+i,k { i,k |
+n and g = g(n) n as the respective MSE weights and equalizers for user k to
+∈ N} i,k { i,k | ∈ N}
+decode s . We obtain the following AR–WMMSE relationship
+i
+ξMMSE(N)
+= min
+ξ(N)
+= 1
+R(N),
+(38)
+i,k w ,g i,k − i,k
+i,k i,k
+which can be proved by emplboying the same mebthod as in Pbroposition 1.
+Based on (38), the target problem (30) for PP–RSMA is then equivalently transformed into
+the following WMMSE problem:
+min X
++ξ(N)
+(39a)
+P,xb,W,G k p,k
+k
+X
+∈Kα
+s.t. X +ξ(N) 1 b R b th, k (39b)
+k p,k ≤ − k ∀ ∈ K α
+θ max ξ(N) θ Rth, k (39c)
+0b,k i∈K b α∪{k}{ 0,i } ≤ 0,k − k ∀ ∈ K 0
+X +1b
+ξ(N),
+k (39d)
+k′ ≥ c,k ∀ ∈ K α
+k
+X
+′∈Kα
+b b
+x 0 (39e)
+≤
+(27c), (39f)
+b
+where x = [X X X ] is the transformation of c. It follows that x = c. W ,
+1 2 M
+··· −
+w ,w ,w k ,k′ and G , g ,g ,g k ,k′ are the
+0,k′ c,k p,k α 0,k′ c,k p,k α
+{ b b |b ∈ K b ∈ K} { b | ∈ K b ∈ K} b
+respective MSE weights and equalizers.
+
+22
+Algorithm 1: WMMSE-based AO algorithm
+1
+Initialize: t 0, P, ASR[t];
+←
+repeat
+2
+3
+t t+1, P[t−1] P;
+← ←
+4
+W[t] WMMSE(P[t−1]); W[t] GMMSE(P[t−1]);
+← ←
+5
+update (P,x) by solving (40);
+6
+until ASR[t] ASR[t−1] ǫ;
+| − | ≤
+b
+Though the joint optimization of variables (P,x,W,G) in (39) is still non-convex, it has the
+property of block-wise convexity in each block of (P,x), W and G if other two blocks are
+b
+fixed, which fits to be solved by using Alternating Optimization (AO) as illustrated in Algorithm
+b
+1. At the [t]-th iteration, the respective optimal solutions of equalizers and weights are G[t] =
+GMMSE(P[t−1]), W[t] = WMMSE(P[t−1]) with each corresponding element calculated by (35) and
+(36). Then, we obtain the problem to update (P[t],x[t]) at the [t]-th iteration by substituting
+G[t],W[t] back to (39), which is given by
+b
+min (X + p H Ψ¯ p +t¯ 2 ¯f H p +w¯ ν¯ )
+P,xb k j p,k j p,k − ℜ p,k k p,k − p,k
+k
+X
+∈Kα j
+X
+∈Kα
+(cid:8) (cid:9)
+s.t. X + p bH Ψ¯ p +t¯ 2 ¯f H p +w¯ ν¯ 1 Rth, k
+k j p,k j p,k − ℜ p,k k p,k − p,k ≤ − k ∀ ∈ K α
+j
+X
+∈Kα
+(cid:8) (cid:9)
+b
+θ max p H Ψ¯ p +t¯ 2 ¯f H p +w¯ ν¯ θ Rth, k (40)
+0,k i∈Kα∪{k} j 0,i j 0,i − ℜ 0,i 0 0,i − 0,i  ≤ 0,k − k ∀ ∈ K 0
+j∈K Xα∪{c,0}
+(cid:8) (cid:9)
+
+X
+k′
++1
+≥
+p H
+j
+Ψ¯
+c,k
+p
+j
++t¯
+c,k −
+2
+ℜ
+¯f
+c
+H
+,k
+p
+c
++w¯
+c,k −
+ν¯c,k ,
+∀
+k
+∈ K α
+k
+X
+′∈Kα j∈K Xα∪{c}
+(cid:8) (cid:9)
+b
+(27c),(39e)
+where Ψ¯ ,t¯ ,¯f ,w¯ ,ν¯ ,i 0,c,p are averaged over N channel samples, i.e., w¯ =
+i,k i,k i,k i,k i,k i,k
+∈ { }
+1 N w(n). Ψ (n),t(n),f(n),ν(n) are updated in nth channel sample as
+N n=1 i,k i,k i,k i,k i,k
+2
+t(n) = w(n) g(n) , Ψ (n) = t(n)h(n) (h(n) ) H, f(n) = w(n)h(n) (g(n) ) H, ν(n) = log w(n) . (41)
+Pi,k i,k i,k i,k i,k k k i,k i,k k i,k i,k 2 i,k
+(P[t],x[t]) are(cid:12)upd(cid:12)ated by solving the convex Quadratically Constrained Quad(cid:16)ratic(cid:17)Program
+(cid:12) (cid:12)
+(cid:12) (cid:12)
+(QCQP) (40) via interior-point methods. The blocks W, G and (P,x) are updated iteratively
+b
+until the convergence of the ESR5.
+b
+When solving problem (26) for TP–RSMA, though the TP factor θ increases the complexity
+to solve the problem, we observe that for a fixed θ, the original problem can be decomposed into
+b
+b
+5TheAOalgorithmisguaranteedtoconvergetoastationarypointof(27)givenafeasibleinitialpoint.Theproofofconvergence
+is inline with [18], which is not specified here due to the space limitation. Readers are referred to [18] for more details.
+
+23
+(a) PP–RSMA (b) PP–SDMA (c) TP–RSMA (d) TP–SDMA
+Fig. 6: Comparison of the four transmission strategies in the numerical results
+subproblems for α-users and 0-users. The subproblem for α-users is the same as the one studied
+in [18] with an additional QoS rate constraint for each user which can be solved directly by
+using the SAA and WMMSE algorithm proposed in [18] while the subproblem for 0-users can
+be written into max min RTP such that constraints RTP Rth, k and p 2 P
+p0 k∈K0 k k ≥ k ∀ ∈ K 0 k 0 k ≤
+are met. After using SAA, it is a convex optimization problem which can be solved directly
+b b
+by using interior-point method. Therefore, by tuning θ and calculate the ASR for each θ, the
+optimal θ to maximize the ASR in (26) can be obtained.
+b b
+b
+VII. NUMERICAL RESULTS
+In this section, the ESR performance of the proposed TP–RSMA and PP–RSMA achieved
+by solving problem (26) and (27) is studied. Random channel generation is considered where
+the exact channel h of user k,k has i.i.d. complex Gaussian entries drawn from the
+k
+∈ K
+distribution (0,1) and the channel estimation error h of α-user k,k has entries
+k α
+CN ∈ K
+drawn from distribution (0,σ2 ) with σ2 = P−α. The instantaneous CSIT of 0-users is
+CN e,k e,k e
+unknown.TheoptimizationframeworksspecifiedinSectionVIisadoptedtodesigntheprecoders
+for TP–RSMA and PP–RSMA in this subsection. We use the CVX toolbox [31] to solve the
+approximated WMMSE problems. A transmission over T = 100 channel users is considered,
+i.e., = 1,...,100 . For each channel use, the AR of each user is approximated using
+T { }
+SAA method over the channel sample of size N = 1000. The precoders are initialized at the
+transmitter by the Maximum Ratio Transmission (MRT) and Singular Value Decomposition
+(SVD) method as studied in [18]. For both TP–RSMA and PP–RSMA, p is initialized by
+0
+a random precoding vector with p = p 2. p is initialized as p = √p p and p is the
+0 0 c c c c c
+|| ||
+largest left singular vector of the channel estimate [h , ,h ]. The precoder p of the private
+1 M k
+···
+stream for α-user k is initialized as p = √p h b k . p ,p ,p are the power b allocate b d to the
+k k b 0 c k
+||h kb|| b
+corresponding precoders and they satisfy that p +p + p = P if PP–RSMA is considered
+0 c k∈Kα k
+or p +p = P, p = P if TP–RSMA is considered.
+0 c k∈Kα k P
+The following four strategies as illustrated in Fig. 6 are compared in the numerical results:
+P
+
+24
+14
+12
+10
+8
+6
+4
+2
+0
+0 5 10 15 20 25 30 35
+SNR (dB)
+)zH/s/tib(
+RSE
+12
+PP-RSMA 10 dB
+PP-RSMA 20 dB 10
+TP-RSMA
+8
+6
+4
+2
+0
+0 5 10 15 20 25 30 35
+SNR (dB)
+(a) Optimized precoding
+)zH/s/tib(
+RSE
+PP-RSMA 10 dB
+PP-RSMA 20 dB
+TP-RSMA
+(b) Random and ZF precoding
+Fig. 7: Ergodic sum rate of α-users, M = K = 2, K = 1, α = 0.5 and θ = 0.5. Same rate
+α 0
+for the 0-user is maintained for the cases when the long-term SNR of the 0-user is 10 dB and
+20 dB lower than that of user 1 and user 2.
+PP–RSMA: the transmission approach we proposed in Section III-B.
+•
+PP–SDMA: users in and are served via PP as in PP–RSMA. However, users in
+• α 0 α
+K K K
+are served by SDMA as specified in [7]. After decoding and removing s from the received
+0
+signal, user k,k directly decodes its intended stream.
+α
+∈ K
+TP–RSMA: the transmission approach we proposed in Section III-A.
+•
+•
+TP–SDMA: the α-and 0-users are served via TP and SDMA is adopted for the transmission
+of α-users.
+As wementionedpreviously,weassumeuniformtimeallocationamong0-users,i.e., θ = 1
+0,k K−M
+for all strategies. In the sequel, the ESR performance of the above four strategies is evaluated
+in a wide range of user deployments considering a wide range of network load, CSIT qualities
+of α-users and QoS rate requirements of all users.
+We first study the ESR versus SNR result for the two proposed approaches with optimized
+precoding in Fig. 7(a) and we compare it with random and ZF precoding as illustrated in Fig.
+7(b). TheBS has M = 2 transmitantennas and serves two single-antennaα-users and one single-
+antenna 0-users. α = θ = 0.5. Same as in Fig. 5, the ER of 0-user is maintained to be the same
+for both TP–RSMA and PP–RSMA and thelong-term SNR of the0-user is 10 dB or 20 dB lower
+than that of the α-users. As the precoders are optimally designed, the ESR of each approach
+is boosted in Fig. 7(a) compared with the result in Fig. 7(b). The ESR performance when the
+precoders are optimized coincides with the performance when random and ZF precoding is used.
+The ESR gain of PP–RSMA over TP–RSMA still increases with the SNR difference between
+the two approaches.
+Next, we take TP factor optimization into consideration and compare the four strategies
+illustrated in Fig. 6. We assume that there is a 10 dB SNR difference between TP–RSMA
+
+25
+14
+12
+10
+8
+6
+4
+2
+5 10 15 20 25 30
+SNR (dB)
+)zH/s/tib(
+RSE
+14
+PP-RSMA
+PP-SDMA 12
+TP-RSMA
+TP-SDMA 10
+8
+6
+4
+2
+0
+5 10 15 20 25 30
+SNR (dB)
+(a) rth = [0.04,0.1,0.2,0.3,0.5,0.7],
+0
+Rth =0 bit/s/Hz
+α
+)zH/s/tib(
+RSE
+14
+PP-RSMA
+PP-SDMA 12
+TP-RSMA
+TP-SDMA 10
+8
+6
+4
+2
+0
+5 10 15 20 25 30
+SNR (dB)
+(b) rth = [0.04,0.1,0.2,0.3,0.5,0.7],
+0
+rth =[0.1,0.2 0.6] bit/s/Hz
+α
+···
+)zH/s/tib(
+RSE
+PP-RSMA
+PP-SDMA
+TP-RSMA
+TP-SDMA
+(c) rth = [0.1,0.2,0.4,0.8,1.4,2],
+0
+rth =[0.1,0.2 0.6] bit/s/Hz
+α
+···
+Fig. 8: Ergodic sum rate of α-users versus SNR comparison of different strategies, M = 2,
+K = 3, α = 0.5.
+and PP–RSMA approaches in all the following results. Without loss of generality, the QoS
+rate constraints of all α-users are assumed to be equal, i.e., Rth = Rth, k and that
+k α ∀ ∈ K α
+of all 0-users are assumed to be equal, i.e., Rth = Rth, k . We first study the influ-
+k 0 ∀ ∈ K 0
+ence of QoS rate constraints when there are two α-users with CSIT quality factor α = 0.5
+and one 0-user. As SNR increases from 5 to 30 dB, the QoS rate constraint for each 0-user
+increases as rth = [0.04,0.1,0.2,0.3,0.5,0.7] bit/s/Hz in Fig. 8(a) and Fig. 8(b) or increases
+0
+as rth = [0.1,0.2,0.4,0.8,1.4,2] bit/s/Hz in Fig. 8(c). The QoS rate constraint for each α-user
+0
+is 0 for all considered SNR in Fig. 8(a) while it is equal to rth = [0.1,0.2,0.3,0.4,0.5,0.6]
+α
+bit/s/Hz for the corresponding SNR values in Fig. 8(b) and Fig. 8(c). In all subfigures of
+Fig. 8, PP–RSMA achieves non-negligible ESR gain over all other strategies. Comparing Fig.
+8(a) and Fig. 8(b), we observe that the ESR gain of RSMA-based strategies (including PP–
+RSMA and TP–RSMA) over SDMA-based strategies (including PP–SDMA and TP–SDMA)
+increases with the QoS rate constraint of α-users. The tendency coincides with the performance
+of α-users-only transmission illustrated in [18]. By enabling the common stream for α-users,
+RS is capable of managing interference more flexibly and therefore achieves non-negligible
+performance gain towards varied QoS rate constraints of the α-users. Comparing Fig. 8(b)
+and Fig. 8(c), we notice that the performance of TP-based strategies (TP–RSMA and TP–
+SDMA) drops dramatically with the QoS rate constraint of the 0-users. In other words, PP-
+based strategies achieves higher ESR performance improvement as the QoS rate constraints of
+0-users increase. By embracing the benefits of PP-based and RSMA-based strategies, PP–RSMA
+achieves appealing ESR performance improvement over all other schemes towards various QoS
+rate constraints of α-users and 0-users.
+We further study the influence of different network loads in Fig. 9. Comparing Fig. 9(a) and
+
+26
+12
+10
+8
+6
+4
+2
+0
+5 10 15 20 25 30
+SNR (dB)
+)zH/s/tib(
+RSE
+PP-RSMA
+PP-SDMA 15
+TP-RSMA
+TP-SDMA
+10
+5
+0
+5 10 15 20 25 30
+SNR (dB)
+(a) M =2, K =4
+)zH/s/tib(
+RSE
+16
+PP-RSMA
+PP-SDMA 14
+TP-RSMA
+TP-SDMA 12
+10
+8
+6
+4
+2
+0
+5 10 15 20 25 30
+SNR (dB)
+(b) M =4, K =6
+)zH/s/tib(
+RSE
+PP-RSMA
+PP-SDMA
+TP-RSMA
+TP-SDMA
+(c) M =4, K =8
+Fig. 9: Ergodic sum rate of α-users versus SNR comparison of different strategies, α = 0.5,
+rth = [0.04,0.1,0.2,0.3,0.5,0.7] bit/s/Hz, Rth = 0.1 bit/s/Hz.
+0 α
+9
+8
+7
+6
+5
+4
+3
+2
+0.2 0.4 0.6 0.8 1
+)zH/s/tib(
+RSE
+9
+8
+7
+6
+5
+PP-RSMA 4
+PP-SDMA
+TP-RSMA 3
+TP-SDMA
+2
+0.2 0.4 0.6 0.8 1
+(a) Rth =0.2 bit/s/Hz
+α
+)zH/s/tib(
+RSE
+PP-RSMA
+PP-SDMA
+TP-RSMA
+TP-SDMA
+(b) Rth =0.4 bit/s/Hz
+α
+Fig. 10: Ergodic sum rate of partial-CSIT users versus the CSIT quality factor α comparison of
+different strategies, M = 2, K = 4, SNR = 20dB, Rth = 0.4 bit/s/Hz
+0
+Fig. 9(b), the ESRs of all strategies increase with the number of α-users. The ESR gaps between
+the corresponding PP-based strategies and TP-based strategies increase with the number of α-
+users. PP-based strategies are capable of serving more α-users. Comparing Fig. 9(b) and Fig.
+9(c), we also obtain that PP-based strategies are more suited to the cases with more 0-users and
+the ESR gap between PP–RSMA and PP–SDMA decreases with the number of 0-users. As the
+number of 0-users increases, a larger amount of power is allocated to 0-users so as to meet their
+QoS rate constraints. Therefore, the remaining amount of power allocated to α-users reduces.
+As the performance benefit of RSMA increases with SNR [16], adequate power allocation for
+the α-streams allows RSMA to better determine the level of the interference to decode and treat
+as noise. Thanks to its ability of partially decoding interference, partially treating interference
+as noise as well as non-orthogonal serving α-and 0-users, PP–RSMA achieves the highest ESR
+performance over all other strategies even when the network load becomes much overloaded.
+Fig. 10 illustrates the ESR versus CSIT quality factor comparison of all the considered
+
+27
+strategies. By comparing Fig. 10(a) and Fig. 10(b), we observe that as α decreases, the ESRs of
+SDMA-based strategies drop when the QoS rate constraints of α-users increase while there is
+no rate loss for the RSMA-based strategies. RSMA enhances user fairness and enables a more
+flexible allocation of user rates.
+All above, we conclude that PP–RSMA possesses the capability of both PP and RSMA, and
+becomes a more powerful and general transmission strategy for overloaded cellular IoT networks
+with heterogeneous CSIT quality and QoS rate constraints of all users. It is less sensitiveto CSIT
+inaccuracy, and achieves a higher ESR gain over other strategies as the number of α-and 0-users
+increases or as the QoS rate constraint Rth of each user becomes larger.
+k
+VIII. CONCLUSION
+To conclude, we consider an overloaded MISO BC with M transmit antennas and K users
+(M < K) where the transmitter has partial CSI for M users and statistical CSI for the remaining
+K M users. We incorporate RS strategy into the considered cellular IoT-suited scenario and
+−
+propose TP–RSMA and PP–RSMA approaches. PP–RSMA superposes the symbol for 0-users
+on top of the symbols for α-users. Such non-orthogonal transmission strategy has been shown
+to achieve strict DoF gains over TP–RSMA where the 0-users are served independently from
+α-users over orthogonal time slots. Moreover, the DoF region achieved by PP–RSMA has been
+shown to be optimal. Besides the DoF analysis in the high SNR regime, we also design the
+precoders of TP–RSMA and PP–RSMA by studying the ESR maximization problem subject
+to the QoS rate requirements of all users. Numerical results show that PP–RSMA achieves
+explicit sum rate gain over TP–RSMA and all other baseline schemes. The DoF gain of PP–
+RSMA at high SNR is realized at finite SNR as well. Moreover, PP–RSMA is less sensitive
+to CSIT inaccuracy. The achieved ESR gap over TP-based strategies increases with the number
+of α-users and 0-users as well as QoS rate constraints of all users. PP–RSMA is suited to an
+extremely overloaded scenario. According to the DoF and rate analysis, we draw the conclusion
+that PP–RSMA is a powerful physical-layer transmission approach for overloaded cellular IoT.
+APPENDIX I
+PROOF OF THE OPTIMUM DOF REGION
+D
+The DoF region described by the inequalities in (20) and (21) is a K-dimensional polyhe-
+D
+dron. To prove the optimality of , we show that it is both achievable, and an outer bound of
+D
+the optimal region.
+Achievability: We first prove the achievability of . Before we delve into the general case, we
+D
+firstcharacterizetheachievableDoFregionobtainedbyswitchingoffallusersin (forcingtheir
+0
+K
+
+28
+DoF to zero). This is equivalent to projecting onto the M dimensional subspace characterized
+D
+by d , ,d = 0. It is readily seen that this setting corresponds to the K-User MISO BC
+M+1 K
+···
+with partial CSIT in [19], restricted to the case where all users have the same CSIT quality. The
+DoF region can be then obtained by [19, Theorem 1] and it is given by the lemma below. This
+region is used as a building block to prove the achievability of .
+D
+Lemma 1. For a MISO BC with K = M and CSIT quality α [0,1] for all users, an achievable
+∈
+DoF region is given by
+M=K
+D
+d 0, k (42)
+k
+≥ ∀ ∈ K
+d 1+( 1)α, , 1 (43)
+k
+≤ |S|− ∀S ⊆ K |S| ≥
+k∈S
+X
+where denotes the set of users 1,...,K .
+K { }
+We can now proceed to show the achievability of the region . First, defining d = d ,
+D Σ i∈K0 i
+the problem is equivalent to showing that all the non-negativetuples (d ,...,d ,d ) that satisfy
+1 M Σ P
+d 0,d 0 i (44)
+i Σ α
+≥ ≥ ∀ ∈ K
+d +d 1+( 1)α, , 1 (45)
+i Σ α
+≤ |S|− ∀S ⊆ K |S| ≥
+i∈S
+X
+are achievable. All tuples (d ,...,d ,d , ,d ) are then obtained by splitting, in all
+1 M M+1 K
+···
+possible variants, the values of d among users in . The proof follows similar steps as in [19]
+Σ 0
+K
+but, in this case, the induction is done over the number of users in , denoted as K and equal
+α α
+K
+to M. The case K = 1 is trivial. We assume that the hypothesis holds for K = 1,...,k 1. As
+α α
+−
+in [19], we show that each facet of the polyhedron is achievable. Starting with the hyperplanes
+in (45), for each subset , 1, we need to show that all the non-negative tuples
+α
+S ⊆ K |S| ≥
+(d ,...,d ,d ) that satisfy
+1 k Σ
+d +d = 1+( 1)α
+i∈S i Σ |S|−
+ P d +d 1+( ¯ 1)α, ¯ , ¯= , ¯ 1
+ i∈S¯ i Σ ≤ |S|− ∀S ⊆ K α S 6 S |S| ≥
+are achievable. FolPlowing the same steps as in [19], it can be verified that the above conditions
+
+are equivalent to
+d +d = 1+( 1)α
+i∈S i Σ |S|−
+
+Pd α, i
+  i ≥ ∀ ∈ S
+
+
+d α, i .
+i α
+≤ ∀ ∈ K \S
+
+Each DoF tuple is achi  eved through power partitioning by allocating powers scaling as O(Pα)
+
+to private symbols of users i , and powers scaling as O(Pdi) to private symbols of users
+∈ S
+
+29
+i . On top, we consider all possible power partitions β [α,1] and for each partition,
+α
+∈ K \S ∈
+the common symbol’s DoF is split, in all possible variants, among users k only, while
+∈ S
+d = 1 β.
+Σ
+−
+Considering the facets contained in the hyperplanes in (45), we have two cases. The first is
+given by d = 0 and it reduces to k users with CSIT α and k antennas as in Lemma 1. The
+Σ
+second case considers any j and we have
+α
+∈ K
+d = 0
+j
+
+d +d 1+( 1)α, j , 1.
+ i∈S i Σ ≤ |S|− ∀S ⊆ K α \{ } |S| ≥
+This corresponds toPthe region in (44) and (45) considering the k 1 users in . It is readily
+ α
+− K
+seen that this region is achievable by induction. As all facets of the polyhedron are achievable,
+all the remaining points can be achieved by time-sharing and the region is achievable.
+Converse:Theconverseisbased onthesum-DoFupperboundobtainedin[29]. Foran arbitrary
+subset of users , the sum-DoF is upperbounded by
+U ⊆ K
+d 1+α( 1)+ (46)
+k
+≤ |S|−
+k∈U
+X
+where = . We increase the number of transmitter antennas to K and then enhance the
+α
+S U ∩K
+quality of one of the users in to 1 (if is empty we pick any other user). Since the previous
+S S
+steps provide an outerbound and cannot harm the DoF, (46) directly follows from [29, Theorem
+1]. By removing all redundant inequalities, the outerbound coincides with the region .
+D
+ACKNOWLEDGEMENT
+The authors are deeply indebted to Dr. Hamdi Joudeh for his helpful comments and sugges-
+tions.
+REFERENCES
+[1] E. Piovano, H. Joudeh, and B. Clerckx, “Overloaded multiuser MISO transmission with imperfect CSIT,” in Proc. 50th
+Asilomar Conf. Signals, Syst. Comput., Nov. 2016, pp. 34–38.
+[2] J. Jin, J. Gubbi, S. Marusic, and M. Palaniswami, “An information framework for creating a smart city through Internet
+of Things,” IEEE Internet Things J., vol. 1, no. 2, pp. 112–121, April 2014.
+[3] S. Li, L. Da Xu, and S. Zhao, “5G Internet of Things: A survey,” J. Ind. Inf. Integr., vol. 10, pp. 1–9, 2018.
+[4] X. Chen, Massive Access for Cellular Internet of Things Theory and Technique. Springer, 2019.
+[5] “Cellular system support for ultra low complexity and low throughput Internet of Things,” 3GPP TR 45.820, Tech. Rep.,
+Aug. 2016.
+[6] B. Clerckx, H. Joudeh, C. Hao, M. Dai, and B. Rassouli, “Rate splitting for MIMO wireless networks: A promising
+PHY-layer strategy for LTE evolution,” IEEE Commun. Mag., vol. 54, no. 5, pp. 98–105, May 2016.
+[7] Y. Mao, B. Clerckx, and V. O. K. Li, “Rate-splitting multiple access for downlink communication systems: bridging,
+generalizing,andoutperformingSDMAandNOMA,”EURASIPJ.WirelessCommun.Netw.,vol.2018,no.1,p.133,May
+2018.
+[8] M.Shirvanimoghaddam,M.Dohler,andS.J.Johnson,“Massivenon-orthogonalmultipleaccessforcellularIoT:Potentials
+and limitations,” IEEE Commun. Mag., vol. 55, no. 9, pp. 55–61, Sept. 2017.
+
+30
+[9] X.Chen, Z.Zhang, C.Zhong, R.Jia,andD.W.K.Ng, “Fullynon-orthogonal communication formassiveaccess,”IEEE
+Trans. Commun., vol. 66, no. 4, pp. 1717–1731, April 2018.
+[10] T. Cover, “Broadcast channels,” IEEE Trans. Inf. Theory, vol. 18, no. 1, pp. 2–14, Jan. 1972.
+[11] B. Hassibi and B. M. Hochwald, “How much training is needed in multiple-antenna wireless links?” IEEE Trans. Inf.
+Theory, vol. 49, no. 4, pp. 951–963, April 2003.
+[12] D. J. Love, R. W. Heath, V. K. N. Lau, D. Gesbert, B. D. Rao, and M. Andrews, “An overview of limited feedback in
+wireless communication systems,” IEEE J. Sel. Areas Commun., vol. 26, no. 8, pp. 1341–1365, Oct. 2008.
+[13] Y. Mao, B. Clerckx, and V. O. K. Li, “Rate-splitting multiple access for coordinated multi-point joint transmission,” in
+Proc. IEEE Int. Conf. Commun. (ICC) Workshop, May 2019, pp. 1–6.
+[14] Y. Mao, B. Clerckx, and V. O. K. Li, “Energy efficiency of rate-splitting multiple access, and performance benefits over
+SDMA and NOMA,” in Proc. IEEE Int. Symp. Wireless Commun. Syst. (ISWCS), Aug. 2018, pp. 1–5.
+[15] B. Clerckx, Y. Mao, R. Schober, and H. V. Poor, “Rate-splitting unifying SDMA, OMA, NOMA, and multicasting in
+MISO broadcast channel: A simple two-user rate analysis,” IEEE Wireless Communications Letters, vol. 9, no. 3, pp.
+349–353, 2020.
+[16] Y.Mao, B.Clerckx,and V.O.K.Li,“Rate-splittingformulti-antennanon-orthogonal unicast andmulticasttransmission:
+Spectral and energy efficiency analysis,” IEEE Trans. Commun., vol. 67, no. 12, pp. 8754–8770, Dec. 2019.
+[17] Y.MaoandB.Clerckx,“Beyonddirtypapercodingformulti-antennabroadcastchannelwithpartialCSIT:Arate-splitting
+approach,” arXiv preprint arXiv:1912.05409, 2019.
+[18] H. Joudeh and B. Clerckx, “Sum-rate maximization for linearly precoded downlink multiuser MISO systems with partial
+CSIT: A rate-splitting approach,” IEEE Trans. Commun., vol. 64, no. 11, pp. 4847–4861, Nov. 2016.
+[19] E.PiovanoandB.Clerckx,“OptimalDoFregionoftheK-userMISOBCwithpartialCSIT,”IEEECommun.Lett.,vol.21,
+no. 11, pp. 2368–2371, Nov. 2017.
+[20] H. Joudeh and B. Clerckx, “DoF region of the MISO BC with partial CSIT: Proof by inductive Fourier-Motzkin
+elimination,” in Proc. IEEE Int. Workshop Signal Process. Adv. Wireless Commun. (SPAWC), July 2019, pp. 1–5.
+[21] A. Alameer Ahmad, H. Dahrouj, A. Chaaban, A. Sezgin, and M. Alouini, “Interference mitigation via rate-splitting and
+common message decoding in cloud radio access networks,” IEEE Access, vol. 7, pp. 80350–80365, June 2019.
+[22] D.Yu,J.Kim,andS.Park,“Anefficientrate-splittingmultipleaccessschemeforthedownlinkofC-RANsystems,”IEEE
+Wireless Commun. Lett.,vol. 8, no. 6, pp. 1555–1558, Dec. 2019.
+[23] H. Joudeh and B. Clerckx, “Rate-splitting for max-min fair multigroup multicast beamforming in overloaded systems,”
+IEEE Trans. Wireless Commun., vol. 16, no. 11, pp. 7276–7289, Nov. 2017.
+[24] M. Dai, B. Clerckx, D. Gesbert, and G. Caire, “A rate splitting strategy for massive MIMO with imperfect CSIT,”IEEE
+Trans. Wireless Commun., vol. 15, no. 7, pp. 4611–4624, July 2016.
+[25] M. Dai and B. Clerckx, “Multiuser millimeter wave beamforming strategies with quantized and statistical CSIT,” IEEE
+Trans. Wireless Commun., vol. 16, no. 11, pp. 7025–7038, Nov. 2017.
+[26] Y.Mao,B.Clerckx,andV.O.K.Li,“Rate-splittingformulti-usermulti-antennawirelessinformationandpowertransfer,”
+in Proc. IEEE Int. Workshop Signal Process. Adv. Wireless Commun. (SPAWC), July 2019, pp. 1–5.
+[27] J. Zhang, B. Clerckx, J. Ge, and Y. Mao, “Cooperative rate splitting for MISO broadcast channel withuser relaying, and
+performance benefits over cooperative NOMA,” IEEE Signal Process. Lett., vol. 26, no. 11, pp. 1678–1682, Nov. 2019.
+[28] Y.Mao,B.Clerckx,J.Zhang,V.O.K.Li,andM.Arafah,“Max-minfairnessofK-usercooperativerate-splittinginMISO
+broadcast channel with user relaying,” IEEE Trans. Wireless Commun., pp. 1–1, 2020.
+[29] A. G. Davoodi and S. A. Jafar, “Aligned image sets under channel uncertainty: Settling conjectures on the collapse of
+degrees of freedom under finite precision CSIT,”IEEE Trans. Inf. Theory, vol. 62, no. 10, pp. 5603–5618, Oct. 2016.
+[30] H. Joudeh and B. Clerckx, “Robust transmission in downlink multiuser MISO systems: A rate-splitting approach,” IEEE
+Trans. Signal Process., vol. 64, no. 23, pp. 6227–6242, Dec. 2016.
+[31] M. Grant, S. Boyd, and Y. Ye, “CVX: Matlab software for disciplined convex programming,” 2008.

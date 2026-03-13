@@ -1,0 +1,298 @@
+Electric Vehicle
+Basics
+Electric vehicles (EVs) use electricity Electric vehicles are charged by plugging the vehicle into an electric power source.
+as their primary fuel or to improve Photo courtesy of Forth.
+the effciency of conventional vehicle
+an electric power source and can also be
+designs. EVs include all-electric
+charged through regenerative braking. Regenerative Braking
+vehicles, also referred to as battery
+All-electric vehicles produce no tailpipe
+electric vehicles (BEVs), and plug-in Regenerative braking allows EVs to
+emissions, although there are “life cycle”
+hybrid electric vehicles (PHEVs). In emissions associated with the electricity capture energy normally lost during
+colloquial references, these vehicles production. braking by using the electric motor
+as a generator and storing that
+are called electric cars, or simply EVs,
+All-electric vehicles typically have
+captured energy in the battery.
+even though some of these vehicles
+shorter driving ranges per charge than
+still use liquid fuels in conjunction conventional vehicles have per tank of
+with electricity. EVs are known for gasoline. Most new BEVs are designed Plug-In Hybrid Electric Vehicles
+to travel between 110 and over 300 miles
+providing instant torque and a quiet PHEVs use batteries to power an electric
+on a fully charged battery, depending
+driver experience. motor and use another fuel, such as
+on the model. For context, 90% of all
+gasoline, to power a conventional engine.
+U.S. household trips cover less than 100
+Other types of electric-drive vehicles The batteries are typically charged by
+miles.1 An all-electric vehicle’s range
+not covered here include hybrid plugging the PHEV into an electric power
+varies according to driving conditions and
+electric vehicles, which are powered by source, although they can also be charged
+driving habits. Extreme temperatures tend
+by the conventional engine and through
+a conventional engine and an electric to reduce range because energy from the
+regenerative braking.
+motor that uses energy stored in a battery powers climate control systems in
+battery that is charged by regenerative addition to powering the motor. Speeding, PHEVs have an all-electric driving range
+aggressive driving, and heavy loads can of about 15 to 60+ miles, depending
+braking, not by plugging in, and fuel
+also reduce range. on the model. As long as the battery is
+cell electric vehicles, which use a
+propulsion system similar to electric
+vehicles, where energy stored as EVs at a Glance
+hydrogen is converted to electricity by
+EVs run on electricity alone. They are powered by one or more
+the fuel cell. electric motors and a battery. The battery is charged by plugging
+the vehicle into an electric power source and through
+All-Electric Vehicles
+regenerative braking.
+All-electric vehicles do not have
+PHEVs can travel moderate distances on electricity alone.
+conventional engines but are driven solely
+The battery can be charged by plugging into an electric
+by one or more electric motors powered
+by energy stored in batteries. The batteries power source, through regenerative braking, and by
+are charged by plugging the vehicle into the engine.
+PHEVs don’t have to be plugged in before driving. They can also be fueled solely
+1 National Highway Travel Survey, U.S. Department
+of Transportation, Federal Highway Administration, with conventional fuel. However, they will not achieve maximum fuel economy or
+2008, fhwa.dot.gov/policyinformation/pubs/pl08021/
+take full advantage of their all-electric capabilities without plugging in.
+fig4_5.cfm.
+
+charged, a PHEV can draw most of its often be done with little or no required
+power from electricity for typical daily electrical upgrades, as most homes
+driving. The engine will then power on have 240-V service for appliances like
+when the battery is mostly depleted, dryers and electric ranges. A Level 2
+during rapid acceleration, at high unit can be portable or “hard wired”
+speeds, or when intensive heating or air into a building and can be purchased for
+conditioning is required. as little as $200. For more information
+on installing charging equipment, see
+When running on battery power alone,
+Charging Infrastructure Procurement and
+PHEVs produce no tailpipe emissions.
+Installation on the AFDC (afdc.energy.
+Even when the conventional engine is
+gov/fuels/electricity_infrastructure_
+running, PHEVs typically consume less More heavy-duty vehicle manufacturers
+development.html).
+gasoline and produce fewer emissions are now offering plug-in models for
+than similar conventional vehicles. feets. Photo by Dennis Schroeder, NREL To make long-distance travel more
+46574. accessible, the Federal Highway
+What EV Models Are Administration is establishing a network
+How Do These Vehicles of alternative fueling and charging
+Available?
+infrastructure along highway corridors.
+“Fuel Up”?
+Nearly all major vehicle manufacturers Designated EV corridors2 supported
+have EV models available, and some Charging equipment provides electricity by DC fast charging stations are under
+have committed to transitioning to selling to charge EV batteries. The charging unit development nationwide. To find public
+only EVs by 2030. communicates with the vehicle to ensure stations, use the Alternative Fueling
+that it supplies an appropriate and safe
+Station Locator (afdc.energy.gov/
+Medium- and heavy-duty options are flow of electricity.
+stations), which is available as an iPhone
+also available for fleet applications. See
+and Android app.
+Considering an EV for fleet-specific There are more than 140,000 publicly
+considerations. available charging outlets—and
+Equipment Types and Costs
+counting—across the country. Most
+For up-to-date information on available currently available light-duty BEVs have Charging units are classified according
+models, use the Alternative Fuels Data ranges between 110 and over 300 miles. to the rate at which they charge batteries.
+Center (AFDC) Vehicle Search tool (afdc. Technological advances such as larger Two types—Level 1 and Level 2—
+energy.gov/tools) or the Find a Car tool batteries and growing access to charging provide AC power to the vehicle, with the
+on FuelEconomy.gov (fueleconomy.gov/ are increasingly addressing “range
+feg/findacar.shtml). anxiety,” or the fear of running out of
+Charging Made Simple
+charge. Learn more about trends in EV
+charging infrastructure (afdc.energy.gov/ Most EV owners charge at home or
+fuels/electricity_infrastructure_trends.
+at work because charging is more
+html).
+convenient and cost-effective than
+It may take as little as 30 minutes to fully using public stations. But public
+charge an EV’s battery, but charging equipment is also easy to use.
+times vary based on the type or level of Depending on the station, drivers
+charging; the type of battery, its capacity, might use a network card, credit
+and how depleted it is; and the capacity
+card, phone, cash, or even just enter
+of the vehicle’s internal charger (see
+an account number. There are also
+Charging Options table).
+free chargers where users can just
+Charging units can be installed in plug in.
+residential, fleet, workplace, and
+An added beneft of going electric is
+public settings. Most EVs come with a
+that electricity prices are less
+110-volt “Level 1” cordset that can be
+plugged into a typical electrical outlet. volatile than gasoline and diesel
+For quicker charging, homeowners prices, so drivers can more easily
+can install a 240-V “Level 2” unit on forecast their fueling expenses. See
+Getting started with an EV is easy
+a dedicated electrical circuit. This can a comparison of all fuel prices over
+thanks to the charging “cordset” that
+comes with most vehicles. Photo by time on the AFDC Fuel Prices page
+Erik Nelsen, NREL 64277. 2 fhwa.dot.gov/environment/alternative_fuel_corridors (afdc.energy.gov/fuels/prices.html).
+2
+
+Charging Options
+Federal and state tax credits and
+Cost for Equipment, Installation,
+Typical Charging Time private and utility rebates may also be
+and Site Costs*
+available to help offset the cost of EVs.
+Level 1 2–5 miles of range per hour $0 to $1,800 For information on available vehicle
+incentives, see the AFDC Laws &
+of charging
+Incentives page (afdc.energy.gov/laws).
+Level 2** 10–30 miles of range per $800 to $33,000
+To find fuel economy ratings and fuel/
+hour of charging
+vehicle cost comparisons among
+DC Fast 100–200+ miles of range in $30,000 to over $120,000 currently available models, visit
+Charging** 30 minutes FuelEconomy.gov.
+*Costs do not include the price of operation (network charges, electricity, utility How Do Their Emissions
+demand charges). Factors affecting the price include equipment (charging equipment, Compare With Those of
+electrical supplies), electrical installation (upgrading or adding electrical service,
+Conventional Vehicles?
+upgrading the electrical panel, conduit, and trenching), site improvements (adding
+pavement), activating a network, payment collection, labor, permitting, and taxes. EVs typically produce fewer emissions
+than conventional vehicles. All-electric
+**Charging unit cost (Level 2 and DCFC) is proportional to the unit’s power rating. The
+vehicles produce zero tailpipe emissions,
+higher its rating, the higher the cost. A Level 2 unit can range from 6.6 to 19.2 kW
+and PHEVs produce no tailpipe emissions
+output. A DCFC unit can range from 25 to 350 kW. Charging varies by charging unit
+when in electric-only mode.
+power, vehicle, and battery state of charge.
+Life cycle emissions are generated when
+vehicle’s onboard equipment converting How Much Do the fuel or electricity is produced, as well as
+AC to DC to charge the batteries. The Vehicles Cost? during the manufacturing of the vehicle
+other type—DC fast charging (DCFC)— itself. The life cycle emissions of an EV
+EVs are generally more expensive than
+provides DC power directly. largely depend on how the electricity
+their conventional counterparts. However,
+is generated (and how much a PHEV’s
+Wireless or “inductive” charging lower fueling and maintenance costs can
+engine is being used), and this varies by
+equipment uses an electromagnetic field make them a competitive option. For
+region. Generally, all-electric vehicles
+to transfer electricity to an EV without example, electric drivetrains are more
+and PHEVs produce one-third to half
+a cord. Today, this technology is used efficient, making BEVs (and PHEVs
+the emissions of conventional vehicles,
+primarily at higher power levels in heavy- operating in electric mode) more than
+respectively, considering both air
+duty applications like transit buses. three times as efficient. Electricity is also
+pollutants and greenhouse gases. Regions
+less expensive than gasoline or diesel on
+with high use of renewable energy will
+Some states and utilities offer financial an energy-equivalent basis. BEV drivers
+see stronger emissions benefits. See a
+incentives for charging stations; see the can save as much as $14,500 in fuel costs
+comparison of emissions by state using
+AFDC Laws & Incentives page for more alone over 15 years (see table: Benefits
+the AFDC emissions tool at afdc.energy.
+information (afdc.energy.gov/laws). of Electric-Drive Vehicles).
+gov/ev-emissions.html.
+What About Safety and
+Maintenance?
+National Average Annual Emissions per Vehicle
+All EVs undergo the same rigorous
+safety testing as conventional vehicles
+Electric emissions
+All Electric sold in the United States and must meet
+Gasoline emissions
+Federal Motor Vehicle Safety Standards
+(including those for batteries). For
+Plug-in Hybrid
+additional safety information, refer to
+the AFDC’s Maintenance and Safety of
+Hybrid Hybrid and Plug-In Electric Vehicles
+page (afdc.energy.gov/vehicles/electric_
+maintenance.html).
+Gasoline
+Because PHEVs have conventional
+0 3k 6k 9k 12k 15k engines, their maintenance requirements
+Light-duty vehicles excluding fuel cell electric Pounds of CO 2 Equivalent are similar to conventional vehicles.
+Based on assumptions updated in 2020
+3
+
+Beneÿts of
+• Evaluating equipment vendors and
+Electric-Drive
+considering needs/options such as
+Vehicles compared smart charging, cloud communications,
+PHEVs All-electric vehicles
+to conventional vehicles vendor payment, and equipment owner-
+ship and maintenance
+Fuel Economy Most achieve combined fuel Most achieve fuel economy ratings
+economy ratings higher than higher than 100 mpge.*
+• Timing the purchase and installation
+90 mpge.*
+of charging units with the delivery
+of vehicles (this can be especially
+Emissions Produce no tailpipe emissions Produce no tailpipe slow/complicated for municipal
+Reductions when in electric-only mode. emissions. organizations).
+Generally, they produce less than Generally, they produce one-third
+half the emissions. the emissions. For medium- and heavy-duty vehicles,
+there are additional considerations:
+Fuel Cost In electric-only mode, PHEV All-electric vehicles run on • Examining auxiliary loads (e.g.,
+Savings** electricity costs range about electricity only. Electricity costs are
+heating/cooling, lights, power take-off/
+3¢–10¢ per mile. 2¢–6¢ per mile.
+hydraulics use), and optional auxiliary
+On gasoline only, fuel costs are
+power units or heating, ventilating, and
+about 4¢–36¢ per mile.
+air-conditioning (HVAC) units powered
+by diesel or another fuel
+Fueling Can fuel at gas stations. Can charge at:
+Flexibility Can charge at: • home • Determining the impacts of increased
+• home • public charging stations electricity consumption, especially
+• public charging stations • some workplaces when several vehicles need to be
+charged simultaneously at high
+• some workplaces
+charging rates
+Electricity is produced from varied, domestic sources: • Understanding original equipment
+manufacturer vehicle maintenance and
+support if issues arise.
+Sources: AFDC (afdc.energy.gov), FuelEconomy.gov
+* EVs are rated not in miles per gallon (mpg) but miles per gallon of gasoline Find additional information on EVs on
+equivalent (mpge). Similar to mpg, mpge represents the number of miles the vehicle the AFDC at afdc.energy.gov/vehicles/
+can travel using a quantity of fuel (or electricity) with the same energy content as a electric.html.
+gallon of gasoline.
+**Compare to 10¢–15¢ per mile for conventional gasoline- or diesel-powered sedans.
+For all EVs, the electrical system (battery, Considering an EV
+motor, and associated electronics)
+Fleet managers should consider:
+requires minimal scheduled maintenance.
+A manufacturer’s warranty of a battery • Arranging for basic technician and
+typically covers 8 years or 100,000 driver training
+miles, and the expected battery lifetime
+is 12 to 15 years under normal operating • Conducting site planning for charging
+conditions and in moderate climates. units, including setbacks, electrical
+Check with your manufacturer about service locations, potential service
+vehicle and battery warranties. Brake upgrade needs, and future upgrades
+systems on these vehicles typically
+• Determining when and how the
+last longer than conventional vehicles
+vehicles will charge (including working
+because regenerative braking reduces
+with utilities to understand time-of-
+brake wear.
+use and demand charges), as well as
+All-electric vehicles lack conventional managed charging
+engines and have far fewer moving
+• Exploring private or utility incentives For more information, visit:
+parts and fewer fluids to change, so they
+for equipment installation or power use afdc.energy.gov
+typically require less maintenance than
+conventional vehicles or even PHEVs. DOE/GO-102023-6050 • August 2023
+4
